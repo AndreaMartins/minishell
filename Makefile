@@ -21,9 +21,10 @@ SRC = src/main.c
 OBJ = $(SRC:.c=.o)
 LIBFT = ./includes/libft/libft.a
 MAKE_LIBFT = make -C includes/libft --no-print-directory
-READLINE = -L/Users/mmarsa-s/.brew/Cellar/readline/8.2.10/lib -lreadline
+READLINE = -L$(HOME)/.brew/Cellar/readline/8.2.10/lib -lreadline -lhistory
 
 all: make_lib $(NAME)
+
 
 make_lib:
 	$(MAKE_LIBFT)
