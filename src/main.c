@@ -14,9 +14,10 @@
 
 int	minishell_loop(t_toolkit *toolkit)
 {
-	toolkit->args = readline("minishell >$ ");
-	if (!toolkit->args)
+	toolkit->args = readline("Hola Juan Carlos>$ ");
+	if (!toolkit->args || !ft_strncmp(toolkit->args, "exit", ft_strlen("exit")))
 	{
+		printf("adios\n");
 		exit(EXIT_SUCCESS);
 	}
 	add_history(toolkit->args);
@@ -26,13 +27,16 @@ int	minishell_loop(t_toolkit *toolkit)
 
 int	main(int argc, char **argv, char **envp)
 {
-	(void)argv;
-	(void)envp;
-
 	t_toolkit	toolkit;
 
-	if(argc != 1)
+	(void)envp;
+
+	if(argc != 1 || argv[1])
+	{
 		printf("This programm doesn't accept arguments.\n");
+		exit(0);
+	}
+	
 	minishell_loop(&toolkit);
 	return (0);
 }

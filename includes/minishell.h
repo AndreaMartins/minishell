@@ -13,15 +13,27 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "Libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
 
+typedef struct s_envlst
+{
+	char				*key;
+	char				*val;
+	struct s_envlst		*next;
+}	t_env;
+
 typedef enum s_tokens
 {
-	PIPE = 1,
+	SPACE = 0,
+	STR,
+	DOUBLEQ,
+	SIMPLEQ,
+	PIPE,
 	GREAT,
 	GREAT_GREAT,
 	LESS,
@@ -37,39 +49,63 @@ typedef struct s_lexer
 	struct s_lexer	*prev;
 }	t_lexer;
 
-typedef struct s_parser_tools
+typedef struct s_exp
 {
-	t_lexer			*lexer_list;
-	t_lexer			*redirections;
-	int				num_redirections;
-	struct s_tools	*tools;
-}	t_parser_tools;
+	char	*cont;
+	char	*new;
+	char	*var;
+	char	*val;
+	int		alloc;
+	int		k;
+	int		j;
+	int		fl;
+	char	q;
+}	t_exp;
+
+typedef struct s_fd
+{
+	int			fd;
+	int			type;
+	int			exp;
+	char		*str;
+	struct s_fd	*next;
+}	t_fd;
+
+typedef struct s_pipe
+{
+	char			**cmd;
+	char			*path;
+	t_fd			*fd_lst;
+	int				in_fd;
+	int				out_fd;
+	int				builtin;
+	struct s_pipe	*next;
+}	t_pipe;
+
+typedef struct s_exec
+{
+	int		fdp[2];
+	int		pid;
+	int		stat;
+}	t_exec;
 
 typedef struct s_toolkit
 {
-	char					*args;
-	char					**paths;
-	char					**envp;
-	struct s_simple_cmds	*simple_cmds;
-	t_lexer					*lexer_list;
-	char					*pwd;
-	char					*old_pwd;
-	int						pipes;
-	int						*pid;
-	bool					heredoc;
-	bool					reset;
+	t_env	*env_lst;
+	t_lexer	*lex_lst;
+	t_pipe	*pipe_lst;
+	t_fd	*hd_lst;
+	t_exp	*exp;
+	char	*args;
+	char	**paths;
+	int		exit;
+	int		pipes;
+	int		check;
+	t_exec	*exe;
+	char	**env;
+	int		power_on;
 }	t_toolkit;
 
-typedef struct s_simple_cmds
-{
-	char					**str;
-	int						(*builtin)(t_toolkit *, struct s_simple_cmds *);
-	int						num_redirections;
-	char					*hd_file_name;
-	t_lexer					*redirections;
-	struct s_simple_cmds	*next;
-	struct s_simple_cmds	*prev;
-}	t_simple_cmds;
 
 int	main(int argc, char **argv, char **envp);
 
