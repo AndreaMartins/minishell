@@ -52,7 +52,7 @@ typedef struct s_lexer
 typedef struct s_exp
 {
 	char	*cont;
-	char	*new;
+	char	*newe;
 	char	*var;
 	char	*val;
 	int		alloc;
@@ -107,6 +107,16 @@ typedef struct s_toolkit
 }	t_toolkit;
 
 
+//		-> MAIN <-		//
+
 int	main(int argc, char **argv, char **envp);
+
+//		-> LEXER <-		//
+
+int	check_quotes(char *str);
+
+//		-> ERRORS <-	//
+
+int	error_quotes(t_toolkit *kit);
 
 #endif

@@ -17,11 +17,18 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = src/main.c
 OBJ = $(SRC:.c=.o)
 LIBFT = ./includes/libft/libft.a
 MAKE_LIBFT = make -C includes/libft --no-print-directory
 READLINE = -L$(HOME)/.brew/Cellar/readline/8.2.10/lib -lreadline -lhistory
+
+MAIN = src/main.c
+
+LEXER = src/lexer/syntax.c
+
+ERRORS = src/errors/errors.c
+
+SRC = $(MAIN) $(LEXER) $(ERRORS)
 
 all: make_lib $(NAME)
 
