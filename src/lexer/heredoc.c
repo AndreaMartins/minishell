@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-int heredoc(t_toolkit *tool)
+int	heredoc(t_toolkit *tool)
 {
 	int		i;
 	char	*str;
@@ -27,7 +27,7 @@ int heredoc(t_toolkit *tool)
 		if (i <= 0)
 			return (0);
 		str = str + i;
-		set_new_fd(tool, i);
+		set_new_fd(tool, str, i);
 		i = 0;
 	}
 }
