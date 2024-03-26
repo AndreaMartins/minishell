@@ -15,25 +15,39 @@
 /*Trims all spaces and sets a space token*/
 t_lexer	*rd_space(char *input, int *i)
 {
-	char		*new_str;
+	char		*new;
 	int			j;
 
-	new_str = NULL;
+	new = NULL;
 	j = 0;
 	while (input[j + 1] && input[j + 1] == ' ')
 		j++;
-	new_str = malloc(sizeof(char) * 2);
-	if (!new_str)
+	new = malloc(sizeof(char) * 2);
+	if (!new)
 		return (NULL);
-	new_str[0] = ' ';
-	new_str[1] = '\0';
+	new[0] = ' ';
+	new[1] = '\0';
 	*i += j;
-	return (lex_new(new_str, SPACE)); // TO - DO function
+	return (lex_new(new, SPACE)); // TO - DO function
 }
 
-t_lexer	*read_word(char	*input, int i)
+t_lexer	*read_word(char	*input, int i, char q)
 {
+	char	*new;
+	int		j;
 
+	j = 0;
+	while (input[j] && input[j + 1] && check_chr(input[j]) != 2
+		&& check_chr(input[j + 1]) != 2 && check_chr(input[j + 1]))
+		j++;
+	if (check_chr(input[0] == 2))
+		j = word_in_quotes(input, &q, -1); // TO - DO function
+	while (input[j] && input[j + 1] && check_chr(input[j + 1]) == 2)
+		j = word_in_quotes(input, &q, j); // TO - DO function
+	new = ft_substr(input, 0, j + 1);
+	if (!new)
+		return (NULL);
+	return (lex_new(new, WORD))// TO - DO function
 }
 
 t_lexer	*rd_redirection(t_toolkit *tool, char *input, int *i)
@@ -60,7 +74,7 @@ int lexer(t_toolkit *tool, char	*input)
 		else if (input[i] == 39 || input[i] == 34)
 			new = rd_in_quotes(&tool, &i);
 		else
-			new = rd_word(&tool, &i);
+			new = rd_word(&tool, &i, 32);
 		if (!new)
 			return (EXIT_FAILURE); // TO - DO error function
 		else

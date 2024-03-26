@@ -30,7 +30,7 @@ typedef struct s_envlst
 typedef enum s_tokens
 {
 	SPACE = 0,
-	STR,
+	WORD,
 	SIMPLEQ,
 	DOUBLEQ,
 	INFILE,
