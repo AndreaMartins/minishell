@@ -31,13 +31,14 @@ typedef enum s_tokens
 {
 	SPACE = 0,
 	STR,
-	DOUBLEQ,
 	SIMPLEQ,
+	DOUBLEQ,
+	INFILE,
+	OUTFILE,
+	HEREDOC,
+	OUTFILEAPP,
 	PIPE,
-	GREAT,
-	GREAT_GREAT,
-	LESS,
-	LESS_LESS,
+	HEREDOC_NO_EXP,
 }	t_tokens;
 
 typedef struct s_lexer
@@ -65,7 +66,7 @@ typedef struct s_exp
 typedef struct s_fd
 {
 	int			fd;
-	int			type;
+	t_tokens	token;
 	int			exp;
 	char		*str;
 	struct s_fd	*next;

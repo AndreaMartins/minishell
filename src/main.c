@@ -25,6 +25,8 @@ int	minishell_loop(t_toolkit *tool)
 		return (error_quotes(tool));
 	if (heredoc(tool))
 		return (1);
+	if (lexer(tool, tool->args))
+		return (1);
 	return (0);
 }
 

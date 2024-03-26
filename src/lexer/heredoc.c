@@ -12,6 +12,8 @@
 
 #include "../../includes/minishell.h"
 
+/* This fuction checks whether there are heredocs, sets the point where
+it starts and saves its information in a fd_node*/
 int	heredoc(t_toolkit *tool)
 {
 	int		i;
@@ -43,4 +45,12 @@ int	wheredoc(char *str, int i)
 		i++;
 	}
 	return (-1);
+}
+
+char	*keyword_hd(t_fd *new, char *in, int i)
+{
+	char	*keyword;
+	int		j;
+	
+
 }

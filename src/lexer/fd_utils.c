@@ -20,12 +20,12 @@ int	set_new_fd(t_toolkit *tool, char *str, int i)
 	if (!new)
 		return (EXIT_FAILURE); // TO - DO error function
 	new->next = NULL;
-	new->type = 6;
+	new->token = HEREDOC;
 	fd_add(&(tool->hd_lst), new);
-	new->str = keyword_hd(new, str, &i, ' ');
+	new->str = keyword_hd(new, str, i);
 	if (!new->str)
 		return (EXIT_FAILURE); 	// TO - DO error function
-	new->fd = save_hd(tool, new->str, NULL, new->type);
+	new->fd = save_hd(tool, new->str, NULL, new->token);
 	if (new->fd < 0)
 		return (EXIT_FAILURE); // TO - DO error function
 	return (0);
