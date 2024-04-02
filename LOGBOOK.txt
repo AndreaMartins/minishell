@@ -1,0 +1,9 @@
+02/04/2024
+
+Create a file containing the functions to handle the lexer list
+
+- lex_add
+- lex_new
+- lex_clear
+
+Updated libft adding ft_memdel
