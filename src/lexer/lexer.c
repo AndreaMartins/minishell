@@ -12,11 +12,12 @@
 
 #include "../../includes/minishell.h"
 
-/*Trims all spaces and sets a space token*/
+/* Trims all spaces and sets a space token */
+
 t_lexer	*rd_space(char *input, int *i)
 {
-	char		*new;
-	int			j;
+	char	*new;
+	int		j;
 
 	new = NULL;
 	j = 0;
@@ -28,33 +29,86 @@ t_lexer	*rd_space(char *input, int *i)
 	new[0] = ' ';
 	new[1] = '\0';
 	*i += j;
-	return (lex_new(new, SPACE)); // TO - DO function
+	return (lex_new(new, SPACE));
 }
 
-t_lexer	*read_word(char	*input, int i, char q)
+/* This function serves to parse input strings, 
+extracting individual words, including those within quotes */
+
+t_lexer	*rd_word(char *input, int *i)
 {
 	char	*new;
 	int		j;
 
+	new = NULL;
 	j = 0;
 	while (input[j] && input[j + 1] && check_chr(input[j]) != 2
 		&& check_chr(input[j + 1]) != 2 && check_chr(input[j + 1]))
 		j++;
 	if (check_chr(input[0] == 2))
-		j = word_in_quotes(input, &q, -1); // TO - DO function
+		j = word_in_quotes(input, -1);
 	while (input[j] && input[j + 1] && check_chr(input[j + 1]) == 2)
-		j = word_in_quotes(input, &q, j); // TO - DO function
+		j = word_in_quotes(input, j);
 	new = ft_substr(input, 0, j + 1);
 	if (!new)
 		return (NULL);
-	return (lex_new(new, WORD))// TO - DO function
+	*i += j;
+	return (lex_new(new, WORD));
 }
 
-t_lexer	*rd_redirection(t_toolkit *tool, char *input, int *i)
+/* This function identifies the type of special symbol and generates
+a LEX_NODE with the defining characteristic */
+
+t_lexer	*rd_symbol(t_toolkit *tool, char *input, int *i)
 {
 	int			j;
 
+	j = 0;
+	if (input[j] == '<' && input[j + 1] != '<')
+		return (lex_nex(NULL, INFILE));
+	else if (input[j] == '>' && input[j + 1] != '>')
+		return (lex_new(NULL, OUTFILE));
+	else if (input[j] == '>' && input[j + 1] == '>')
+	{
+		(*i)++;
+		return (lex_new(NULL, OUTFILEAPP));
+	}
+	else if (input[j] == '<' && input[j + 1] == '<')
+	{
+		(*i)++;
+		return (lex_new(NULL, HEREDOC));
+	}
+	else if (input[j] == '|')
+	{
+		tool->pipes++;
+		return (lex_new(NULL, PIPE));
+	}
+	return (NULL);
+}
 
+/* This function parses an input string, identifying words within 
+single or double quotes. It extracts the word within the quotes and 
+creates a corresponding lexical token, distinguishing between single
+and double quotes. */
+
+t_lexer	*rd_in_quotes(char *input, int *i)
+{
+	char	*new;
+	int		j;
+
+	new = NULL;
+	j = 0;
+	while (input[j] && input[j + 1] && input[j + 1] != input[0])
+		j++;
+	if (input[j + 2] && check_chr(input[j + 2]))
+		return (rd_word(input, i));
+	new = ft_substr(input, 1, j);
+	*i += j;
+	if (input[0] == 39)
+		return (lex_new(new, SIMPLEQ));
+	else if (input[0] == 34)
+		return (lex_new(new, DOUBLEQ));
+	return (NULL);
 }
 
 int lexer(t_toolkit *tool, char	*input)
@@ -70,15 +124,15 @@ int lexer(t_toolkit *tool, char	*input)
 		if (input[i] == ' ')
 			new = rd_space(&input[i], &i);
 		else if (input[i] == '<' || input[i] == '>' || input[i] == '|')
-			new = rd_redirection(&tool, input, &i);
+			new = rd_symbol(tool, &input[i], &i);
 		else if (input[i] == 39 || input[i] == 34)
-			new = rd_in_quotes(&tool, &i);
+			new = rd_in_quotes(&input[i], &i); // TO - DO function
 		else
-			new = rd_word(&tool, &i, 32);
+			new = rd_word(&input[i], &i);
 		if (!new)
 			return (EXIT_FAILURE); // TO - DO error function
 		else
-			lex_add(&tool, new); // TO - DO function
+			lex_add(&tool, new);
 	}
 
 }

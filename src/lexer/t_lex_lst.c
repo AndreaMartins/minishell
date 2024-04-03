@@ -20,7 +20,7 @@ t_lexer	*lex_new(char *info, t_tokens type)
 
 	new_node = malloc(sizeof(t_lexer));
 	if (!new_node)
-		return (ft_memdel(info)); // TO - DO function;
+		return (ft_memdel(info));
 	new_node->str = info;
 	new_node->token = type;
 	new_node->next = NULL;

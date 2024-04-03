@@ -33,3 +33,17 @@ int	check_chr(char c)
 		return (1);
 	return (0);
 }
+
+int	word_in_quotes(char *input, int j)
+{
+	char	q;
+
+	q = input[++j];
+	j++;
+	while (input[j] && input[j] != q)
+		j++;
+	while (input[j] && input[j + 1] && input[j + 1] != ' '
+		&& check_chr(input[j + 1]) != 2)
+		j++;
+	return (j);
+}
