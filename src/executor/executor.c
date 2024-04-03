@@ -6,7 +6,7 @@
 /*   By: andmart2 <andmart2@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:15:01 by andmart2          #+#    #+#             */
-/*   Updated: 2024/03/19 17:31:46 by andmart2         ###   ########.fr       */
+/*   Updated: 2024/04/03 20:18:16 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,3 +62,25 @@ int	executor(t_toolkit *sh, t_pipe *p, int i, int j)
 	return (0);
 }
 
+int	exec_builtin(t_toolkit *sh, t_pipe *p)
+{
+	if(!sh->pipes && ft_open_built(sh, p, p->fd_lst, -1))
+		return(sh->exit);
+	if(p->builtin == 1)
+		return(ft_echo(sh, p))
+	if(p->builtin == 2)
+		return(ft_cdho(sh, p))
+	if(p->builtin == 3)
+		return(ft_pwd(sh, p))
+	if(p->builtin == 4)
+		return(ft_export(sh, p))	
+	if(p->builtin == 5)
+		return(ft_unset(sh, p))
+	if(p->builtin == 6 && sh->paths)
+		return(ft_env(sh, p));
+	else if ( p->builtin == 6 && !sh->paths)
+		err_break(sh, p->cmd[0], "No such file or directory", 127);
+	if(p->builtin == 7)
+		return(ft_exit(sh));
+	return(sh->exit);
+}
