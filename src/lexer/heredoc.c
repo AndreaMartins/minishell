@@ -14,24 +14,33 @@
 
 /* This fuction checks whether there are heredocs, sets the point where
 it starts and saves its information in a fd_node*/
-int	heredoc(t_toolkit *tool)
+int	heredoc(t_toolkit *tool, char *input, int i)
 {
-	int		i;
-	char	*str;
+	t_fd	*new;
 
-	i = 0;
-	str = tool->args;
-	if (!ft_strnstr(str, "<<", ft_strlen(str)))
+	if (!ft_strnstr(input, "<<", ft_strlen(input)))
 		return (0);
-	while (str[i])
+	while (input[i])
 	{
-		i = wheredoc(str, 0);
+		i = wheredoc(input, 0);
 		if (i <= 0)
 			return (0);
-		str = str + i;
-		set_new_fd(tool, str, i);
+		input = input + i;
+		new = malloc(sizeof(t_fd));
+		if (!new)
+			return (err_break(tool, "heredoc", NULL, 12)); // TO - DO error function
+		new->next = NULL;
+		new->token = HEREDOC;
+		fd_add(&(tool->hd_lst), new);
+		new->str = keyword_hd(new, input, &i, ' ');
+		if (!new->str)
+			return (err_break(tool, "heredoc", NULL, 12)); 	// TO - DO error function
+		new->fd = save_hd(tool, new->str, NULL, new->token);
+		if (new->fd < 0)
+			return (err_break(tool, "heredoc",  NULL, -(new->fd))); // TO - DO error function
 		i = 0;
 	}
+	return (0);
 }
 
 int	wheredoc(char *str, int i)
@@ -40,14 +49,27 @@ int	wheredoc(char *str, int i)
 	{
 		while (str[i] != '<')
 			i++;
-		if (str[i] && str[i + 1] == '<')
-			return (i);
-		i++;
+		if (!str[i] || !str[i + 1] || !str[i + 2])
+			return (-1);
+		if (str[i + 1] != '<')
+		{
+			i++;
+			continue;
+		}
+		else if (str[i + 2] == '<')
+			return -1;
+		i += 2;
+		while (str[i] && str[i] == ' ')
+			i++;
+		if (str[i] && check_chr(str[i]))
+			break;
+		else
+			return (-1);
 	}
-	return (-1);
+	return (i);
 }
 
-char	*keyword_hd(t_fd *new, char *in, int i)
+char	*keyword_hd(t_fd *new, char *in, int i, char q)
 {
 	char	*keyword;
 	int		j;
