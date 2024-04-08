@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 //recomendacion de poner to lower y usar solo strcmp r CmD (con minusculas y mayusculas mezcladas)
-	check_builtin(char **cmd)
+int	check_builtin(char **cmd)
 {
 	if( !cmd || **cmd)
 		return(0);
@@ -36,4 +36,12 @@
 // void	ft_open(t_toolkit *sh, t_pipe,)
 // void ft_check_open()
 // void check_access()
-// void check_paths() 
+
+
+void	check_paths()
+{
+
+}
+
+
+ 

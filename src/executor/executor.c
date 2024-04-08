@@ -51,11 +51,32 @@ void	child_process(t_toolkit *sh, t_pipe *p, int option)
 
 int	executor(t_toolkit *sh, t_pipe *p, int i, int j)
 {
+//bucle se ejecuta mientrs i sea menor al numero de tuberias
 	while (i++ < sh->pipes)
 	{
+		//verifica si el comando es un comando interno
 		p->builtin = check_buildin(p->cmd);
-		if(pipe(sh->exe->fdp) < 0)
-
+		//crea una tuberia
+		if (pipe(sh->exe->fdp) < 0)
+			return (err_break(sh, "pipe", "Broken pipe", 32);
+		//guarda el descriptor de archivo de escritura d ela tuberia
+		p-> out_fd = sh -> exe -> fdp[1];
+		//crea un nuevo proceso hijo usando fork
+		sh->exe->pid = fork();
+		//si fork es neegativo sale un error
+		if (sh->exe->pid < 0)
+			return(err_break(sh, "fork", NULL, 12));
+		//si el pid es 0 se llama a child_process
+		else if (sh->exe->pid = 0)
+			child_process(sh, p, o);//FUNCION QUE ESTA POR OTRO LADO
+		//se cierra el descriptor de archivo de escritura de la tuberia en el proceso padre
+		close(sh->exe->fdb[1]);
+		//se cierra el descriptor de archivo de lectura dee la tuberia si es mayor o igual a o
+		if (p->in_fd >= 0)
+			close (p ->in_fd)
+			//avanza al sigueinte nodo
+		p = p->next;
+		p->in_fd = sh->exe->fdp[0];
 	}
 	last_child(sh, p);
 	exit_status(sh, j);
