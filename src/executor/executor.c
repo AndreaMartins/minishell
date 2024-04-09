@@ -6,15 +6,13 @@
 /*   By: andmart2 <andmart2@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:15:01 by andmart2          #+#    #+#             */
-/*   Updated: 2024/04/03 20:18:16 by andmart2         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:22:54 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 /*crear err_exit function*/
-/*ft_open function*/
-/*check_access*/
 
 void	ft_redir(t_toolkit *sh, t_pipe *p)
 {
@@ -41,7 +39,7 @@ void	ft_redir(t_toolkit *sh, t_pipe *p)
 
 void	child_process(t_toolkit *sh, t_pipe *p, int option)
 {
-//iniciar senhales
+	//iniciar senhales
 	init_signals(N_INTERACT);
 	//si option es igual 0 se cierra el descriptor y se establece -2
 	if (!option)
@@ -70,12 +68,11 @@ int	last_child(t_toolkit *sh, t_pipe *p)
 	//verifica si no hay tuberias y si el ultimo elemento de la linea de tuberias es un cmd integrado
 	if(!sh->pipes && sh->pipe_lst->builtin)
 	{
-		sh->exit = exec_builtin(sh, p);
+		sh->exit = exec_builtin(sh,p);
 		return(0);
-	}
-	//nuevo proceso hijo usando fork y le pid hijo se guarda
-	sh->exe->pid = fork();
-	//si el fork es negativo
+		//nuevo proceso hijo usando fork y le pid hijo se guarda
+	}	
+	sh->exe->pid = fork();	
 	if (sh->exe->pid < 0)
 		return(err_break(sh, "fork", NULL, 12));
 	//si el fork es igual a 0
@@ -125,8 +122,7 @@ int	exec_builtin(t_toolkit *sh, t_pipe *p)
 {
 	//verifica si no hay tuberias
 	if(!sh->pipes && ft_open_built(sh, p, p->fd_lst, -1))
-		return(sh->exit);
-	
+		return(sh->exit);	
 	if(p->builtin == 1)
 		return(ft_echo(sh, p))
 	if(p->builtin == 2)
