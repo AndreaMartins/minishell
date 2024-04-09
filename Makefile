@@ -24,7 +24,8 @@ READLINE = -L$(HOME)/.brew/Cellar/readline/8.2.10/lib -lreadline -lhistory
 
 MAIN = src/main.c
 
-LEXER = src/lexer/syntax.c
+LEXER = src/lexer/syntax.c src/lexer/fd_utils.c src/lexer/heredoc.c \
+		src/lexer/lexer.c src/lexer/t_lex_lst.c src/lexer/tools.c
 
 ERRORS = src/errors/errors.c
 

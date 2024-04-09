@@ -12,9 +12,9 @@
 
 #include "../../includes/minishell.h"
 
-int	error_quotes(t_toolkit *kit)
+int	error_quotes(t_toolkit *tool)
 {
 	ft_putstr_fd("minishell: syntax error: Quotes not closed\n", 2);
-	kit->exit = 258;
+	tool->exit = 258;
 	return (1);
 }

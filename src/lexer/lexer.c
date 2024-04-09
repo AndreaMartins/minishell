@@ -35,7 +35,7 @@ t_lexer	*rd_space(char *input, int *i)
 /* This function serves to parse input strings, 
 extracting individual words, including those within quotes */
 
-t_lexer	*rd_word(char *input, int *i)
+t_lexer	*rd_word(char *input, int *i, char q)
 {
 	char	*new;
 	int		j;
@@ -46,9 +46,9 @@ t_lexer	*rd_word(char *input, int *i)
 		&& check_chr(input[j + 1]) != 2 && check_chr(input[j + 1]))
 		j++;
 	if (check_chr(input[0] == 2))
-		j = word_in_quotes(input, -1);
+		j = word_in_quotes(input, &q, -1);
 	while (input[j] && input[j + 1] && check_chr(input[j + 1]) == 2)
-		j = word_in_quotes(input, j);
+		j = word_in_quotes(input, &q, j);
 	new = ft_substr(input, 0, j + 1);
 	if (!new)
 		return (NULL);
@@ -65,7 +65,7 @@ t_lexer	*rd_symbol(t_toolkit *tool, char *input, int *i)
 
 	j = 0;
 	if (input[j] == '<' && input[j + 1] != '<')
-		return (lex_nex(NULL, INFILE));
+		return (lex_new(NULL, INFILE));
 	else if (input[j] == '>' && input[j + 1] != '>')
 		return (lex_new(NULL, OUTFILE));
 	else if (input[j] == '>' && input[j + 1] == '>')
@@ -101,7 +101,7 @@ t_lexer	*rd_in_quotes(char *input, int *i)
 	while (input[j] && input[j + 1] && input[j + 1] != input[0])
 		j++;
 	if (input[j + 2] && check_chr(input[j + 2]))
-		return (rd_word(input, i));
+		return (rd_word(input, i, ' '));
 	new = ft_substr(input, 1, j);
 	*i += j;
 	if (input[0] == 39)
@@ -126,13 +126,13 @@ int lexer(t_toolkit *tool, char	*input)
 		else if (input[i] == '<' || input[i] == '>' || input[i] == '|')
 			new = rd_symbol(tool, &input[i], &i);
 		else if (input[i] == 39 || input[i] == 34)
-			new = rd_in_quotes(&input[i], &i); // TO - DO function
+			new = rd_in_quotes(&input[i], &i);
 		else
-			new = rd_word(&input[i], &i);
+			new = rd_word(&input[i], &i, ' ');
 		if (!new)
 			return (EXIT_FAILURE); // TO - DO error function
 		else
-			lex_add(&tool, new);
+			lex_add(&(tool->lex_lst), new);
 	}
-
+	return (0);
 }

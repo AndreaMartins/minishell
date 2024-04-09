@@ -39,3 +39,7 @@ next session To-do:
 - quotes utils
 - heredoc keyword function
 - heredoc block of text saving function
+
+09/04/2024
+
+- debugging

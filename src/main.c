@@ -23,8 +23,8 @@ int	minishell_loop(t_toolkit *tool)
 	add_history(tool->args);
 	if (check_quotes(tool->args))
 		return (error_quotes(tool));
-	if (heredoc(tool))
-		return (1);
+	//if (heredoc(tool, tool->args, 0))
+	//	return (1);
 	if (lexer(tool, tool->args))
 		return (1);
 	return (0);

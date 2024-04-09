@@ -107,16 +107,48 @@ typedef struct s_toolkit
 }	t_toolkit;
 
 
-//		-> MAIN <-		//
+//		-> MAIN <-			//
 
 int	main(int argc, char **argv, char **envp);
+int	minishell_loop(t_toolkit *tool);
 
-//		-> LEXER <-		//
+//		-> LEXER <-			//
+
+int lexer(t_toolkit *tool, char	*input);
+t_lexer	*rd_in_quotes(char *input, int *i);
+t_lexer	*rd_symbol(t_toolkit *tool, char *input, int *i);
+t_lexer	*rd_word(char *input, int *i, char q);
+t_lexer	*rd_space(char *input, int *i);
+int	check_quotes(char *str);
+
+//		-> HEREDOC <-		//
+
+int	heredoc(t_toolkit *tool, char *input, int i);
+int	wheredoc(char *str, int i);
+//char	*keyword_hd(t_fd *new, char *in, int *i, char q);
+
+//		-> fd_UTILS <-		//
+
+void	fd_add(t_fd **hd_list, t_fd *new);
+
+//		-> SYNTAX <-		//
 
 int	check_quotes(char *str);
 
-//		-> ERRORS <-	//
+//		-> t_lex_list <-	//
 
-int	error_quotes(t_toolkit *kit);
+t_lexer	*lex_new(char *info, t_tokens type);
+t_lexer	*lex_last(t_lexer *lex_list);
+void	lex_add(t_lexer **lst, t_lexer *new);
+int	lst_clear(t_lexer **lst);
+
+//		-> TOOLS <-			//
+
+int	check_chr(char c);
+int	word_in_quotes(char *input, char *q, int j);
+
+//		-> ERRORS <-		//
+
+int	error_quotes(t_toolkit *tool);
 
 #endif

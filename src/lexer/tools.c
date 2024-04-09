@@ -36,8 +36,6 @@ int	check_chr(char c)
 
 int	word_in_quotes(char *input, char *q, int j)
 {
-	char	q;
-
 	*q = input[++j];
 	j++;
 	while (input[j] && input[j] != *q)

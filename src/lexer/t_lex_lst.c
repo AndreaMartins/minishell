@@ -43,11 +43,11 @@ void	lex_add(t_lexer **lst, t_lexer *new)
 {
 	t_lexer	*last;
 
-	if (!lst)
-		lst = new;
+	if (!*lst)
+		*lst = new;
 		new->prev = NULL;
 		return ;
-	last = lex_last(lst);
+	last = lex_last(*lst);
 	last->next = new;
 	new->prev = last;
 }
