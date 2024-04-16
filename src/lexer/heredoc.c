@@ -57,8 +57,8 @@ char	*keyword_hd(t_fd *new, char *in, int *i, char q)
 	while (in[j] && in[j + 1] && check_chr(in[j + 1]) == 2)
 		j = word_in_quotes(in, &q, j);
 	str = ft_substr(in, 0, j + 1);
-	if (str)
-		str = trim_quotes(str, ' ', ft_strlen(str), -1);
+	// if (str)
+	// 	str = trim_quotes(str, ' ', ft_strlen(str), -1);
 	if (!str)
 		return (NULL);
 	if (q == '\'' || q == '\"')
