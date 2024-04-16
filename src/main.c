@@ -27,6 +27,7 @@ int	minishell_loop(t_toolkit *tool)
 	//	return (1);
 	if (lexer(tool, tool->args))
 		return (1);
+		
 	return (0);
 }
 

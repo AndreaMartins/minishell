@@ -43,10 +43,9 @@ int	wheredoc(char *str, int i)
 
 /* This function parses and saves the heredoc keyword, trims the quotes if
 it finds them and manage the token type to expand. */
-/*char	*keyword_hd(t_fd *new, char *in, int *i, char q)
+char	*keyword_hd(t_fd *new, char *in, int *i, char q)
 {
-
-	char	*cont;
+	char	*str;
 	int		j;
 
 	j = 0;
@@ -57,16 +56,16 @@ it finds them and manage the token type to expand. */
 		j = word_in_quotes(in, &q, -1);
 	while (in[j] && in[j + 1] && check_chr(in[j + 1]) == 2)
 		j = word_in_quotes(in, &q, j);
-	cont = ft_substr(in, 0, j + 1);
-	if (cont)
-		cont = trim_quotes(cont, ' ', ft_strlen(cont), -1);
-	if (!cont)
+	str = ft_substr(in, 0, j + 1);
+	if (str)
+		str = trim_quotes(str, ' ', ft_strlen(str), -1);
+	if (!str)
 		return (NULL);
 	if (q == '\'' || q == '\"')
-		new->type = 9;
+		new->token = HEREDOC_NO_EXP;
 	*i += j;
-	return (cont);
-}*/
+	return (str);
+}
 
 /* This fuction checks whether there are heredocs, sets the point where
 it starts and saves its information in a fd_node */

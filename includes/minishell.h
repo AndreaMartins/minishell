@@ -19,6 +19,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
+# include <fcntl.h>
+# include <signal.h>
 
 typedef struct s_envlst
 {
