@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andmart2 <andmart2@student.42barcel>       +#+  +:+       +#+        */
+/*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:30:06 by andmart2          #+#    #+#             */
-/*   Updated: 2024/04/09 16:45:44 by andmart2         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:25:50 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+# include "../../includes/minishell.h"
 
 //recomendacion de poner to lower y usar solo strcmp r CmD (con minusculas y mayusculas mezcladas)
 int	check_builtin(char **cmd)
@@ -43,22 +45,22 @@ void	ft_open(t_toolkit *sh, t_pipe *p, t_fd  *fd1, int prev)
 		if (fd1->exp == 1)
 			err_exit(sh, fd1->str, "ambiguous redirect", 1);
 		//si es standar y entrada de error, se establece el descriptor del archivo de entrada en el descriptr del archivo
-		if (fd1->type == 6 || fd1-> type == 9)
+		if (fd1->token == 6 || fd1-> token == 9)
 			p->in_fd = fd1->fd;
 		// si no tiene un nombre de archivo o esta vacio
 		else if(!fd1->str || *fd1->str == '\0')
 			err_exit(sh, "","No such file or diectory", 1);
-		else if(fd1->type == 4)
+		else if(fd1->token == 4)
 			p->in_fd = open(fd1->str, O_RDONLY);
-		else if(fd1->type == 5)
+		else if(fd1->token == 5)
 			p->out_fd = open(fd1->str, O_TRUNC | O_CREAT | O_RDWR, 0666);
-		else if(fd1->type == 7)
+		else if(fd1->token == 7)
 			p->out_fd = open(fd1->str, O_APPEND | O_CREAT | O_RDWR, 0666);
-		if(p->in_fd < 0 && (fd1->type == 6 || fd1->type == 9  || fd1->type == 4))
+		if(p->in_fd < 0 && (fd1->token == 6 || fd1->token == 9  || fd1->token == 4))
 			err_exit(sh, fd1->str, NULL, 1);
-		if(p->out_fd < 0 && (fd1->type == 5 ||  fd1->type == 7))
+		if(p->out_fd < 0 && (fd1->token == 5 ||  fd1->token == 7))
 			err_exit(sh, fd1->str, NULL, 1);
-		prev = fd1->type;
+		prev = fd1->token;
 		fd1 = fd1->next;
 	}
 }
@@ -66,14 +68,14 @@ void	ft_open(t_toolkit *sh, t_pipe *p, t_fd  *fd1, int prev)
 void	ft_check_open(t_pipe *p, t_fd *cur, int prev)
 {
 	//verifica si el decriptor de entrada es mayor igual que 0 si el tipo es uno de eso y que el anterior no es 6
-	if (p->in_fd >= 0 && (cur->type == 6 || cur->type == 9 || cur->type == 4) \
+	if (p->in_fd >= 0 && (cur->token == 6 || cur->token == 9 || cur->token == 4) \
 			&& prev !=6) 
 	{
 		close(p->in_fd);
 		p->in_fd = -2;
 	}
 	//verifica si el desccriptor de salida es mayor igual que 0 
-	if (p->out_fd >= 0 && (cur->type == 5 || cur->type ==7))
+	if (p->out_fd >= 0 && (cur->token == 5 || cur->token ==7))
 	{
 		close(p->out_fd);
 		p->out_fd = -2; 
