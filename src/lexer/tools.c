@@ -46,14 +46,14 @@ int	word_in_quotes(char *input, char *q, int j)
 	return (j);
 }
 
-int	len_no_q(char *str, char q, int len, int j)
-{
+// int	len_no_q(char *str, char q, int len, int j)
+// {
 	
-}
+// }
 
-char	*trim_quotes(char *str, char q, int len, int j)
-{
-	if (!str || !len || (!ft_strchr(str, 34) && !ft_strchr(str, 39)))
-		return (str);
+// char	*trim_quotes(char *str, char q, int len, int j)
+// {
+// 	if (!str || !len || (!ft_strchr(str, 34) && !ft_strchr(str, 39)))
+// 		return (str);
 			
-}
+// }

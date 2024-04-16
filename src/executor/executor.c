@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andmart2 <andmart2@student.42barcel>       +#+  +:+       +#+        */
+/*   By: andmart2 <andmart2@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:15:01 by andmart2          #+#    #+#             */
-/*   Updated: 2024/04/09 15:54:16 by andmart2         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:33:32 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	exec_builtin(t_toolkit *sh, t_pipe *p)
 	if(p->builtin == 1)
 		return(ft_echo(sh, p));
 	if(p->builtin == 2)
-		return(ft_cdho(sh, p));
+		return(ft_cd(sh, p));
 	if(p->builtin == 3)
 		return(ft_pwd(sh, p));
 	if(p->builtin == 4)
