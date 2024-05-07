@@ -27,8 +27,8 @@ int print_export(t_env *eprint, t_pipe *p)
     while (tmp)
     {
         ft_putstr_fd("declare -x", output);
-        ft_putstr_fd(tmp->env_key, output);
-        if(tmp->env_val)
+        ft_putstr_fd(tmp->key, output);
+        if(tmp->val)
             print_env_fd(tmp, output);
         else
             ft_putstr_fd("\n", output);
@@ -36,4 +36,14 @@ int print_export(t_env *eprint, t_pipe *p)
     }
     tmp = eprint;
     return(0);
+}
+
+int export_option(const char *name)
+{
+    int i;
+
+    if(!name || (!ft_isalpha(name[0]) && name[0] != '_'))
+        return(0);
+    
+
 }

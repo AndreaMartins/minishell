@@ -23,17 +23,28 @@ void    print_sort_print(t_env *env)
     {
         if(tmp->next != NULL)
         {
-            if(ft_strcmp(tmp->env_key, tmp->next->env_key) > 0)
+            if(ft_strcmp(tmp->key, tmp->next->key) > 0)
             {
-                tmp_name = tmp->env_key;
-                tmp_value = tmp->env_val;
-                tmp->env_key = tmp->next->env_key;
-                tmp->env_val = tmp->next->env_val;
-                tmp->next->env_key = tmp_name;
-                tmp->next->env_val = tmp_value;
+                tmp_name = tmp->key;
+                tmp_value = tmp->val;
+                tmp->key = tmp->next->key;
+                tmp->val = tmp->next->val;
+                tmp->next->key = tmp_name;
+                tmp->next->val = tmp_value;
                 tmp = env;
             }
         }
         tmp = tmp->next;
     }
+}
+
+void    sort_env(t_env *head)
+{
+    t_env   *head_bk;
+
+    head_bk = head;
+    if(!head_bk)
+        return;
+    print_sort_print(head);
+    head = head_bk;
 }
