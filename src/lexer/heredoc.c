@@ -57,14 +57,62 @@ char	*keyword_hd(t_fd *new, char *in, int *i, char q)
 	while (in[j] && in[j + 1] && check_chr(in[j + 1]) == 2)
 		j = word_in_quotes(in, &q, j);
 	str = ft_substr(in, 0, j + 1);
-	// if (str)
-	// 	str = trim_quotes(str, ' ', ft_strlen(str), -1);
+	 if (str)
+	 	str = trim_quotes(str, ' ', ft_strlen(str), -1);
 	if (!str)
 		return (NULL);
 	if (q == '\'' || q == '\"')
 		new->token = HEREDOC_NO_EXP;
 	*i += j;
 	return (str);
+}
+
+/* 
+This function creates a pipe to save the heredoc content in it.
+The pipe is used as a buffer with a file descriptor to read from. 
+Then it opens a readline, we can fill it from standart input.
+It compares each line with the key word and if it's not the keyword 
+it saves the line in the buffer. 
+1. return (-1) - if pipe() error occures
+2. return (fd) - a file descriptor to read the content of the heredoc
+*/
+int	save_hd(t_toolkit *tool, char *key, char *str, int type)
+{
+	int	hd[2];
+
+	if (pipe(hd) < 0)
+		return (-1);
+	while (1)
+	{
+		str = readline("> ");
+		if (!str)
+			return (hd_close(hd, 0));
+		else if (!ft_strncmp(str, key, ft_longer(str, key)) && \
+				(ft_strncmp(str, "\n", 1)))
+			break ;
+		else if (!ft_strncmp(str, "\n", 1) && (*key == '\0'))
+			break ;
+		str = expand_hd(tool, str, type);
+		if (!str)
+			return (hd_close(hd, 1));
+		write(hd[1], str, ft_strlen(str));
+		write(hd[1], "\n", 1);
+		str = ft_memdel(str);
+	}
+	str = ft_memdel(str);
+	close(hd[1]);
+	return (hd[0]);
+}
+
+int	hd_close(int fd[], int flag)
+{
+	close(fd[1]);
+	if (flag)
+	{
+		close(fd[0]);
+		return (-12);
+	}
+	return (fd[0]);
 }
 
 /* This fuction checks whether there are heredocs, sets the point where
@@ -87,10 +135,10 @@ int	heredoc(t_toolkit *tool, char *input, int i)
 		new->next = NULL;
 		new->token = HEREDOC;
 		fd_add(&(tool->hd_lst), new);
-//		new->str = keyword_hd(new, input, &i, ' ');
+		new->str = keyword_hd(new, input, &i, ' ');
 //		if (!new->str)
 //			return (err_break(tool, "heredoc", NULL, 12)); 	// TO - DO error function
-//		new->fd = save_hd(tool, new->str, NULL, new->token);
+		new->fd = save_hd(tool, new->str, NULL, new->token);
 //		if (new->fd < 0)
 //			return (err_break(tool, "heredoc",  NULL, -(new->fd))); // TO - DO error function
 		i = 0;

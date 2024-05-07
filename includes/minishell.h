@@ -148,6 +148,7 @@ int	lst_clear(t_lexer **lst);
 
 int	check_chr(char c);
 int	word_in_quotes(char *input, char *q, int j);
+char	*trim_quotes(char *str, char q, int len, int i);
 
 //		-> ERRORS <-		//
 
