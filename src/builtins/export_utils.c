@@ -12,13 +12,13 @@
 
 #include "../../includes/minishell.h"
 
-int print_export(t_env, t_pipe *p)
+int print_export(t_env *eprint, t_pipe *p)
 {
     t_env   *tmp;
     int output;
 
     output = p->out_fd;
-    if (outut < 1)
+    if (output < 1)
         output = 1;
     if (!eprint)
         return(1);

@@ -41,8 +41,8 @@ int ft_export(t_toolkit *sh, t_pipe *p)
     // Clean up the environment variable and update the environment array
     if(sh->env)
         sh->env = arr_clean(sh->env, 0);
-        sh->env = env_converter(sh->env_lst);
 
+    sh->env = env_converter(sh->env_lst);
     //Return the final error status
-    return(err).
+    return(err);
 }

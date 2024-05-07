@@ -11,3 +11,29 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void    print_sort_print(t_env *env)
+{
+    t_env   *tmp;
+    char    *tmp_name;
+    char    *tmp_value;
+
+    tmp = env;
+    while(tmp != NULL)
+    {
+        if(tmp->next != NULL)
+        {
+            if(ft_strcmp(tmp->env_key, tmp->next->env_key) > 0)
+            {
+                tmp_name = tmp->env_key;
+                tmp_value = tmp->env_val;
+                tmp->env_key = tmp->next->env_key;
+                tmp->env_val = tmp->next->env_val;
+                tmp->next->env_key = tmp_name;
+                tmp->next->env_val = tmp_value;
+                tmp = env;
+            }
+        }
+        tmp = tmp->next;
+    }
+}
