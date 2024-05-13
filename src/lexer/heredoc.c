@@ -42,7 +42,7 @@ int	wheredoc(char *str, int i)
 }
 
 /* This function parses and saves the heredoc keyword, trims the quotes if
-it finds them and manage the token type to expand. */
+it finds them and manage the token token to expand. */
 char	*keyword_hd(t_fd *new, char *in, int *i, char q)
 {
 	char	*str;
@@ -76,7 +76,7 @@ it saves the line in the buffer.
 1. return (-1) - if pipe() error occures
 2. return (fd) - a file descriptor to read the content of the heredoc
 */
-int	save_hd(t_toolkit *tool, char *key, char *str, int type)
+int	save_hd(t_toolkit *tool, char *key, char *str, int token)
 {
 	int	hd[2];
 
@@ -92,7 +92,7 @@ int	save_hd(t_toolkit *tool, char *key, char *str, int type)
 			break ;
 		else if (!ft_strncmp(str, "\n", 1) && (*key == '\0'))
 			break ;
-		str = expand_hd(tool, str, type);
+		str = expand_hd(tool, str, token);
 		if (!str)
 			return (hd_close(hd, 1));
 		write(hd[1], str, ft_strlen(str));

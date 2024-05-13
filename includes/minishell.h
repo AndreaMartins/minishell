@@ -53,8 +53,8 @@ typedef struct s_lexer
 
 typedef struct s_exp
 {
-	char	*cont;
-	char	*newe;
+	char	*str;
+	char	*new;
 	char	*var;
 	char	*val;
 	int		alloc;
