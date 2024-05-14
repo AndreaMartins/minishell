@@ -52,7 +52,7 @@ char	*expand_str(t_toolkit *tool, char *str, int token, int i)
 			while (tool->exp->val && tool->exp->val[++tool->exp->k])
 				tool->exp->new[++tool->exp->j] = tool->exp->val[tool->exp->k];
 			i += ft_strlen(tool->exp->var);
-			exp_nano_clean(tool->exp);
+			exp_spc_clean(tool->exp);
 		}
 	}
 	tool->exp->new[++tool->exp->j] = '\0';
@@ -64,29 +64,30 @@ char	*expand_str(t_toolkit *tool, char *str, int token, int i)
 /*
 	Function designed to expand the $ into the command.
 */
-int	expanser(t_toolkit *tool, t_lexer *head, int flag)
+int	expanser(t_toolkit *t, t_lexer *head, int flag)
 {
-	if (exp_init(tool))
+	if (exp_init(t))
 		return (1);
-	while (tool->lex_lst)
+	while (t->lex_lst)
 	{
-		if (tool->lex_lst->token == 3 && check_exp(tool->lex_lst->str, 3, -1) >= 0)
+		if (t->lex_lst->token == 3 && check_exp(t->lex_lst->str, 3, -1) >= 0)
 		{
-			tool->lex_lst->str = expand_str(tool, tool->lex_lst->str, 3, -1);
-			if (!tool->lex_lst->str)
-				return (err_break(tool_re(&tool, head, NULL), "malloc", NULL, 12));
+			t->lex_lst->str = expand_str(t, t->lex_lst->str, 3, -1);
+			if (!t->lex_lst->str)
+				return (err_break(tool_re(&t, head, NULL),
+						"malloc", NULL, 12));
 		}
 		else if (!flag)
 		{
-			if (exp_quotes(tool, &head, &flag))
-				return (err_break(tool_re(&tool, head, NULL), "malloc", NULL, 12));
+			if (exp_quotes(t, &head, &flag))
+				return (err_break(tool_re(&t, head, NULL), "malloc", NULL, 12));
 		}
-		if (tool->lex_lst && tool->lex_lst->token > 0
-			&& tool->lex_lst->token < 4 && flag)
+		if (t->lex_lst && t->lex_lst->token > 0
+			&& t->lex_lst->token < 4 && flag)
 			flag = 0;
-		if (tool->lex_lst)
-			tool->lex_lst = tool->lex_lst->next;
+		if (t->lex_lst)
+			t->lex_lst = t->lex_lst->next;
 	}
-	shell_re(&tool, head, NULL);
+	shell_re(&t, head, NULL);
 	return (0);
 }

@@ -46,4 +46,3 @@ int	check_exp(char *str, int token, int q)
 		return (-1);
 	return (i);
 }
-
