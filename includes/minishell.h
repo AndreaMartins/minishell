@@ -121,13 +121,14 @@ t_lexer	*rd_in_quotes(char *input, int *i);
 t_lexer	*rd_symbol(t_toolkit *tool, char *input, int *i);
 t_lexer	*rd_word(char *input, int *i, char q);
 t_lexer	*rd_space(char *input, int *i);
-int	check_quotes(char *str);
 
 //		-> HEREDOC <-		//
 
 int	heredoc(t_toolkit *tool, char *input, int i);
 int	wheredoc(char *str, int i);
-//char	*keyword_hd(t_fd *new, char *in, int *i, char q);
+char	*keyword_hd(t_fd *new, char *in, int *i, char q);
+int	save_hd(t_toolkit *tool, char *key, char *str, int token);
+int	hd_close(int fd[], int flag);
 
 //		-> fd_UTILS <-		//
 
@@ -149,6 +150,11 @@ int	lst_clear(t_lexer **lst);
 int	check_chr(char c);
 int	word_in_quotes(char *input, char *q, int j);
 char	*trim_quotes(char *str, char q, int len, int i);
+
+//		-> EXPANSER <-			//
+
+char	*expand_hd(t_toolkit *tool, char *str, int token);
+
 
 //		-> ERRORS <-		//
 
