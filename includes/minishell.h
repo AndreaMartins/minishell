@@ -148,6 +148,7 @@ t_lexer	*lex_new(char *info, t_tokens type);
 t_lexer	*lex_last(t_lexer *lex_list);
 void	lex_add(t_lexer **lst, t_lexer *new);
 int	lst_clear(t_lexer **lst);
+void	lex_insert(t_toolkit *tool, t_lexer *new, t_lexer **lex, t_lexer *temp);
 
 //		-> TOOLS <-			//
 
