@@ -51,4 +51,12 @@ next session To-do:
 
 22/05/2024
 
-- Expanser
+- Expanser -> ok
+
+24/05/2024
+
+- Parsing and setting data structures -> okk
+TO - DO
+- Is needed error and signal handling. Also initialization and orchesting main
+- Cleaning stuff required.
+- Norminette.

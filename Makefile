@@ -34,7 +34,7 @@ PARSER = src/parser/parser.c src/parser/parser_utils
 
 ERRORS = src/errors/errors.c
 
-SRC = $(MAIN) $(LEXER) $(ERRORS) $(EXPANSER)
+SRC = $(MAIN) $(LEXER) $(ERRORS) $(EXPANSER) $(PARSER)
 
 all: make_lib $(NAME)
 
