@@ -27,7 +27,10 @@ MAIN = src/main.c
 LEXER = src/lexer/syntax.c src/lexer/fd_utils.c src/lexer/heredoc.c \
 		src/lexer/lexer.c src/lexer/t_lex_lst.c src/lexer/tools.c
 
-EXPANSER = src/expanser/expanser.c
+EXPANSER = src/expanser/expanser.c src/expanser/expanser_utils.c \
+			src/expanser/expanser_structure.c
+
+PARSER = src/parser/parser.c src/parser/parser_utils
 
 ERRORS = src/errors/errors.c
 

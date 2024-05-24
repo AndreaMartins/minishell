@@ -150,11 +150,28 @@ int	lst_clear(t_lexer **lst);
 int	check_chr(char c);
 int	word_in_quotes(char *input, char *q, int j);
 char	*trim_quotes(char *str, char q, int len, int i);
+int	len_no_q(char *s, char q, int len, int i);
 
 //		-> EXPANSER <-			//
 
 char	*expand_hd(t_toolkit *tool, char *str, int token);
+char	*expand_str(t_toolkit *tool, char *str, int token, int i);
+t_lexer	*rd_word_exp(char *in, int *i, char q, int j);
+int	expand_word(t_toolkit *tool, t_lexer **lex);
+int	expanser(t_toolkit *t, t_lexer *head, int flag);
 
+//		-> EXPANSER_UTILS <-		//
+
+int	check_exp(char *str, int token, int q);
+
+
+//		-> EXPANSER_STRUCTURE <-	//
+
+char	*exp_fd(t_toolkit *tool, char *str, t_fd *new);
+int	exp_start(t_toolkit *tool, char *str, int token);
+int	exp_init(t_toolkit *tool);
+void	exp_clean(t_exp **exp);
+void	exp_spc_clean(t_exp *exp);
 
 //		-> ERRORS <-		//
 
