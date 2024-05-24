@@ -114,6 +114,10 @@ typedef struct s_toolkit
 int	main(int argc, char **argv, char **envp);
 int	minishell_loop(t_toolkit *tool);
 
+//		-> SHELL_INIT <-		//
+
+t_toolkit	*shell_re(t_toolkit **tool, t_lexer *lex, t_fd *hd);
+
 //		-> LEXER <-			//
 
 int lexer(t_toolkit *tool, char	*input);
@@ -176,5 +180,18 @@ void	exp_spc_clean(t_exp *exp);
 //		-> ERRORS <-		//
 
 int	error_quotes(t_toolkit *tool);
+
+//		-> PARSER <-		//
+
+t_lexer	*next_word(t_lexer *temp);
+int	count_cmd(t_lexer *temp);
+int	parse_cmd(t_pipe *new, t_lexer *temp, t_toolkit *t, int j);
+int	parse_redir(t_pipe *new, t_lexer *lex, t_fd *hd, t_toolkit *t);
+int	parser(t_toolkit *t, t_lexer *lex, t_fd *hd, t_pipe *new);
+
+//		-> PARSER_UTILS <-		//
+
+void	pipe_init(t_pipe *pipe);
+void	pipe_add(t_toolkit *tool, t_pipe *new);
 
 #endif
