@@ -12,13 +12,14 @@
 
 #include "../../includes/minishell.h"
 
-/* Check if there is special symbol (<, >, |) and there are quotes,
-for expansion.
-1. return (1) - the char is NOT a redirection, it's a simple char
-2. return (0) - the char is a redirection or space
-3. return (2) - the char is a quote (for expansion)
-4. return (3) - the char is a number (for expansion)
-4. return (4) - the char is a character (for expansion)
+/* 
+	Check if there is special symbol (<, >, |) and there are quotes,
+	for expansion.
+	1. return (1) - the char is NOT a redirection, it's a simple char
+	2. return (0) - the char is a redirection or space
+	3. return (2) - the char is a quote (for expansion)
+	4. return (3) - the char is a number (for expansion)
+	4. return (4) - the char is a character (for expansion)
 */
 int	check_chr(char c)
 {
@@ -70,10 +71,11 @@ int	len_no_q(char *s, char q, int len, int i)
 
 
 /*
-str: The string from which quotes need to be removed.
-q: Initially a space (' ') character, dynamically changes based on encountered quotes.
-len: The length of the string s.
-i: Starting index for loops, beginning at -1.
+	str: The string from which quotes need to be removed.
+	q: Initially a space (' ') character, dynamically changes based on
+	encountered quotes.
+	len: The length of the string s.
+	i: Starting index for loops, beginning at -1.
 */
 char	*trim_quotes(char *str, char q, int len, int i)
 {
@@ -102,4 +104,80 @@ char	*trim_quotes(char *str, char q, int len, int i)
 	m[i] = '\0';
 	str = ft_memdel(str);
 	return (m);
+}
+
+/*
+	Cleans up a double array of strings. It either frees each string and
+	the array itself or sets each string pointer to NULL without freeing
+	them, based on the provided flag.
+
+	flag = 0: Frees all strings in the array and the array itself.
+	flag = 1: Sets all string pointers in the array to NULL without
+	freeing them, then frees the array itself.	
+*/
+char	**arr_clean(char **cmd, int flag)
+{
+	int		i;
+
+	i = 0;
+	if (!cmd)
+		return (NULL);
+	while (cmd && cmd[i])
+	{
+		if (!flag)
+			cmd[i] = ft_memdel(cmd[i]);
+		else
+			cmd[i] = NULL;
+		i++;
+	}
+	cmd = ft_memdel(cmd);
+	return (NULL);
+}
+
+/* 
+	This function receives 2 strings and returns the lenth
+	of the longer one 
+*/
+int	ft_longer(char *str, char *key)
+{
+	int	len;
+
+	if (ft_strlen(str) > ft_strlen(key))
+		len = ft_strlen(str);
+	else
+	{
+		len = ft_strlen(key);
+	}
+	return (len);
+}
+
+/*
+	concatenates three input strings (s1, s2, and s3)
+	into a single new string. It ensures that all input
+	strings are valid and dynamically allocates memory for
+	the concatenated result.
+*/
+
+char	*ft_triplejoin(char *s1, char *s2, char *s3)
+{
+	char	*new;
+	int		i;
+	int		j;
+
+	i = -1;
+	j = 0;
+	if (!(s1 && s2 && s3))
+		return (0);
+	new = malloc(ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3) + 1);
+	if (!new)
+		return (NULL);
+	while (s1[++i])
+		new[i] = s1[i];
+	while (s2[j])
+		new[i++] = s2[j++];
+	j = 0;
+	while (s3[j])
+		new[i++] = s3[j++];
+	new[i] = '\0';
+	return (new);
 }
