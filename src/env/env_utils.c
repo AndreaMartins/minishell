@@ -11,3 +11,20 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char    *ft_get_value(t_toolkit *sh, char *key)
+{
+    t_env *tmp;
+
+    if (!sh || !key)
+        return NULL;
+    tmp = sh->env_lst;
+    while (tmp)
+    {
+        if(ft_strncmp(key, tmp->env_key, ft_longer(key, tmp->env_key)) == 0)
+            return(tmp->env_val);
+        else
+            tmp = tmp->next;
+    }
+    return (NULL);
+}

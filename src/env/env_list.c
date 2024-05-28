@@ -37,7 +37,7 @@ int env_val_update(t_env *head, char *key, char *n_value)
   while(tmp != NULL)
   {
     if(ft_strncmp(tmp->key, key, len) == 0\
-        &&len == ft_strlen(tmp->key))
+        && len == ft_strlen(tmp->key))
         {
             tmp->val = ft_strdup(n_value);
             if (!tmp->val)
