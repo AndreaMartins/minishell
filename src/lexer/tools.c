@@ -46,14 +46,60 @@ int	word_in_quotes(char *input, char *q, int j)
 	return (j);
 }
 
-// int	len_no_q(char *str, char q, int len, int j)
-// {
-	
-// }
+int	len_no_q(char *s, char q, int len, int i)
+{
+	int	flag;
 
-// char	*trim_quotes(char *str, char q, int len, int j)
-// {
-// 	if (!str || !len || (!ft_strchr(str, 34) && !ft_strchr(str, 39)))
-// 		return (str);
-			
-// }
+	flag = 1;
+	while (s[++i])
+	{
+		if (check_chr(s[i]) == 2 && flag > 0)
+		{
+			q = s[i];
+			flag *= -1;
+			len--;
+		}
+		else if (check_chr(s[i]) == 2 && flag < 0 && s[i] == q)
+		{
+			flag *= -1;
+			len--;
+		}
+	}
+	return (len);
+}
+
+
+/*
+str: The string from which quotes need to be removed.
+q: Initially a space (' ') character, dynamically changes based on encountered quotes.
+len: The length of the string s.
+i: Starting index for loops, beginning at -1.
+*/
+char	*trim_quotes(char *str, char q, int len, int i)
+{
+	char	*m;
+	int		flag;
+	int		j;
+
+	if (!str || !len || (!ft_strchr(str, '\'') && !ft_strchr(str, '\"')))
+		return (str);
+	len = len_no_q(str, q, len, -1);
+	m = (char *) malloc(len + 1);
+	if (m == 0)
+		return (NULL);
+	flag = 1;
+	j = 0;
+	while (++i < len && str[i + j])
+	{
+		while (check_chr(str[i + j]) == 2 && (flag > 0
+				|| (flag < 0 && str[i + j] == q)))
+		{
+			flag *= -1;
+			q = str[i + j++];
+		}
+		m[i] = str[i + j];
+	}
+	m[i] = '\0';
+	str = ft_memdel(str);
+	return (m);
+}

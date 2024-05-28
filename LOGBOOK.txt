@@ -1,6 +1,6 @@
 02/04/2024
 
-Created a file containing the functions to handle the lexer list
+Created a file straining the functions to handle the lexer list
 
 - lex_add
 - lex_new
@@ -43,3 +43,21 @@ next session To-do:
 09/04/2024
 
 - debugging
+
+13/05/2024
+
+- expanser
+- expanser utils
+
+22/05/2024
+
+- Expanser
+
+24/05/2024
+
+- Parsing and setting data structures -> okk
+TO - DO
+- Is needed error and signal handling. Also initialization and orchesting main
+- Cleaning stuff required.
+- Finish expanser
+- Norminette.

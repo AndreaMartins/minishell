@@ -22,14 +22,19 @@ LIBFT = ./includes/libft/libft.a
 MAKE_LIBFT = make -C includes/libft --no-print-directory
 READLINE = -L$(HOME)/.brew/Cellar/readline/8.2.10/lib -lreadline -lhistory
 
-MAIN = src/main.c
+MAIN = src/main.c src/shell_init.c
 
 LEXER = src/lexer/syntax.c src/lexer/fd_utils.c src/lexer/heredoc.c \
 		src/lexer/lexer.c src/lexer/t_lex_lst.c src/lexer/tools.c
 
+EXPANSER = src/expanser/expanser.c src/expanser/expanser_utils.c \
+			src/expanser/expanser_structure.c
+
+PARSER = src/parser/parser.c src/parser/parser_utils
+
 ERRORS = src/errors/errors.c
 
-SRC = $(MAIN) $(LEXER) $(ERRORS)
+SRC = $(MAIN) $(LEXER) $(ERRORS) $(EXPANSER) $(PARSER)
 
 all: make_lib $(NAME)
 
