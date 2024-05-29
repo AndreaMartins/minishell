@@ -17,6 +17,49 @@
 	heredoc lists within the t_toolkit structure to their original states after 
 	they have been iterated over. 
 */
+
+int	sh_init(t_toolkit *sh, char **env)
+{
+	sh->env_lst = NULL;
+	sh->lex_lst = NULL;
+	sh->hd_lst = NULL;
+	sh->pipe_lst = NULL;
+	sh->exp = NULL;
+	sh->args = NULL;
+	sh->paths = NULL;
+	sh->exit = 0;
+	sh->pipes = 0;
+	sh->check = 0;
+	sh->exe = NULL;
+	sh->env = NULL;
+	sh->power_on = 0;
+	if(env)
+		first_env(sh,env);
+	sh->env = env_converter(sh->env_lst);
+	sh->power_on = 1;
+	return(0);
+}
+
+void	sh_clean(t_toolkit *sh)
+{
+	if (sh->lex_lst)
+		lex_clean(&(sh->lex_lst));	
+	if (sh->hd_lst)
+		fd_clean(&(sh->hd_lst), 1);
+	if (sh->args)
+		sh->args = ft_memdel(sh->args);
+	if (sh->pipe_lst)
+		pipe_clean(&(sh->pipe_lst));
+	if (sh->paths)
+		sh->paths = arr_clean(sh->paths, 0);
+	if (sh->exe)
+		sh->exe = ft_memdel(sh->exe);
+	if (sh->exp)
+		exp_clean(&sh->exp);
+	sh->pipes = 0;
+	sh->check = 0;
+}
+
 t_toolkit	*shell_re(t_toolkit **tool, t_lexer *lex, t_fd *hd)
 {
 	if (lex)
