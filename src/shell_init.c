@@ -12,12 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-/* 
-	The shell_re function restores the initial positions of the lexer and 
-	heredoc lists within the t_toolkit structure to their original states after 
-	they have been iterated over. 
-*/
-
 int	sh_init(t_toolkit *sh, char **env)
 {
 	sh->env_lst = NULL;
@@ -60,6 +54,11 @@ void	sh_clean(t_toolkit *sh)
 	sh->check = 0;
 }
 
+/* 
+	The shell_re function restores the initial positions of the lexer and 
+	heredoc lists within the t_toolkit structure to their original states after 
+	they have been iterated over. 
+*/
 t_toolkit	*shell_re(t_toolkit **tool, t_lexer *lex, t_fd *hd)
 {
 	if (lex)
