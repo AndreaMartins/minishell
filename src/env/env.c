@@ -111,3 +111,31 @@ int first_env(t_toolkit *sh, char **env)
     }
     return(0);
 }
+
+char	**env_converter(t_env *env)
+{
+	t_env			*tmp;
+	char			**grid;
+	unsigned int	i;
+
+	if (!env)
+		return (NULL);
+	grid = (char **)malloc(sizeof(char *) * (env_var(env, 1) + 1));
+	if (!grid)
+		return (NULL);
+	tmp = env;
+	i = 0;
+	while (tmp)
+	{
+		if (tmp->env_val != NULL)
+		{
+			grid[i] = ft_envfull(tmp->env_key, tmp->env_val);
+			if (!grid[i])
+				return (arr_clean(grid, 0));
+			i++;
+		}
+		tmp = tmp->next;
+	}
+	grid[i] = NULL;
+	return (grid);
+}

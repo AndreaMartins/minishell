@@ -198,6 +198,7 @@ void	exp_spc_clean(t_exp *exp);
 int	error_quotes(t_toolkit *tool);
 int	err_exit(t_toolkit *sh, char *name, char *message, int err);
 int	err_break(t_toolkit *sh, char *name, char *message, int err);
+int	err_char(t_toolkit *sh, int token);
 
 //		-> PARSER <-		//
 t_lexer	*next_word(t_lexer *temp);
@@ -209,6 +210,7 @@ int	parser(t_toolkit *t, t_lexer *lex, t_fd *hd, t_pipe *new);
 //		-> PARSER_UTILS <-		//
 void	pipe_init(t_pipe *pipe);
 void	pipe_add(t_toolkit *tool, t_pipe *new);
+int	pipe_clean(t_pipe **lst);
 
 //		-> EXECUTOR <-			//
 void	ft_redir(t_toolkit *sh, t_pipe *p);
@@ -216,6 +218,13 @@ void	child_process(t_toolkit *sh, t_pipe *p, int option);
 int	last_child(t_toolkit *sh, t_pipe *p);
 int	executor(t_toolkit *sh, t_pipe *p, int i, int j);
 int	exec_builtin(t_toolkit *sh, t_pipe *p);
+
+//		-> EXECUTOR_utils <-			//
+void	ft_check_open(t_pipe *p, t_fd *cur, int prev);
+int	check_builtin(char **cmd);
+void	ft_open(t_toolkit *sh, t_pipe *p, t_fd  *fd1, int prev);
+void check_access(t_toolkit *sh, char **cmd, t_pipe *p);
+void	check_paths(char **paths, char *cmd, t_toolkit *sh, t_pipe *pipe );
 
 //		-> BUILTINS <-		//
 
@@ -283,5 +292,6 @@ char    *ft_envfull(char *key, char *value);
 size_t  env_var(t_env *head, int option);
 void    add_env_to_list(t_toolkit *sh, t_env *new_env);
 int first_env(t_toolkit *sh, char **env);
+char	**env_converter(t_env *env);
 
 #endif

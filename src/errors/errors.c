@@ -19,6 +19,25 @@ int	error_quotes(t_toolkit *tool)
 	return (1);
 }
 
+int	err_char(t_toolkit *sh, int token)
+{
+	ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
+	if (token == 4)
+		ft_putendl_fd("<\n", 2);
+	else if (token == 5)
+		ft_putendl_fd(">\n", 2);
+	else if (token == 6)
+		ft_putendl_fd("<<\n", 2);
+	else if (token == 7)
+		ft_putendl_fd(">>\n", 2);
+	else if (token == 8)
+		ft_putendl_fd("|\n", 2);
+	else
+		ft_putendl_fd("newline\n", 2);
+	sh->exit = 258;
+	return (1);
+}
+
 /*
 	Handles error reporting and cleanup of the program before
 	terminating the process. This function should only be called within
