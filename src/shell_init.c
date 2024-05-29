@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 int	sh_init(t_toolkit *sh, char **env)
 {
@@ -68,7 +68,7 @@ t_toolkit	*shell_re(t_toolkit **tool, t_lexer *lex, t_fd *hd)
 	return (*tool);
 }
 
-int		sh_lopp_init(t_toolkit *sh)
+int		sh_loop_init(t_toolkit *sh)
 {
 	sh->pipes = 0;
 	sh->check = 0;

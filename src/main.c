@@ -29,10 +29,10 @@ int	minishell_loop(t_toolkit *sh)
 	if(check_input(sh->args))
 		return(0);
 	//check pre quote issues	
-	if(pre_quotes(sh->args))
-		return(quotes_error(sh));
+	if(check_quotes(sh->args))
+		return(error_quotes(sh));
 	//process herdoc syntax
-	if(ft_herdoc(sh, sh->args, 0))
+	if(heredoc(sh, sh->args, 0))
 		return(1);
 	//tokenize input using lexer
 	if(lexer(sh, sh->args))
@@ -53,31 +53,13 @@ int	minishell_loop(t_toolkit *sh)
 	return(0);
 }
 
-/*int	minishell_loop(t_toolkit *tool)
-{
-	tool->args = readline("Hola Juan Carlos>$ ");
-	if (!tool->args || !ft_strncmp(tool->args, "exit", ft_strlen("exit")))
-	{
-		printf("adios\n");
-		exit(EXIT_SUCCESS);
-	}
-	add_history(tool->args);
-	if (check_quotes(tool->args))
-		return (error_quotes(tool));
-	//if (heredoc(tool, tool->args, 0))
-	//	return (1);
-	if (lexer(tool, tool->args))
-		return (1);
-		
-	return (0);
-}*/
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_toolkit	tool;
 	
 	(void)argc;
 	(void)envp;
+	(void)argv;
 
 	g_sig_rec = 0;
 	sh_init(&tool, envp);

@@ -119,6 +119,16 @@ int	minishell_loop(t_toolkit *tool);
 
 //		-> SHELL_INIT <-		//
 t_toolkit	*shell_re(t_toolkit **tool, t_lexer *lex, t_fd *hd);
+int	sh_init(t_toolkit *sh, char **env);
+void	sh_clean(t_toolkit *sh);
+int		sh_loop_init(t_toolkit *sh);
+int	allocate_exe(t_toolkit *sh);
+
+//		-> SIGNALS <-		//
+void	norm_handler(int sig, siginfo_t *data, void *non_used_data);
+void	do_siging(int signum);
+int	init_signals(int mode);
+void	exit_status(t_toolkit *sh, int j);
 
 //		-> LEXER <-			//
 int lexer(t_toolkit *tool, char	*input);
@@ -193,6 +203,13 @@ int	parser(t_toolkit *t, t_lexer *lex, t_fd *hd, t_pipe *new);
 //		-> PARSER_UTILS <-		//
 void	pipe_init(t_pipe *pipe);
 void	pipe_add(t_toolkit *tool, t_pipe *new);
+
+//		-> EXECUTOR <-			//
+void	ft_redir(t_toolkit *sh, t_pipe *p);
+void	child_process(t_toolkit *sh, t_pipe *p, int option);
+int	last_child(t_toolkit *sh, t_pipe *p);
+int	executor(t_toolkit *sh, t_pipe *p, int i, int j);
+int	exec_builtin(t_toolkit *sh, t_pipe *p);
 
 //		-> BUILTINS <-		//
 

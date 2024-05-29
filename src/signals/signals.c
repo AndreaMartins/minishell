@@ -28,7 +28,7 @@ void	norm_handler(int sig, siginfo_t *data, void *non_used_data)
 	return;
 }
 
-void	di_sigign(int signum)
+void	do_sigign(int signum)
 {
 	struct sigaction signal;
 
