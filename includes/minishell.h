@@ -113,18 +113,14 @@ typedef struct s_toolkit
 	int		power_on;
 }	t_toolkit;
 
-
 //		-> MAIN <-			//
-
 int	main(int argc, char **argv, char **envp);
 int	minishell_loop(t_toolkit *tool);
 
 //		-> SHELL_INIT <-		//
-
 t_toolkit	*shell_re(t_toolkit **tool, t_lexer *lex, t_fd *hd);
 
 //		-> LEXER <-			//
-
 int lexer(t_toolkit *tool, char	*input);
 t_lexer	*rd_in_quotes(char *input, int *i);
 t_lexer	*rd_symbol(t_toolkit *tool, char *input, int *i);
@@ -132,7 +128,6 @@ t_lexer	*rd_word(char *input, int *i, char q);
 t_lexer	*rd_space(char *input, int *i);
 
 //		-> HEREDOC <-		//
-
 int	heredoc(t_toolkit *tool, char *input, int i);
 int	wheredoc(char *str, int i);
 char	*keyword_hd(t_fd *new, char *in, int *i, char q);
@@ -140,15 +135,17 @@ int	save_hd(t_toolkit *tool, char *key, char *str, int token);
 int	hd_close(int fd[], int flag);
 
 //		-> fd_UTILS <-		//
-
 void	fd_add(t_fd **hd_list, t_fd *new);
+int	fd_init(t_fd *new, t_toolkit *tool, int fd);
+void	fd_clean(t_fd **hd, int flag);
+int	ft_open_built(t_toolkit *sh, t_pipe *p, t_fd *fd1, int prev);
 
 //		-> SYNTAX <-		//
-
 int	check_quotes(char *str);
+int	check_input(char *in);
+int	check_syntax(t_toolkit *sh, t_lexer *current, int prev_token);
 
 //		-> t_lex_list <-	//
-
 t_lexer	*lex_new(char *info, t_tokens type);
 t_lexer	*lex_last(t_lexer *lex_list);
 void	lex_add(t_lexer **lst, t_lexer *new);
@@ -156,14 +153,12 @@ int	lst_clear(t_lexer **lst);
 void	lex_insert(t_toolkit *tool, t_lexer *new, t_lexer **lex, t_lexer *temp);
 
 //		-> TOOLS <-			//
-
 int	check_chr(char c);
 int	word_in_quotes(char *input, char *q, int j);
 char	*trim_quotes(char *str, char q, int len, int i);
 int	len_no_q(char *s, char q, int len, int i);
 
 //		-> EXPANSER <-			//
-
 char	*expand_hd(t_toolkit *tool, char *str, int token);
 char	*expand_str(t_toolkit *tool, char *str, int token, int i);
 t_lexer	*rd_word_exp(char *in, int *i, char q, int j);
@@ -171,12 +166,12 @@ int	expand_word(t_toolkit *tool, t_lexer **lex);
 int	expanser(t_toolkit *t, t_lexer *head, int flag);
 
 //		-> EXPANSER_UTILS <-		//
-
 int	check_exp(char *str, int token, int q);
-
+int	new_len(t_toolkit *tool, char *cont, int type);
+char	*get_var(char *cont);
+char	*check_value(t_toolkit *tool, char *var);
 
 //		-> EXPANSER_STRUCTURE <-	//
-
 char	*exp_fd(t_toolkit *tool, char *str, t_fd *new);
 int	exp_start(t_toolkit *tool, char *str, int token);
 int	exp_init(t_toolkit *tool);
@@ -184,11 +179,11 @@ void	exp_clean(t_exp **exp);
 void	exp_spc_clean(t_exp *exp);
 
 //		-> ERRORS <-		//
-
 int	error_quotes(t_toolkit *tool);
+int	err_exit(t_toolkit *sh, char *name, char *message, int err);
+int	err_break(t_toolkit *sh, char *name, char *message, int err);
 
 //		-> PARSER <-		//
-
 t_lexer	*next_word(t_lexer *temp);
 int	count_cmd(t_lexer *temp);
 int	parse_cmd(t_pipe *new, t_lexer *temp, t_toolkit *t, int j);
@@ -196,7 +191,6 @@ int	parse_redir(t_pipe *new, t_lexer *lex, t_fd *hd, t_toolkit *t);
 int	parser(t_toolkit *t, t_lexer *lex, t_fd *hd, t_pipe *new);
 
 //		-> PARSER_UTILS <-		//
-
 void	pipe_init(t_pipe *pipe);
 void	pipe_add(t_toolkit *tool, t_pipe *new);
 

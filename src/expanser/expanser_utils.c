@@ -47,7 +47,6 @@ int	check_exp(char *str, int token, int q)
 	return (i);
 }
 
-
 /*
 	Calculates the new length of a string after performing variable expansions 
 	based on the provided shell state and type. It handles memory management
