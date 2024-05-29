@@ -32,9 +32,21 @@ EXPANSER = src/expanser/expanser.c src/expanser/expanser_utils.c \
 
 PARSER = src/parser/parser.c src/parser/parser_utils
 
+EXECUTOR = src/executor/executor.c src/executor/executor_utils.c
+
 ERRORS = src/errors/errors.c
 
-SRC = $(MAIN) $(LEXER) $(ERRORS) $(EXPANSER) $(PARSER)
+BUILTINGS = src/builtings/cd.c src/builtings/echo.c src/builtings/env.c \
+			src/builtings/exit.c src/builtings/export_utils.c \
+			src/builtings/export.c src/builtings/pwd.c src/builtings/unset.c
+
+ENV = src/env/env_free.c src/env/env_list.c src/env/env_sort.c \
+		src/env/env_utils.c src/env/env.c
+
+SIGNALS = src/signals/signals.c
+
+SRC = $(MAIN) $(LEXER) $(ERRORS) $(EXPANSER) $(PARSER) $(EXECUTOR) \
+		$(SIGNALS) $(BUILTINGS) $(ENV)
 
 all: make_lib $(NAME)
 
