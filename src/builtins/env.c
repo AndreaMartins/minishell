@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-int ft_env(t_mini *sh, t_pipe *p)
+int ft_env(t_toolkit *sh, t_pipe *p)
 {
     t_env   *tmp;
     int output;
@@ -25,11 +25,11 @@ int ft_env(t_mini *sh, t_pipe *p)
         tmp = sh->env_lst;
         while (tmp)
         {
-            if(tmp->env_val != NULL)
+            if(tmp->val != NULL)
             {
-                ft_putstr_fd(tmp->env_key, output);
+                ft_putstr_fd(tmp->key, output);
                 ft_putstr_fd("=", output);
-                ft_putendl_fd(tmp->env_val, output);
+                ft_putendl_fd(tmp->val, output);
                 ft_putstr_fd("\n", output);
             }
             tmp = tmp->next;

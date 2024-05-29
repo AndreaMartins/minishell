@@ -195,4 +195,46 @@ int	parser(t_toolkit *t, t_lexer *lex, t_fd *hd, t_pipe *new);
 void	pipe_init(t_pipe *pipe);
 void	pipe_add(t_toolkit *tool, t_pipe *new);
 
+//		-> BUILTINS <-		//
+
+//		-> CD <-		//
+void print_error(char **args);
+int	update_oldpwd(t_toolkit *sh);
+int	go_to_path(int option, t_toolkit *sh);
+int ft_cd( t_toolkit *sh, t_pipe *p);
+
+//		-> ECHO <-		//
+int	parse_nl(char *s);
+int	check_nl(char *str);
+int	num_args(char **args);
+int	ft_echo(t_toolkit *sh, t_pipe *p);
+
+//		-> ENV<-		//
+int ft_env(t_toolkit *sh, t_pipe *p);
+
+//		-> EXIT<-		//
+long long int ft_atol_sh(char *str);
+int arg_count(char **grid);
+int p_exit_err(char *str_error, int option);
+int check_exit(char *s);
+int ft_exit(t_toolkit *sh);
+
+//		-> EXPORT_UTILS<-		//
+int print_export(t_env *eprint, t_pipe *p);
+int export_option(const char *name);
+
+//		-> EXPORT<-		//
+void	export_plus_equal(t_toolkit *sh, char *key, char *value);
+int	error_option(char *str1, char *str2, char **vc);
+int handle_args(t_toolkit *sh, char *arg);
+int ft_export(t_toolkit *sh, t_pipe *p);
+
+//		-> PWD<-		//
+int ft_pwd(t_toolkit *sh, t_pipe *p);
+
+//		-> UNSET<-		//
+void    unset_free(t_env *env);
+void unset_var(t_toolkit *sh,char *var);
+int ft_unset(t_toolkit *sh, t_pipe *p);
+
 #endif

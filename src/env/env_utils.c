@@ -21,8 +21,8 @@ char    *ft_get_value(t_toolkit *sh, char *key)
     tmp = sh->env_lst;
     while (tmp)
     {
-        if(ft_strncmp(key, tmp->env_key, ft_longer(key, tmp->env_key)) == 0)
-            return(tmp->env_val);
+        if(ft_strncmp(key, tmp->key, ft_longer(key, tmp->key)) == 0)
+            return(tmp->val);
         else
             tmp = tmp->next;
     }

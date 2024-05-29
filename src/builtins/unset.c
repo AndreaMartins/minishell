@@ -14,28 +14,28 @@
 
 void    unset_free(t_env *env)
 {
-    ft_memdel(env->env_key);
-    ft_memdel(env->env_val);
+    ft_memdel(env->key);
+    ft_memdel(env->val);
     ft_memdel(env);
 }
 
-void unset_var(t_mini *sh,char *var)
+void unset_var(t_toolkit *sh,char *var)
 {
     t_env *node;
     t_env *tmp;
 
     node = sh->env_lst;
     tmp = NULL;
-    if(ft_strcmp(node->env_key, var) == 0)
+    if(ft_strcmp(node->key, var) == 0)
     {
         sh->env_lst = sh->env_lst->next;
         unset_free(node);
         return;
     }
-    while(node != NULL && ft_strcmp(node->env_key, var) != 0)
+    while(node != NULL && ft_strcmp(node->key, var) != 0)
     {
         tmp = node;
-        node = node-next;
+        node = node->next;
     }
     if(node == NULL)
         return;
@@ -43,7 +43,7 @@ void unset_var(t_mini *sh,char *var)
     unset_free(node);
 }
 
-int ft_unset(t_mini *sh, t_pipe *p)
+int ft_unset(t_toolkit *sh, t_pipe *p)
 {
     char    **args;
     int     i;
@@ -57,7 +57,7 @@ int ft_unset(t_mini *sh, t_pipe *p)
         i++;
     }
     if (sh->env)
-        sh->env = arr_clean(sh->env, o);
+        sh->env = arr_clean(sh->env, 0);
     sh->env =env_converter(sh->env_lst);
     if (!sh->env)
         return(err_break(sh, "malloc", NULL, 12));

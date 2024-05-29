@@ -72,7 +72,7 @@ int check_exit(char *s)
     int i;
 
     i = 0;
-    while (s[i] == '')
+    while (s[i] == ' ')
         i++;
     if (!s[i])
         return (p_exit_err(s,1));
@@ -92,7 +92,7 @@ int ft_exit(t_toolkit *sh)
     char    *input;
     int     ex;
 
-    if (sh->input == NULL || ft_strcmp(sh->input, "exit") == 0)
+    if (sh->args == NULL || ft_strcmp(sh->args, "exit") == 0)
     {
         sh->power_on = 0;
         printf("bye\n");
