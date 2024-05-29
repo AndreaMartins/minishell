@@ -69,7 +69,6 @@ int	len_no_q(char *s, char q, int len, int i)
 	return (len);
 }
 
-
 /*
 	str: The string from which quotes need to be removed.
 	q: Initially a space (' ') character, dynamically changes based on
@@ -132,52 +131,4 @@ char	**arr_clean(char **cmd, int flag)
 	}
 	cmd = ft_memdel(cmd);
 	return (NULL);
-}
-
-/* 
-	This function receives 2 strings and returns the lenth
-	of the longer one 
-*/
-int	ft_longer(char *str, char *key)
-{
-	int	len;
-
-	if (ft_strlen(str) > ft_strlen(key))
-		len = ft_strlen(str);
-	else
-	{
-		len = ft_strlen(key);
-	}
-	return (len);
-}
-
-/*
-	concatenates three input strings (s1, s2, and s3)
-	into a single new string. It ensures that all input
-	strings are valid and dynamically allocates memory for
-	the concatenated result.
-*/
-
-char	*ft_triplejoin(char *s1, char *s2, char *s3)
-{
-	char	*new;
-	int		i;
-	int		j;
-
-	i = -1;
-	j = 0;
-	if (!(s1 && s2 && s3))
-		return (0);
-	new = malloc(ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3) + 1);
-	if (!new)
-		return (NULL);
-	while (s1[++i])
-		new[i] = s1[i];
-	while (s2[j])
-		new[i++] = s2[j++];
-	j = 0;
-	while (s3[j])
-		new[i++] = s3[j++];
-	new[i] = '\0';
-	return (new);
 }
