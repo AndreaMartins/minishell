@@ -168,6 +168,12 @@ int	word_in_quotes(char *input, char *q, int j);
 char	*trim_quotes(char *str, char q, int len, int i);
 int	len_no_q(char *s, char q, int len, int i);
 
+//		-> lexer_UTILS <-		//
+int	ft_longer(char *str, char *key);
+char	*ft_triplejoin(char *s1, char *s2, char *s3);
+int	lex_clean(t_lexer **lst);
+char	**arr_clean(char **cmd, int flag);
+
 //		-> EXPANSER <-			//
 char	*expand_hd(t_toolkit *tool, char *str, int token);
 char	*expand_str(t_toolkit *tool, char *str, int token, int i);
