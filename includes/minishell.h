@@ -22,6 +22,11 @@
 # include <fcntl.h>
 # include <signal.h>
 
+# define NORM	1
+# define N_INTERACT 3
+
+int	g_sig_rec;
+
 typedef struct s_envlst
 {
 	char				*key;
