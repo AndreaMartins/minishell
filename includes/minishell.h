@@ -197,44 +197,69 @@ void	pipe_add(t_toolkit *tool, t_pipe *new);
 
 //		-> BUILTINS <-		//
 
-//		-> CD <-		//
+//		-> 1.CD <-		//
 void print_error(char **args);
 int	update_oldpwd(t_toolkit *sh);
 int	go_to_path(int option, t_toolkit *sh);
 int ft_cd( t_toolkit *sh, t_pipe *p);
 
-//		-> ECHO <-		//
+//		-> 2.ECHO <-		//
 int	parse_nl(char *s);
 int	check_nl(char *str);
 int	num_args(char **args);
 int	ft_echo(t_toolkit *sh, t_pipe *p);
 
-//		-> ENV<-		//
+//		-> 3.ENV<-		//
 int ft_env(t_toolkit *sh, t_pipe *p);
 
-//		-> EXIT<-		//
+//		-> 4.EXIT<-		//
 long long int ft_atol_sh(char *str);
 int arg_count(char **grid);
 int p_exit_err(char *str_error, int option);
 int check_exit(char *s);
 int ft_exit(t_toolkit *sh);
 
-//		-> EXPORT_UTILS<-		//
+//		-> 5.EXPORT_UTILS<-		//
 int print_export(t_env *eprint, t_pipe *p);
 int export_option(const char *name);
 
-//		-> EXPORT<-		//
+//		-> 6.EXPORT<-		//
 void	export_plus_equal(t_toolkit *sh, char *key, char *value);
 int	error_option(char *str1, char *str2, char **vc);
 int handle_args(t_toolkit *sh, char *arg);
 int ft_export(t_toolkit *sh, t_pipe *p);
 
-//		-> PWD<-		//
+//		-> 7.PWD<-		//
 int ft_pwd(t_toolkit *sh, t_pipe *p);
 
-//		-> UNSET<-		//
+//		-> 8.UNSET<-		//
 void    unset_free(t_env *env);
 void unset_var(t_toolkit *sh,char *var);
 int ft_unset(t_toolkit *sh, t_pipe *p);
+
+//		-> ENV <-		//
+
+//		-> 1.ENV_FREE <-		//
+int     free_env_lst(t_env *head);
+void    free_env(t_toolkit *sh);
+
+//		-> 2.ENV_LIST <-		//
+t_env   *ft_getkey_node(char *new_key, t_env *list);
+int env_val_update(t_env *head, char *key, char *n_value);
+int env_add_last(t_toolkit *sh, char *name, char *value, int has_value);
+int add_or_update_env(t_toolkit *sh, char *name, char *value);
+
+//		-> 3.ENV_SORT <-		//
+void    print_sort_print(t_env *env);
+void    sort_env(t_env *head);
+
+//		-> 4.ENV_UTILS <-		//
+char    *ft_get_value(t_toolkit *sh, char *key);
+
+//		-> 5.ENV <-		//
+char    *ft_envfull(char *key, char *value);
+size_t  env_var(t_env *head, int option);
+void    add_env_to_list(t_toolkit *sh, t_env *new_env);
+int first_env(t_toolkit *sh, char **env);
 
 #endif
