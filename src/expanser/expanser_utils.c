@@ -131,3 +131,34 @@ char	*check_value(t_toolkit *tool, char *var)
 	else
 		return (ft_get_value(tool, var));
 }
+
+/*
+Validates a string, ensuring that it does not contain 
+unquoted spaces and that any quotes within the string are
+properly opened and closed.
+	flag = 0 - there is no open quotes
+	flag = 1 - there is an open quote
+*/
+int	check_file_exp(char *str)
+{
+	int		i;
+	int		flag;
+	char	q;
+
+	i = -1;
+	flag = 0;
+	q = ' ';
+	while (str[++i])
+	{
+		if (str[i] == ' ' && !flag)
+			return (1);
+		if (check_chr(str[i]) == 2 && !flag)
+		{
+			flag++;
+			q = str[i];
+		}
+		else if (flag && str[i] == q)
+			flag = 0;
+	}
+	return (0);
+}

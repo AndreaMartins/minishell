@@ -32,7 +32,7 @@ void	exp_clean(t_exp **exp)
 {
 	if (!(*exp))
 		return ;
-	exp_nano_clean(*exp);
+	exp_spc_clean(*exp);
 	(*exp)->str = NULL;
 	(*exp)->new = NULL;
 	*exp = ft_memdel(*exp);
@@ -52,7 +52,7 @@ int	exp_init(t_toolkit *tool)
 	tool->exp->str = NULL;
 	tool->exp->var = NULL;
 	tool->exp->val = NULL;
-	tool->exp->alloc = NULL;
+	tool->exp->alloc = 0;
 	tool->exp->k = -1;
 	tool->exp->j = -1;
 	return (0);
