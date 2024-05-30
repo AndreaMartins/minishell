@@ -28,7 +28,8 @@ READLINE = -L$(HOME)/.brew/Cellar/readline/8.2.10/lib \
 MAIN = src/main.c src/shell_init.c
 
 LEXER = src/lexer/syntax.c src/lexer/fd_utils.c src/lexer/heredoc.c \
-		src/lexer/lexer.c src/lexer/t_lex_lst.c src/lexer/tools.c
+		src/lexer/lexer.c src/lexer/t_lex_lst.c src/lexer/tools.c \
+		src/lexer/utils.c
 
 EXPANSER = src/expanser/expanser.c src/expanser/expanser_utils.c \
 			src/expanser/expanser_structure.c

@@ -16,13 +16,13 @@ int	minishell_loop(t_toolkit *sh)
 {
 	//initialize signal
 	init_signals(NORM);
-
-	sh->args = readline("test$>");
+	do_sigign(SIGQUIT);
+	sh->args = readline("Hola Juan Carlos$> ");
 	//if readline returns null
 	if(!sh->args)
 		return(ft_exit(sh));
 	//after getting input  ignore sigint signal
-	do_siging(SIGINT);
+	do_sigign(SIGINT);
 	//add input line to shell history
 	add_history(sh->args);
 	//check validity of input
