@@ -15,12 +15,15 @@ HEADER = includes/minishell.h
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(HOME)/.brew/Cellar/readline/8.2.10/include
+CFLAGS = -Wall -Wextra -Werror -Iincludes \
+		-I$(HOME)/.brew/Cellar/readline/8.2.10/include
 
 OBJ = $(SRC:.c=.o)
 LIBFT = ./includes/libft/libft.a
 MAKE_LIBFT = make -C includes/libft --no-print-directory
-READLINE = -L$(HOME)/.brew/Cellar/readline/8.2.10/lib -lreadline -lhistory
+
+READLINE = -L$(HOME)/.brew/Cellar/readline/8.2.10/lib \
+			-lreadline -lhistory -ltermcap
 
 MAIN = src/main.c src/shell_init.c
 
@@ -50,12 +53,14 @@ SRC = $(MAIN) $(LEXER) $(ERRORS) $(EXPANSER) $(PARSER) $(EXECUTOR) \
 
 all: make_lib $(NAME)
 
-
 make_lib:
 	$(MAKE_LIBFT)
 
-$(NAME): $(OBJ) $(LIBFT)
+$(NAME): $(OBJ) $(LIBFT) $(HEADER) Makefile
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(READLINE) -o $(NAME)
+
+%.o: %.c $(HEADER)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)

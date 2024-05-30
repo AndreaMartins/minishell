@@ -18,7 +18,7 @@ void    export_plus_equal(t_toolkit *sh, char *key, char *value)
     char    *old_value;
     char    *env_value;
 
-    env_value = find_in_env_variables (sh, key);
+    env_value = find_in_env_variables(sh, key);
     if (!env_value)
         return ((void)add_or_update_env(sh, key, value));
     else
