@@ -15,7 +15,7 @@ HEADER = includes/minishell.h
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(HOME)/.brew/Cellar/readline/8.2.10/include
 
 OBJ = $(SRC:.c=.o)
 LIBFT = ./includes/libft/libft.a

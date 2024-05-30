@@ -36,7 +36,7 @@ typedef struct s_envlst
 
 typedef enum s_tokens
 {
-	SPACE = 0,
+	MYSPACE = 0,
 	WORD,
 	SIMPLEQ,
 	DOUBLEQ,
