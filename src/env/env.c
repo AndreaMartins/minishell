@@ -127,9 +127,9 @@ char	**env_converter(t_env *env)
 	i = 0;
 	while (tmp)
 	{
-		if (tmp->env_val != NULL)
+		if (tmp->val != NULL)
 		{
-			grid[i] = ft_envfull(tmp->env_key, tmp->env_val);
+			grid[i] = ft_envfull(tmp->key, tmp->val);
 			if (!grid[i])
 				return (arr_clean(grid, 0));
 			i++;
