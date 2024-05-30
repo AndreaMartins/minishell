@@ -109,3 +109,27 @@ int	ft_open_built(t_toolkit *sh, t_pipe *p, t_fd *fd1, int prev)
 	}
 	return (0);
 }
+
+char	*ft_smart_join(char *s1, char *s2, char *s3)
+{
+	char	*new;
+	int		i;
+	int		j;
+
+	i = -1;
+	j = 0;
+	if (!(s1 && s2 && s3))
+		return (0);
+	new = malloc(ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3) + 1);
+	if (!new)
+		return (NULL);
+	while (s1[++i])
+		new[i] = s1[i];
+	while (s2[j])
+		new[i++] = s2[j++];
+	j = 0;
+	while (s3[j])
+		new[i++] = s3[j++];
+	new[i] = '\0';
+	return (new);
+}

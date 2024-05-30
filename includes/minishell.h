@@ -175,6 +175,7 @@ char	*ft_triplejoin(char *s1, char *s2, char *s3);
 int	lex_clean(t_lexer **lst);
 char	**arr_clean(char **cmd, int flag);
 int	open_q(t_exp *exp, char c, int type);
+char	*ft_smart_join(char *s1, char *s2, char *s3);
 
 //		-> EXPANSER <-			//
 char	*expand_hd(t_toolkit *tool, char *str, int token);

@@ -21,7 +21,7 @@ void	norm_handler(int sig, siginfo_t *data, void *non_used_data)
 	{
 		printf("\n");
 		rl_on_new_line();
-		rl_repalce_line("",1);
+		rl_replace_line("",1);
 		rl_redisplay();
 		g_sig_rec = 1; 
 	}

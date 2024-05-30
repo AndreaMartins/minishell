@@ -51,7 +51,7 @@ void	child_process(t_toolkit *sh, t_pipe *p, int option)
 	ft_open(sh, p, p->fd_lst, -1 );
 	//si es verdadero se ejecuta exec builtin y se sale del proceso
 	if(p->builtin)
-		exit(exec_builting (sh,p));
+		exit(exec_builtin (sh,p));
 	//verificar si el usuario tiene el permisod e eejecutar el comando
 	check_access(sh, p->cmd, p);
 	//manejar la redireccion del preoceso hijo
@@ -88,7 +88,7 @@ int	executor(t_toolkit *sh, t_pipe *p, int i, int j)
 {
 	while (i++ < sh->pipes)
 	{
-		p->builtin = check_buildin(p->cmd);
+		p->builtin = check_builtin(p->cmd);
 		if (pipe(sh->exe->fdp) < 0)
 			return (err_break(sh, "pipe", "Broken pipe", 32));
 		p->out_fd = sh->exe->fdp[1];
