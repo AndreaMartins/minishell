@@ -12,6 +12,15 @@
 
 #include "../../includes/minishell.h"
 
+void	print_env_fd(t_env *tmp, int output)
+{
+	ft_putstr_fd("=", output);
+	ft_putstr_fd("\"", output);
+	ft_putstr_fd(tmp->val, output);
+	ft_putstr_fd("\"", output);
+	ft_putstr_fd("\n", output);
+}
+
 int print_export(t_env *eprint, t_pipe *p)
 {
     t_env   *tmp;
@@ -38,12 +47,46 @@ int print_export(t_env *eprint, t_pipe *p)
     return(0);
 }
 
-int export_option(const char *name)
+char	*find_in_env_variables(t_toolkit *sh, char *variable_name)
 {
-    int i;
+	t_env	*env;
+	int		env_name_len;
+	int		var_name_len;
 
-    if(!name || (!ft_isalpha(name[0]) && name[0] != '_'))
-        return(0);
-    
+	if (variable_name == NULL)
+		return (NULL);
+	env = sh->env_lst;
+	var_name_len = ft_strlen(variable_name);
+	while (env != NULL)
+	{
+		env_name_len = ft_strlen(env->key);
+		if (ft_strncmp(env->key, variable_name, env_name_len) == 0
+			&& (env_name_len == var_name_len))
+			return (env->val);
+		env = env->next;
+	}
+	return (NULL);
+}
 
+int	export_option(const char *name)
+{
+	int	i;
+
+	if (!name || (!ft_isalpha(name[0]) && name[0] != '_'))
+		return (0);
+	i = 1;
+	while (name[i])
+	{
+		if (!ft_isalnum(name[i]) && name[i] != '_')
+		{
+			if (name[i] == '+' && name[i + 1])
+				return (0);
+			if (name[i] == ' ' || name[i] == '%' || name[i] == '/')
+				return (0);
+			if (name[i] != '+' && name[i] != '=')
+				return (0);
+		}
+		i++;
+	}
+	return (1);
 }

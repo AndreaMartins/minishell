@@ -20,7 +20,10 @@ CFLAGS = -Wall -Wextra -Werror
 OBJ = $(SRC:.c=.o)
 LIBFT = ./includes/libft/libft.a
 MAKE_LIBFT = make -C includes/libft --no-print-directory
-READLINE = -L$(HOME)/.brew/Cellar/readline/8.2.10/lib -lreadline -lhistory
+
+READLINE = -L$(HOME)/.brew/Cellar/readline/8.2.10/lib \
+			-I$(HOME)/.brew/Cellar/readline/8.2.10/include \
+			-lreadline -lhistory -ltermcap
 
 MAIN = src/main.c src/shell_init.c
 
@@ -36,9 +39,9 @@ EXECUTOR = src/executor/executor.c src/executor/executor_utils.c
 
 ERRORS = src/errors/errors.c
 
-BUILTINGS = src/builtings/cd.c src/builtings/echo.c src/builtings/env.c \
-			src/builtings/exit.c src/builtings/export_utils.c \
-			src/builtings/export.c src/builtings/pwd.c src/builtings/unset.c
+BUILTINS = src/builtins/cd.c src/builtins/echo.c src/builtins/env.c \
+			src/builtins/exit.c src/builtins/export_utils.c \
+			src/builtins/export.c src/builtins/pwd.c src/builtins/unset.c
 
 ENV = src/env/env_free.c src/env/env_list.c src/env/env_sort.c \
 		src/env/env_utils.c src/env/env.c
@@ -46,16 +49,18 @@ ENV = src/env/env_free.c src/env/env_list.c src/env/env_sort.c \
 SIGNALS = src/signals/signals.c
 
 SRC = $(MAIN) $(LEXER) $(ERRORS) $(EXPANSER) $(PARSER) $(EXECUTOR) \
-		$(SIGNALS) $(BUILTINGS) $(ENV)
+		$(SIGNALS) $(BUILTINS) $(ENV)
 
 all: make_lib $(NAME)
-
 
 make_lib:
 	$(MAKE_LIBFT)
 
-$(NAME): $(OBJ) $(LIBFT)
+$(NAME): $(OBJ) $(LIBFT) $(HEADER) Makefile
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(READLINE) -o $(NAME)
+
+%.o: %.c $(HEADER)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)

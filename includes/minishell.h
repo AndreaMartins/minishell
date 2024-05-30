@@ -21,6 +21,14 @@
 # include <stdbool.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <stddef.h>
+# include <limits.h>
+# include <dirent.h>
+# include <unistd.h>
+# include <sys/wait.h>
+# include <sys/types.h>
+# include <errno.h>
+# include <string.h>
 
 # define NORM	1
 # define N_INTERACT 3
@@ -257,6 +265,9 @@ int ft_exit(t_toolkit *sh);
 //		-> 5.EXPORT_UTILS<-		//
 int print_export(t_env *eprint, t_pipe *p);
 int export_option(const char *name);
+char	*find_in_env_variables(t_toolkit *sh, char *variable_name);
+void	print_env_fd(t_env *tmp, int output);
+
 
 //		-> 6.EXPORT<-		//
 void	export_plus_equal(t_toolkit *sh, char *key, char *value);
