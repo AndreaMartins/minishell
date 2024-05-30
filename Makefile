@@ -30,7 +30,7 @@ LEXER = src/lexer/syntax.c src/lexer/fd_utils.c src/lexer/heredoc.c \
 EXPANSER = src/expanser/expanser.c src/expanser/expanser_utils.c \
 			src/expanser/expanser_structure.c
 
-PARSER = src/parser/parser.c src/parser/parser_utils
+PARSER = src/parser/parser.c src/parser/parser_utils.c
 
 EXECUTOR = src/executor/executor.c src/executor/executor_utils.c
 

@@ -154,6 +154,7 @@ int	ft_open_built(t_toolkit *sh, t_pipe *p, t_fd *fd1, int prev);
 int	check_quotes(char *str);
 int	check_input(char *in);
 int	check_syntax(t_toolkit *sh, t_lexer *current, int prev_token);
+int	exp_quotes(t_toolkit *sh, t_lexer **head, int *flag);
 
 //		-> t_lex_list <-	//
 t_lexer	*lex_new(char *info, t_tokens type);
@@ -173,6 +174,7 @@ int	ft_longer(char *str, char *key);
 char	*ft_triplejoin(char *s1, char *s2, char *s3);
 int	lex_clean(t_lexer **lst);
 char	**arr_clean(char **cmd, int flag);
+int	open_q(t_exp *exp, char c, int type);
 
 //		-> EXPANSER <-			//
 char	*expand_hd(t_toolkit *tool, char *str, int token);
@@ -186,6 +188,7 @@ int	check_exp(char *str, int token, int q);
 int	new_len(t_toolkit *tool, char *cont, int type);
 char	*get_var(char *cont);
 char	*check_value(t_toolkit *tool, char *var);
+int	check_file_exp(char *str);
 
 //		-> EXPANSER_STRUCTURE <-	//
 char	*exp_fd(t_toolkit *tool, char *str, t_fd *new);

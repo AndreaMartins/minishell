@@ -106,3 +106,23 @@ char	**arr_clean(char **cmd, int flag)
 	cmd = ft_memdel(cmd);
 	return (NULL);
 }
+
+/*
+	Manages and tracks the state of quotation marks
+	(single or double quotes) during parsing operations.
+*/
+int	open_q(t_exp *exp, char c, int type)
+{
+	if (type == DOUBLEQ)
+		return (0);
+	if (c == '$' && exp->fl && exp->q == '\'')
+		return (1);
+	if (!exp->fl && check_chr(c) == 2)
+	{
+		exp->fl = 1;
+		exp->q = c;
+	}
+	else if (exp->fl && c == exp->q)
+		exp->fl = 0;
+	return (0);
+}
