@@ -82,31 +82,6 @@ int	lex_clean(t_lexer **lst)
 	return (0);
 }
 
-/* 
-	This function receives an double array and a flag that means:
-	1. flag=0 - all the strings in the array are allocated, so it frees them
-	2. flag=1 - the strings in the array are NOT allocated, 
-			it only iquals them to null
-*/
-char	**arr_clean(char **cmd, int flag)
-{
-	int		i;
-
-	i = 0;
-	if (!cmd)
-		return (NULL);
-	while (cmd && cmd[i])
-	{
-		if (!flag)
-			cmd[i] = ft_memdel(cmd[i]);
-		else
-			cmd[i] = NULL;
-		i++;
-	}
-	cmd = ft_memdel(cmd);
-	return (NULL);
-}
-
 /*
 	Manages and tracks the state of quotation marks
 	(single or double quotes) during parsing operations.
