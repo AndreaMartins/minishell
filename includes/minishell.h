@@ -6,14 +6,14 @@
 /*   By: mmarsa-s <mmarsa-s@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:40:49 by mmarsa-s          #+#    #+#             */
-/*   Updated: 2024/03/12 16:40:51 by mmarsa-s         ###   ########.fr       */
+/*   Updated: 2024/06/07 13:19:13 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "Libft/libft.h"
+# include "libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <readline/readline.h>
