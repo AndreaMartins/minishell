@@ -33,7 +33,13 @@
 # define NORM	1
 # define N_INTERACT 3
 
-int	g_sig_rec;
+#ifndef GLOBALS_H
+#define GLOBALS_H
+
+extern int g_sig_rec;
+
+#endif // GLOBALS_H
+
 
 typedef struct s_envlst
 {

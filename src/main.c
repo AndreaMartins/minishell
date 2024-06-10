@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+int g_sig_rec;
+
 int	minishell_loop(t_toolkit *sh)
 {
 	//initialize signal
@@ -56,7 +58,7 @@ int	minishell_loop(t_toolkit *sh)
 int	main(int argc, char **argv, char **envp)
 {
 	t_toolkit	tool;
-	
+
 	(void)argc;
 	(void)envp;
 	(void)argv;
