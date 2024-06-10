@@ -12,19 +12,19 @@
 
 #include "../../includes/minishell.h"
 
-char    *ft_get_value(t_toolkit *sh, char *key)
+char	*ft_get_value(t_toolkit *sh, char *key)
 {
-    t_env *tmp;
+	t_env	*tmp;
 
-    if (!sh || !key)
-        return NULL;
-    tmp = sh->env_lst;
-    while (tmp)
-    {
-        if(ft_strncmp(key, tmp->key, ft_longer(key, tmp->key)) == 0)
-            return(tmp->val);
-        else
-            tmp = tmp->next;
-    }
-    return (NULL);
+	if (!sh || !key)
+		return (NULL);
+	tmp = sh->env_lst;
+	while (tmp)
+	{
+		if (ft_strncmp(key, tmp->key, ft_longer(key, tmp->key)) == 0)
+			return (tmp->val);
+		else
+			tmp = tmp->next;
+	}
+	return (NULL);
 }
