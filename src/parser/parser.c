@@ -39,7 +39,7 @@ t_lexer	*next_word(t_lexer *temp)
     This function counts the number of command tokens (values between 1 and 3)
     in a linked list until a pipe is encountered.
 */
-int	count_cmd(t_lexer *temp)
+/*int	count_cmd(t_lexer *temp)
 {
 	int	i;
 	int	flag;
@@ -57,13 +57,50 @@ int	count_cmd(t_lexer *temp)
 		temp = temp->next;
 	}
 	return (i);
+}*/
+
+int count_cmd(t_lexer *temp)
+{
+    int i;
+    int flag;
+
+    i = 0;
+    flag = 0;
+    printf("Starting count_cmd function\n");
+
+    while (temp && temp->token != PIPE)
+    {
+        printf("Token: %d, i: %d, flag: %d\n", temp->token, i, flag);
+
+        if (temp->token < 4 && temp->token > 0 && !flag)
+        {
+            i++;
+            printf("Incremented i: %d\n", i);
+        }
+        else if (temp->token < 4 && temp->token > 0 && flag)
+        {
+            flag = 0;
+            printf("Reset flag to 0\n");
+        }
+        else if (temp->token > 3)
+        {
+            flag++;
+            printf("Incremented flag: %d\n", flag);
+        }
+
+        temp = temp->next;
+    }
+
+    printf("Final count: %d\n", i);
+    return i;
 }
+
 
 /*
 	This function parses command tokens from a lexer list and stores them
 	in the cmd array of a t_pipe structure.
 */
-int	parse_cmd(t_pipe *new, t_lexer *temp, t_toolkit *t, int j)
+/*int	parse_cmd(t_pipe *new, t_lexer *temp, t_toolkit *t, int j)
 {
 	int	i;
 
@@ -88,7 +125,45 @@ int	parse_cmd(t_pipe *new, t_lexer *temp, t_toolkit *t, int j)
 	}
 	new->cmd[j] = NULL;
 	return (0);
+}*/
+
+int parse_cmd(t_pipe *new, t_lexer *temp, t_toolkit *sh, int j)
+{
+    int i;
+
+    i = count_cmd(temp);  // Contar el número de tokens de comando
+    new->cmd = (char **) malloc(sizeof(char *) * (i + 1));  // Asignar memoria para el array de comandos
+    if (!new->cmd)
+        return (1);
+
+    // Imprimir información para debuggear
+    printf("DEBUG: Total number of command tokens: %d\n", i);
+
+    // Loop para recolectar tokens de comando en el array new->cmd
+    while (sh->lex_lst && sh->lex_lst->token < 4)
+    {
+        if (sh->lex_lst->token != 0)
+        {
+            new->cmd[j++] = sh->lex_lst->str;  // Asignar el contenido del token a new->cmd
+        }
+        sh->lex_lst = sh->lex_lst->next;
+    }
+
+    // Reiniciar temp para que apunte al inicio de la lista de tokens
+    temp = sh->lex_lst;
+
+    // Loop para obtener tokens subsiguientes usando la función next_word
+    while (j < i)
+    {
+        temp = next_word(temp);  // Obtener el próximo token de comando
+        new->cmd[j++] = temp->str;  // Asignar el contenido del token a new->cmd
+        temp = temp->next;
+    }
+
+    new->cmd[j] = NULL;  // Terminar el array new->cmd con NULL
+    return (0);
 }
+
 
 /*
 	This function identifies redirection tokens and initiates the creation
@@ -124,7 +199,7 @@ int	parse_redir(t_pipe *new, t_lexer *lex, t_fd *hd, t_toolkit *t)
 	of t_pipe structures, where each t_pipe structure contains commands and their
 	associated file descriptors.
 */
-int	parser(t_toolkit *t, t_lexer *lex, t_fd *hd, t_pipe *new)
+/*int	parser(t_toolkit *t, t_lexer *lex, t_fd *hd, t_pipe *new)
 {
 	while (t->lex_lst)
 	{
@@ -150,4 +225,49 @@ int	parser(t_toolkit *t, t_lexer *lex, t_fd *hd, t_pipe *new)
 	}
 	shell_re(&t, lex, hd);
 	return (0);
+}*/
+
+int parser(t_toolkit *t, t_lexer *lex, t_fd *hd, t_pipe *new)
+{
+    printf("Starting parser function\n");
+
+    while (t->lex_lst)
+    {
+        printf("Allocating new t_pipe\n");
+        new = malloc(sizeof(t_pipe));
+        if (!new) {
+            printf("Error allocating memory for t_pipe\n");
+            return err_break(shell_re(&t, lex, hd), "malloc", NULL, 12);
+        }
+        pipe_init(new);
+        pipe_add(t, new);
+
+        while (t->lex_lst && t->lex_lst->token != PIPE)
+        {
+            printf("Processing token: %d\n", t->lex_lst->token);
+            if (t->lex_lst->token > 3 && t->lex_lst->token < 8) {
+                printf("Parsing redirection\n");
+                t->check = parse_redir(new, t->lex_lst, t->hd_lst, t);
+            }
+            else if (t->lex_lst->token > 0 && t->lex_lst->token < 4 && !new->cmd) {
+                printf("Parsing command\n");
+                t->check = parse_cmd(new, t->lex_lst, t, 0);
+            }
+            else {
+                printf("Moving to next token\n");
+                t->lex_lst = t->lex_lst->next;
+            }
+            if (t->check) {
+                printf("Error detected, breaking\n");
+                return err_break(shell_re(&t, lex, hd), "malloc", NULL, 12);
+            }
+        }
+        if (t->lex_lst) {
+            printf("Encountered PIPE, moving to next token\n");
+            t->lex_lst = t->lex_lst->next;
+        }
+    }
+    printf("Completed parsing, resetting shell\n");
+    shell_re(&t, lex, hd);
+    return 0;
 }

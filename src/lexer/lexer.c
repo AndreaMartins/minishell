@@ -29,7 +29,7 @@ t_lexer	*rd_space(char *input, int *i)
 	new[0] = ' ';
 	new[1] = '\0';
 	*i += j;
-	return (lex_new(new, SPACE));
+	return (lex_new(new, MYSPACE));
 }
 
 /* This function serves to parse input strings, 
