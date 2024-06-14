@@ -14,46 +14,90 @@
 
 int g_sig_rec;
 
-int	minishell_loop(t_toolkit *sh)
+int minishell_loop(t_toolkit *sh)
 {
-	//initialize signal
-	init_signals(NORM);
-	do_sigign(SIGQUIT);
-	sh->args = readline("Hola Juan Carlos$> ");
-	//if readline returns null
-	if(!sh->args)
-		return(ft_exit(sh));
-	//after getting input  ignore sigint signal
-	do_sigign(SIGINT);
-	//add input line to shell history
-	add_history(sh->args);
-	//check validity of input
-	if(check_input(sh->args))
-		return(0);
-	//check pre quote issues	
-	if(check_quotes(sh->args))
-		return(error_quotes(sh));
-	//process herdoc syntax
-	if(heredoc(sh, sh->args, 0))
-		return(1);
-	//tokenize input using lexer
-	if(lexer(sh, sh->args))
-		return(1);
-	//expand environment
-	if(expanser(sh, sh->lex_lst,0))
-		return(1);
-	//check syntax errors
-	if(!sh->lex_lst || check_syntax(sh, sh->lex_lst, -1))
-		return(1);
-	//parse the token list into commands
-	if(!sh->lex_lst || parser(sh, sh->lex_lst, sh->hd_lst, NULL))
-		return(1);
-	//execute the parsed command
-	if(executor(sh, sh->pipe_lst, -1, -1))
-		return(1);
-	//if all stages are successfull
-	return(0);
+    // Initialize signal
+    init_signals(NORM);
+    printf("Debug: Initialized signals.\n");
+
+    do_sigign(SIGQUIT);
+    printf("Debug: Ignored SIGQUIT signal.\n");
+
+    sh->args = readline("Hola Juan Carlos$> ");
+    printf("Debug: Readline input: %s\n", sh->args);
+
+    // If readline returns null
+    if (!sh->args)
+        return (ft_exit(sh));
+
+    // After getting input ignore SIGINT signal
+    do_sigign(SIGINT);
+    printf("Debug: Ignored SIGINT signal.\n");
+
+    // Add input line to shell history
+    add_history(sh->args);
+    printf("Debug: Added input to history.\n");
+
+    // Check validity of input
+    if (check_input(sh->args)) {
+        printf("Debug: Input check failed.\n");
+        return (0);
+    }
+    printf("Debug: Input is valid.\n");
+
+    // Check pre-quote issues
+    if (check_quotes(sh->args)) {
+        printf("Debug: Quote check failed.\n");
+        return (error_quotes(sh));
+    }
+    printf("Debug: Quotes are valid.\n");
+
+    // Process heredoc syntax
+    if (heredoc(sh, sh->args, 0)) {
+        printf("Debug: Heredoc processing failed.\n");
+        return (1);
+    }
+    printf("Debug: Heredoc processed.\n");
+
+    // Tokenize input using lexer
+    if (lexer(sh, sh->args)) {
+        printf("Debug: Lexing failed.\n");
+        return (1);
+    }
+    printf("Debug: Lexing successful.\n");
+
+    // Expand environment
+    if (expanser(sh, sh->lex_lst, 0)) {
+        printf("Debug: Expansion failed.\n");
+        return (1);
+    }
+    printf("Debug: Expansion successful.\n");
+
+    // Check syntax errors
+    if (!sh->lex_lst || check_syntax(sh, sh->lex_lst, -1)) {
+        printf("Debug: Syntax check failed.\n");
+        return (1);
+    }
+    printf("Debug: Syntax check successful.\n");
+
+    // Parse the token list into commands
+    if (!sh->lex_lst || parser(sh, sh->lex_lst, sh->hd_lst, NULL)) {
+        printf("Debug: Parsing failed.\n");
+        return (1);
+    }
+    printf("Debug: Parsing successful.\n");
+
+    // Execute the parsed command
+    if (executor(sh, sh->pipe_lst, -1, -1)) {
+        printf("Debug: Execution failed.\n");
+        return (1);
+    }
+    printf("Debug: Execution successful.\n");
+
+    // If all stages are successful
+    return (0);
 }
+
 
 int	main(int argc, char **argv, char **envp)
 {
