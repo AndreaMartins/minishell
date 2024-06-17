@@ -106,7 +106,10 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)envp;
 	(void)argv;
-
+    if (argc > 1) {
+        fprintf(stderr, "Error: This program does not accept any command-line arguments.\n");
+        return 1; 
+    }
 	g_sig_rec = 0;
 	sh_init(&tool, envp);
 	while (tool.power_on)

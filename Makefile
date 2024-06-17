@@ -13,7 +13,7 @@
 NAME = minishell
 HEADER = includes/minishell.h
 
-CC = gcc
+CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -Iincludes \
 		-I$(HOME)/.brew/Cellar/readline/8.2.10/include
