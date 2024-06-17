@@ -278,6 +278,7 @@ void	export_plus_equal(t_toolkit *sh, char *key, char *value);
 int	error_option(char *str1, char *str2, char **vc);
 int handle_args(t_toolkit *sh, char *arg);
 int ft_export(t_toolkit *sh, t_pipe *p);
+char **split_by_equal(char *str);
 
 //		-> 7.PWD<-		//
 int ft_pwd(t_toolkit *sh, t_pipe *p);
