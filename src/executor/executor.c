@@ -12,10 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-
 void	ft_redir(t_toolkit *sh, t_pipe *p)
 {
 	fprintf(stderr, "Entering ft_redir\n");
