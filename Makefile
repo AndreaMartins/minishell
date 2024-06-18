@@ -16,14 +16,13 @@ HEADER = includes/minishell.h
 CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror -Iincludes \
-		-I$(HOME)/.brew/Cellar/readline/8.2.10/include
+	-I$HOME/local/include -L$HOME/local/lib -lreadline -lncurses
 
 OBJ = $(SRC:.c=.o)
 LIBFT = ./includes/libft/libft.a
 MAKE_LIBFT = make -C includes/libft --no-print-directory
 
-READLINE = -L$(HOME)/.brew/Cellar/readline/8.2.10/lib \
-			-lreadline -lhistory -ltermcap
+READLINE = -I$HOME/local/include -L$HOME/local/lib -lreadline -lncurses
 
 MAIN = src/main.c src/shell_init.c
 

@@ -15,6 +15,7 @@ void	norm_handler(int sig, siginfo_t *data, void *non_used_data)
 {
 	(void)data;
 	(void)non_used_data;
+	printf("caught signal %d\n", sig);
 	if (sig == SIGINT)
 	{
 		printf("\n");
