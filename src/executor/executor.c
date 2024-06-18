@@ -48,7 +48,7 @@ void	ft_redir(t_toolkit *sh, t_pipe *p)
 }
 
 
-void child_process(t_toolkit *sh, t_pipe *p, int flag)
+/*void child_process(t_toolkit *sh, t_pipe *p, int flag)
 {
     printf("Entering child_process with flag: %d\n", flag);
 
@@ -84,7 +84,7 @@ void child_process(t_toolkit *sh, t_pipe *p, int flag)
 
     // This point is reached only if execve fails
     printf("Exiting child_process\n");
-}
+}*/
 
 int last_child(t_toolkit *sh, t_pipe *p)
 {
@@ -122,7 +122,7 @@ int last_child(t_toolkit *sh, t_pipe *p)
     return 0;
 }
 
-int executor(t_toolkit *sh, t_pipe *p, int i, int j)
+/*int executor(t_toolkit *sh, t_pipe *p, int i, int j)
 {
     printf("Entering executor function\n");
 
@@ -175,9 +175,9 @@ int executor(t_toolkit *sh, t_pipe *p, int i, int j)
     exit_status(sh, j);
 
     return 0;
-}
+}*/
 
-int exec_builtin(t_toolkit *sh, t_pipe *p)
+/*int exec_builtin(t_toolkit *sh, t_pipe *p)
 {
     printf("Entering exec_builtin function\n");
     printf("p->builtin: %d\n", p->builtin);
@@ -227,4 +227,141 @@ int exec_builtin(t_toolkit *sh, t_pipe *p)
 
     printf("Exiting exec_builtin function\n");
     return sh->exit;
+}*/
+
+void child_process(t_toolkit *sh, t_pipe *p, int flag)
+{
+    printf("Entering child_process with flag: %d\n", flag);
+
+    // Configurar manejo de señales para el modo CHILD
+    init_signals(CHILD);
+
+    // Cerrar el descriptor de archivo de lectura si no es un pipe inicial
+    if (!flag)
+    {
+        printf("Closing sh->exe->fdp[0]: %d\n", sh->exe->fdp[0]);
+        close(sh->exe->fdp[0]);
+        sh->exe->fdp[0] = -2;
+    }
+
+    // Abrir archivos si es necesario (ft_open)
+    ft_open(sh, p, p->fd_lst, -1);
+    printf("ft_open completed\n");
+
+    // Si es un comando integrado, ejecutarlo y salir
+    if (p->builtin)
+    {
+        printf("Executing built-in command\n");
+        exit(exec_builtin(sh, p));
+    }
+
+    // Verificar acceso al comando externo
+    check_access(sh, p->cmd, p);
+    printf("check_access completed\n");
+
+    // Redirigir entrada/salida según sea necesario
+    ft_redir(sh, p);
+    printf("ft_redir completed\n");
+
+    // Ejecutar el comando externo
+    printf("Executing command: %s\n", p->path);
+    if (execve(p->path, p->cmd, sh->env) == -1)
+    {
+        err_exit(sh, "execve", NULL, 14);
+    }
+
+    // Este punto solo se alcanza si execve falla
+    printf("Exiting child_process\n");
+}
+
+
+// Definición de exec_builtin
+int exec_builtin(t_toolkit *sh, t_pipe *p) {
+    printf("Entering exec_builtin function\n");
+    printf("p->builtin: %d\n", p->builtin);
+
+    switch (p->builtin) {
+        case 1:
+            printf("Executing ft_echo\n");
+            return ft_echo(sh, p);
+        case 2:
+            printf("Executing ft_cd\n");
+            return ft_cd(sh, p);
+        case 3:
+            printf("Executing ft_pwd\n");
+            return ft_pwd(sh, p);
+        case 4:
+            printf("Executing ft_export\n");
+            return ft_export(sh, p);
+        case 5:
+            printf("Executing ft_unset\n");
+            return ft_unset(sh, p);
+        case 6:
+            if (sh->paths) {
+                printf("Executing ft_env\n");
+                return ft_env(sh, p);
+            } else {
+                printf("Paths not set: %s\n", p->cmd[0]);
+                err_break(sh, p->cmd[0], "No such file or directory", 127);
+                break;
+            }
+        case 7:
+            printf("Executing ft_exit\n");
+            return ft_exit(sh);
+        default:
+            printf("Default case: returning sh->exit\n");
+            return sh->exit;
+    }
+
+    printf("Exiting exec_builtin function\n");
+    return sh->exit;
+}
+
+// Llamada a exec_builtin desde executor
+int executor(t_toolkit *sh, t_pipe *p, int i, int j) {
+    printf("Entering executor function\n");
+
+    while (++i < sh->pipes) {
+        printf("Loop iteration: %d\n", i);
+
+        p->builtin = check_builtin(p->cmd); // Asumiendo que check_builtin asigna correctamente p->builtin
+        printf("p->builtin: %d\n", p->builtin);
+
+        if (pipe(sh->exe->fdp) < 0) {
+            printf("Pipe creation failed\n");
+            return (err_break(sh, "pipe", "Broken pipe", 32));
+        }
+
+        p->out_fd = sh->exe->fdp[1];
+        printf("Created pipe: sh->exe->fdp[1]: %d\n", sh->exe->fdp[1]);
+
+        sh->exe->pid = fork();
+        if (sh->exe->pid < 0) {
+            printf("Fork failed\n");
+            return (err_break(sh, "fork", NULL, 12));
+        } else if (sh->exe->pid == 0) {
+            printf("Child process executing\n");
+            child_process(sh, p, 0); // Asumiendo que child_process maneja correctamente p como t_pipe
+        }
+
+        close(sh->exe->fdp[1]);
+        printf("Closed sh->exe->fdp[1]: %d\n", sh->exe->fdp[1]);
+
+        if (p->in_fd >= 0) {
+            close(p->in_fd);
+            printf("Closed p->in_fd: %d\n", p->in_fd);
+        }
+
+        p = p->next;
+        p->in_fd = sh->exe->fdp[0];
+        printf("Updated p->in_fd to sh->exe->fdp[0]: %d\n", sh->exe->fdp[0]);
+    }
+
+    printf("Executing last_child function\n");
+    last_child(sh, p);
+
+    printf("Exiting executor function\n");
+    exit_status(sh, j);
+
+    return 0;
 }

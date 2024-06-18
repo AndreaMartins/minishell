@@ -32,7 +32,7 @@
 
 # define NORM	1
 # define N_INTERACT 3
-
+# define CHILD 1
 
 
 extern int g_sig_rec;
@@ -141,6 +141,7 @@ void	norm_handler(int sig, siginfo_t *data, void *non_used_data);
 void	do_sigign(int signum);
 int	init_signals(int mode);
 void	exit_status(t_toolkit *sh, int j);
+void child_sigint_handler(int sig);
 
 //		-> LEXER <-			//
 int lexer(t_toolkit *tool, char	*input);
