@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-/*char	*ft_get_value(t_toolkit *sh, char *key)
+char	*ft_get_value(t_toolkit *sh, char *key)
 {
 	t_env	*tmp;
 
@@ -27,7 +27,7 @@
 			tmp = tmp->next;
 	}
 	return (NULL);
-}*/
+}
 
 /*char *ft_get_value(t_toolkit *sh, char *key) {
     t_env *tmp;
@@ -52,7 +52,7 @@
 
     printf("ft_get_value: key not found\n");
     return NULL;
-}*/
+}
 
 char *ft_get_value(t_toolkit *sh, char *key) {
     t_env *tmp;
@@ -77,5 +77,5 @@ char *ft_get_value(t_toolkit *sh, char *key) {
 
     printf("ft_get_value: key not found\n");
     return NULL;
-}
+}*/
 

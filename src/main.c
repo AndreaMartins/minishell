@@ -128,7 +128,7 @@ int	main(int argc, char **argv, char **envp)
 	return (tool.exit);
 }*/
 
-
+/*
 int minishell_loop(t_toolkit *sh)
 {
     init_signals(NORM);
@@ -197,6 +197,34 @@ int minishell_loop(t_toolkit *sh)
     }
     printf("Debug: Execution successful.\n");
 
+    return (0);
+}*/
+
+int minishell_loop(t_toolkit *sh)
+{
+    init_signals(NORM);
+    do_sigign(SIGQUIT);
+    sh->args = readline("Hola Juan Carlos$> ");
+    if (!sh->args)
+        return (ft_exit(sh));
+    do_sigign(SIGINT);
+    add_history(sh->args);
+    if (check_input(sh->args))
+        return (0);
+    if (check_quotes(sh->args))
+        return (error_quotes(sh));
+    if (heredoc(sh, sh->args, 0))
+        return (1);
+    if (lexer(sh, sh->args)) 
+        return (1);
+    if (expanser(sh, sh->lex_lst, 0))
+        return (1);
+    if (!sh->lex_lst || check_syntax(sh, sh->lex_lst, -1))
+        return (1);
+    if (!sh->lex_lst || parser(sh, sh->lex_lst, sh->hd_lst, NULL))
+        return (1);
+    if (executor(sh, sh->pipe_lst, -1, -1))
+        return (1);
     return (0);
 }
 

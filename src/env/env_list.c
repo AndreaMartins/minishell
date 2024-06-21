@@ -103,7 +103,7 @@ int env_add_last(t_toolkit *sh, char *name, char *value, int has_val) {
 }
 
 
-/*int	add_or_update_env(t_toolkit *sh, char *name, char *value)
+int	add_or_update_env(t_toolkit *sh, char *name, char *value)
 {
 	t_env	*env;
 	int		has_val;
@@ -129,7 +129,7 @@ int env_add_last(t_toolkit *sh, char *name, char *value, int has_val) {
 	if (env_add_last(sh, name, value, has_val))
 		return (err_break(sh, "malloc", NULL, 12));
 	return (0);
-}*/
+}
 
 /*int add_or_update_env(t_toolkit *sh, char *name, char *value) {
     t_env *env;
@@ -176,7 +176,7 @@ int env_add_last(t_toolkit *sh, char *name, char *value, int has_val) {
 
     printf("add_or_update_env: new environment variable added successfully\n");
     return (0);
-}*/
+}
 int add_or_update_env(t_toolkit *sh, char *name, char *value) {
     t_env *env;
     int has_val;
@@ -221,6 +221,6 @@ int add_or_update_env(t_toolkit *sh, char *name, char *value) {
 
     printf("add_or_update_env: new environment variable added successfully\n");
     return (0);
-}
+}*/
 
 
