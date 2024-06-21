@@ -16,14 +16,14 @@ int check_builtin(char **cmd)
 {
     if (!cmd || !(*cmd))
     {
-        printf("cmd is NULL or cmd[0] is NULL\n");
+        //printf("cmd is NULL or cmd[0] is NULL\n");
         return 0;
     }
     
     printf("cmd[0]: %s\n", cmd[0]);
 
     int echo_len = ft_longer(cmd[0], "echo");
-    printf("Length of 'echo': %d\n", echo_len);
+    //printf("Length of 'echo': %d\n", echo_len);
     if (!ft_strncmp(cmd[0], "echo", echo_len))
     {
         printf("Matched 'echo'\n");
@@ -31,7 +31,7 @@ int check_builtin(char **cmd)
     }
 
     int cd_len = ft_longer(cmd[0], "cd");
-    printf("Length of 'cd': %d\n", cd_len);
+    //printf("Length of 'cd': %d\n", cd_len);
     if (!ft_strncmp(cmd[0], "cd", cd_len))
     {
         printf("Matched 'cd'\n");
@@ -39,46 +39,46 @@ int check_builtin(char **cmd)
     }
 
     int pwd_len = ft_longer(cmd[0], "pwd");
-    printf("Length of 'pwd': %d\n", pwd_len);
+    //printf("Length of 'pwd': %d\n", pwd_len);
     if (!ft_strncmp(cmd[0], "pwd", pwd_len))
     {
-        printf("Matched 'pwd'\n");
+        //printf("Matched 'pwd'\n");
         return 3;
     }
 
     int export_len = ft_longer(cmd[0], "export");
-    printf("Length of 'export': %d\n", export_len);
+    //printf("Length of 'export': %d\n", export_len);
     if (!ft_strncmp(cmd[0], "export", export_len))
     {
-        printf("Matched 'export'\n");
+        //printf("Matched 'export'\n");
         return 4;
     }
 
     int unset_len = ft_longer(cmd[0], "unset");
-    printf("Length of 'unset': %d\n", unset_len);
+    //printf("Length of 'unset': %d\n", unset_len);
     if (!ft_strncmp(cmd[0], "unset", unset_len))
     {
-        printf("Matched 'unset'\n");
+        //printf("Matched 'unset'\n");
         return 5;
     }
 
     int env_len = ft_longer(cmd[0], "env");
-    printf("Length of 'env': %d\n", env_len);
+    //printf("Length of 'env': %d\n", env_len);
     if (!ft_strncmp(cmd[0], "env", env_len))
     {
-        printf("Matched 'env'\n");
+        //printf("Matched 'env'\n");
         return 6;
     }
 
     int exit_len = ft_longer(cmd[0], "exit");
-    printf("Length of 'exit': %d\n", exit_len);
+    //printf("Length of 'exit': %d\n", exit_len);
     if (!ft_strncmp(cmd[0], "exit", exit_len))
     {
-        printf("Matched 'exit'\n");
+        //printf("Matched 'exit'\n");
         return 7;
     }
 
-    printf("No match found\n");
+    //printf("No match found\n");
     return 0;
 }
 
