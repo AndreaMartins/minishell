@@ -16,7 +16,7 @@
 	This function receives 2 strings and returns the length
 	of the longer one 
 */
-int	ft_longer(char *str, char *key)
+/*int	ft_longer(char *str, char *key)
 {
 	int	len;
 
@@ -27,6 +27,21 @@ int	ft_longer(char *str, char *key)
 		len = ft_strlen(key);
 	}
 	return (len);
+}*/
+int ft_longer(char *str, char *key) {
+    int len;
+
+    if (str == NULL || key == NULL) {
+        printf("ft_longer: invalid input, str = %p, key = %p\n", (void *)str, (void *)key);
+        return 0;
+    }
+
+    if (ft_strlen(str) > ft_strlen(key))
+        len = ft_strlen(str);
+    else
+        len = ft_strlen(key);
+
+    return len;
 }
 
 /*

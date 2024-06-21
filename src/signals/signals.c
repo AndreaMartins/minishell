@@ -15,6 +15,7 @@
 {
 	(void)data;
 	(void)non_used_data;
+	printf("caught signal %d\n", sig);
 	if (sig == SIGINT)
 	{
 		printf("\n");

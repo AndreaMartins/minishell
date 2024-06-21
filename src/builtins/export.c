@@ -87,7 +87,7 @@ int	error_option(char *str1, char *str2, char **vc)
 	return (1);
 }
 
-int	handle_args(t_toolkit *sh, char *arg)
+/*int	handle_args(t_toolkit *sh, char *arg)
 {
 	char	**vc;
 	char	*key;
@@ -110,7 +110,53 @@ int	handle_args(t_toolkit *sh, char *arg)
 	}
 	vc = arr_clean(vc, 0);
 	return (0);
+}*/
+
+int	handle_args(t_toolkit *sh, char *arg)
+{
+	char	**vc;
+	char	*key;
+
+	printf("handle_args: arg = %s\n", arg); // Depuración inicial del argumento
+
+	vc = ft_split(arg, '=');
+	if (!vc) {
+		printf("Error: ft_split devolvió NULL\n");
+		return (1);
+	}
+
+	printf("handle_args: vc[0] = %s, vc[1] = %s\n", vc[0], vc[1]); // Depuración de la división
+
+	if (!export_option(vc[0])) {
+		printf("handle_args: export_option devolvió 0 para vc[0] = %s\n", vc[0]);
+		return (error_option(vc[0], vc[1], vc));
+	} else {
+		printf("handle_args: export_option devolvió 1 para vc[0] = %s\n", vc[0]);
+		if (ft_strchr(vc[0], '+')) {
+			printf("handle_args: encontrado '+' en vc[0] = %s\n", vc[0]);
+			key = ft_substr(vc[0], 0, ft_strchr(vc[0], '+') - vc[0]);
+			if (!key) {
+				printf("Error: ft_substr devolvió NULL\n");
+				return (1);
+			}
+			printf("handle_args: key = %s, vc[1] = %s\n", key, vc[1]);
+			export_plus_equal(sh, key, vc[1]);
+			free(key);
+		} else {
+			if (!vc[1])
+				add_or_update_env(sh, vc[0], " ");
+			else {
+			printf("handle_args: llamando a add_or_update_env con vc[0] = %s, vc[1] = %s\n", vc[0], vc[1]);
+			add_or_update_env(sh, vc[0], vc[1]);
+			}
+		}
+	}
+
+	vc = arr_clean(vc, 0);
+	printf("handle_args: finalizado, retornando 0\n");
+	return (0);
 }
+
 
 int	ft_export(t_toolkit *sh, t_pipe *p)
 {

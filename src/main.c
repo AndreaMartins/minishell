@@ -16,6 +16,7 @@ int g_sig_rec;
 
 /*int minishell_loop(t_toolkit *sh)
 {
+    rl_catch_signals = 0;
     // Initialize signal
     init_signals(NORM);
     printf("Debug: Initialized signals.\n");
