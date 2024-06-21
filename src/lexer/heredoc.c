@@ -112,6 +112,7 @@ int	save_hd(t_toolkit *tool, char *key, char *str, int token)
 		printf("Debug: Failed to create pipe.\n");
 		return (-1);
 	}
+	init_signals(NORM);
 	while (1)
 	{
 		str = readline("> ");

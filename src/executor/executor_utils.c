@@ -140,7 +140,7 @@ void	check_access(t_toolkit *sh, char **cmd, t_pipe *p)
 			p->path = cmd[0];
 		}
 		else
-			err_exit(sh, cmd[0], "No sucha afile or directory", 127);
+			err_exit(sh, cmd[0], "No such file or directory", 127);
 	}
 	else
 		check_paths(sh->paths, cmd[0], sh, p);

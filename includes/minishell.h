@@ -30,9 +30,9 @@
 # include <errno.h>
 # include <string.h>
 
-# define NORM	1
+# define NORM 1
 # define N_INTERACT 3
-# define CHILD 1
+# define CHILD 2
 
 
 extern int g_sig_rec;
