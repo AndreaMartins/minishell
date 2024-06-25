@@ -42,32 +42,32 @@ int count_cmd(t_lexer *temp)
 
     i = 0;
     flag = 0;
-    printf("Starting count_cmd function\n");
+    //printf("Starting count_cmd function\n");
 
     while (temp && temp->token != PIPE)
     {
-        printf("Token: %d, i: %d, flag: %d\n", temp->token, i, flag);
+        //printf("Token: %d, i: %d, flag: %d\n", temp->token, i, flag);
 
         if (temp->token < 4 && temp->token > 0 && !flag)
         {
             i++;
-            printf("Incremented i: %d\n", i);
+            //printf("Incremented i: %d\n", i);
         }
         else if (temp->token < 4 && temp->token > 0 && flag)
         {
             flag = 0;
-            printf("Reset flag to 0\n");
+            //printf("Reset flag to 0\n");
         }
         else if (temp->token > 3)
         {
             flag++;
-            printf("Incremented flag: %d\n", flag);
+            //printf("Incremented flag: %d\n", flag);
         }
 
         temp = temp->next;
     }
 
-    printf("Final count: %d\n", i);
+    //printf("Final count: %d\n", i);
     return i;
 }
 
@@ -81,7 +81,7 @@ int parse_cmd(t_pipe *new, t_lexer *temp, t_toolkit *sh, int j)
         return (1);
 
     // Imprimir información para debuggear
-    printf("DEBUG: Total number of command tokens: %d\n", i);
+    //printf("DEBUG: Total number of command tokens: %d\n", i);
 
     // Loop para recolectar tokens de comando en el array new->cmd
     while (sh->lex_lst && sh->lex_lst->token < 4)
@@ -147,14 +147,14 @@ int	parse_redir(t_pipe *new, t_lexer *lex, t_fd *hd, t_toolkit *t)
 
 int parser(t_toolkit *t, t_lexer *lex, t_fd *hd, t_pipe *new)
 {
-    printf("Starting parser function\n");
+    //printf("Starting parser function\n");
 
     while (t->lex_lst)
     {
-        printf("Allocating new t_pipe\n");
+        //printf("Allocating new t_pipe\n");
         new = malloc(sizeof(t_pipe));
         if (!new) {
-            printf("Error allocating memory for t_pipe\n");
+            //printf("Error allocating memory for t_pipe\n");
             return err_break(shell_re(&t, lex, hd), "malloc", NULL, 12);
         }
         pipe_init(new);
@@ -162,30 +162,30 @@ int parser(t_toolkit *t, t_lexer *lex, t_fd *hd, t_pipe *new)
 
         while (t->lex_lst && t->lex_lst->token != PIPE)
         {
-            printf("Processing token: %d\n", t->lex_lst->token);
+            //printf("Processing token: %d\n", t->lex_lst->token);
             if (t->lex_lst->token > 3 && t->lex_lst->token < 8) {
-                printf("Parsing redirection\n");
+                //printf("Parsing redirection\n");
                 t->check = parse_redir(new, t->lex_lst, t->hd_lst, t);
             }
             else if (t->lex_lst->token > 0 && t->lex_lst->token < 4 && !new->cmd) {
-                printf("Parsing command\n");
+                //printf("Parsing command\n");
                 t->check = parse_cmd(new, t->lex_lst, t, 0);
             }
             else {
-                printf("Moving to next token\n");
+                //printf("Moving to next token\n");
                 t->lex_lst = t->lex_lst->next;
             }
             if (t->check) {
-                printf("Error detected, breaking\n");
+                //printf("Error detected, breaking\n");
                 return err_break(shell_re(&t, lex, hd), "malloc", NULL, 12);
             }
         }
         if (t->lex_lst) {
-            printf("Encountered PIPE, moving to next token\n");
+            //printf("Encountered PIPE, moving to next token\n");
             t->lex_lst = t->lex_lst->next;
         }
     }
-    printf("Completed parsing, resetting shell\n");
+    //printf("Completed parsing, resetting shell\n");
     shell_re(&t, lex, hd);
     return 0;
 }

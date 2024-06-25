@@ -17,70 +17,70 @@ int g_sig_rec;
 int minishell_loop(t_toolkit *sh)
 {
     init_signals(NORM);
-    printf("Debug: Initialized signals.\n");
+    //printf("Debug: Initialized signals.\n");
 
     do_sigign(SIGQUIT);
-    printf("Debug: Ignored SIGQUIT signal.\n");
+    //printf("Debug: Ignored SIGQUIT signal.\n");
 
     sh->args = readline("Hola Juan Carlos$> ");
-    printf("Debug: Readline input: %s\n", sh->args);
+    //printf("Debug: Readline input: %s\n", sh->args);
 
     if (!sh->args)
         return (ft_exit(sh));
 
     do_sigign(SIGINT);
-    printf("Debug: Ignored SIGINT signal.\n");
+    //printf("Debug: Ignored SIGINT signal.\n");
 
     add_history(sh->args);
-    printf("Debug: Added input to history.\n");
+    //printf("Debug: Added input to history.\n");
 
     if (check_input(sh->args)) {
-        printf("Debug: Input check failed.\n");
+        //printf("Debug: Input check failed.\n");
         return (0);
     }
-    printf("Debug: Input is valid.\n");
+    //printf("Debug: Input is valid.\n");
 
     if (check_quotes(sh->args)) {
-        printf("Debug: Quote check failed.\n");
+        //printf("Debug: Quote check failed.\n");
         return (error_quotes(sh));
     }
-    printf("Debug: Quotes are valid.\n");
+    //printf("Debug: Quotes are valid.\n");
 
     if (heredoc(sh, sh->args, 0)) {
-        printf("Debug: Heredoc processing failed.\n");
+        //printf("Debug: Heredoc processing failed.\n");
         return (1);
     }
-    printf("Debug: Heredoc processed.\n");
+    //printf("Debug: Heredoc processed.\n");
 
     if (lexer(sh, sh->args)) {
-        printf("Debug: Lexing failed.\n");
+        //printf("Debug: Lexing failed.\n");
         return (1);
     }
-    printf("Debug: Lexing successful.\n");
+    //printf("Debug: Lexing successful.\n");
 
     if (expanser(sh, sh->lex_lst, 0)) {
-        printf("Debug: Expansion failed.\n");
+        //printf("Debug: Expansion failed.\n");
         return (1);
     }
-    printf("Debug: Expansion successful.\n");
+    //printf("Debug: Expansion successful.\n");
 
     if (!sh->lex_lst || check_syntax(sh, sh->lex_lst, -1)) {
-        printf("Debug: Syntax check failed.\n");
+        //printf("Debug: Syntax check failed.\n");
         return (1);
     }
-    printf("Debug: Syntax check successful.\n");
+    //printf("Debug: Syntax check successful.\n");
 
     if (!sh->lex_lst || parser(sh, sh->lex_lst, sh->hd_lst, NULL)) {
-        printf("Debug: Parsing failed.\n");
+        //printf("Debug: Parsing failed.\n");
         return (1);
     }
-    printf("Debug: Parsing successful.\n");
+    //printf("Debug: Parsing successful.\n");
 
     if (executor(sh, sh->pipe_lst, -1, -1)) {
-        printf("Debug: Execution failed.\n");
+        //printf("Debug: Execution failed.\n");
         return (1);
     }
-    printf("Debug: Execution successful.\n");
+    //printf("Debug: Execution successful.\n");
 
     return (0);
 }
