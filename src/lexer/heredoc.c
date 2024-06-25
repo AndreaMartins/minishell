@@ -76,7 +76,7 @@ it saves the line in the buffer.
 1. return (-1) - if pipe() error occures
 2. return (fd) - a file descriptor to read the content of the heredoc
 */
-/*int	save_hd(t_toolkit *tool, char *key, char *str, int token)
+int	save_hd(t_toolkit *tool, char *key, char *str, int token)
 {
 	int	hd[2];
 
@@ -102,8 +102,8 @@ it saves the line in the buffer.
 	str = ft_memdel(str);
 	close(hd[1]);
 	return (hd[0]);
-}*/
-
+}
+/*
 int	save_hd(t_toolkit *tool, char *key, char *str, int token)
 {
 	int	hd[2];
@@ -148,7 +148,7 @@ int	save_hd(t_toolkit *tool, char *key, char *str, int token)
 	printf("Debug: Pipe write end closed.\n");
 
 	return (hd[0]);
-}
+}*/
 
 int	hd_close(int fd[], int flag)
 {
@@ -163,7 +163,7 @@ int	hd_close(int fd[], int flag)
 
 /* This fuction checks whether there are heredocs, sets the point where
 it starts and saves its information in a fd_node */
-/*int	heredoc(t_toolkit *tool, char *input, int i)
+int	heredoc(t_toolkit *tool, char *input, int i)
 {
 	t_fd	*new;
 
@@ -190,7 +190,8 @@ it starts and saves its information in a fd_node */
 		i = 0;
 	}
 	return (0);
-}*/
+}
+/*
 int	heredoc(t_toolkit *tool, char *input, int i)
 {
 	t_fd	*new;
@@ -244,4 +245,4 @@ int	heredoc(t_toolkit *tool, char *input, int i)
 
 	printf("Debug: Heredoc processing completed.\n");
 	return (0);
-}
+}*/
