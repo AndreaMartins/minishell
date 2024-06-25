@@ -83,7 +83,7 @@ int check_builtin(char **cmd)
 }
 
 
-void	ft_open(t_toolkit *sh, t_pipe *p, t_fd *fd1, int prev)
+/*void	ft_open(t_toolkit *sh, t_pipe *p, t_fd *fd1, int prev)
 {
 	while (fd1)
 	{
@@ -108,7 +108,69 @@ void	ft_open(t_toolkit *sh, t_pipe *p, t_fd *fd1, int prev)
 		prev = fd1->token;
 		fd1 = fd1->next;
 	}
+}*/
+
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+void ft_open(t_toolkit *sh, t_pipe *p, t_fd *fd1, int prev)
+{
+    while (fd1)
+    {
+        printf("Checking fd1 with token: %d and str: %s\n", fd1->token, fd1->str ? fd1->str : "NULL");
+        
+        ft_check_open(p, fd1, prev);
+        
+        if (fd1->exp == 1)
+        {
+            printf("Error: Ambiguous redirect for str: %s\n", fd1->str);
+            err_exit(sh, fd1->str, "ambiguous redirect", 1);
+        }
+
+        if (fd1->token == 6 || fd1->token == 9)  // HEREDOC or HEREDOC_NO_EXP
+        {
+            printf("Setting input file descriptor: %d\n", fd1->fd);
+            p->in_fd = fd1->fd;
+        }
+        else if (!fd1->str || *fd1->str == '\0')
+        {
+            printf("Error: No such file or directory for empty string\n");
+            err_exit(sh, "", "No such file or directory", 1);
+        }
+        else if (fd1->token == 4)  // INFILE
+        {
+            p->in_fd = open(fd1->str, O_RDONLY);
+            printf("Opened infile: %s with fd: %d\n", fd1->str, p->in_fd);
+        }
+        else if (fd1->token == 5)  // OUTFILE
+        {
+            p->out_fd = open(fd1->str, O_TRUNC | O_CREAT | O_RDWR, 0666);
+            printf("Opened outfile (truncate): %s with fd: %d\n", fd1->str, p->out_fd);
+        }
+        else if (fd1->token == 7)  // OUTFILEAPP
+        {
+            p->out_fd = open(fd1->str, O_APPEND | O_CREAT | O_RDWR, 0666);
+            printf("Opened outfile (append): %s with fd: %d\n", fd1->str, p->out_fd);
+        }
+
+        if (p->in_fd < 0 && (fd1->token == 6 || fd1->token == 9 || fd1->token == 4))
+        {
+            printf("Failed to open input file: %s, fd: %d\n", fd1->str, p->in_fd);
+            err_exit(sh, fd1->str, NULL, 1);
+        }
+        
+        if (p->out_fd < 0 && (fd1->token == 5 || fd1->token == 7))
+        {
+            printf("Failed to open output file: %s, fd: %d\n", fd1->str, p->out_fd);
+            err_exit(sh, fd1->str, NULL, 1);
+        }
+
+        prev = fd1->token;
+        fd1 = fd1->next;
+    }
 }
+
 
 void	ft_check_open(t_pipe *p, t_fd *cur, int prev)
 {

@@ -133,6 +133,8 @@ int lexer(t_toolkit *tool, char	*input)
 			return (EXIT_FAILURE); // TO - DO error function
 		else
 			lex_add(&(tool->lex_lst), new);
+		if (new)
+            printf("Token: %d, String: %s\n", new->token, new->str);
 	}
 	return (0);
 }

@@ -49,7 +49,13 @@ void do_sigign(int signum)
         exit(1);
     }
 }
-
+/**
+* @brief It initializes the signals for specific funtions
+* @param mode `{int}` the mode to use for the signals
+* @returns `{int}`
+* - 0 for ..
+* - 1 for ..
+*/
 int init_signals(int mode)
 {
     //printf("init_signals: Setting up signal handlers for mode: %d\n", mode);
