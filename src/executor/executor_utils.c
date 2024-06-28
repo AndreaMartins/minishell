@@ -15,104 +15,30 @@
 int check_builtin(char **cmd)
 {
     if (!cmd || !(*cmd))
-    {
-        //printf("cmd is NULL or cmd[0] is NULL\n");
         return 0;
-    }
-    
-    printf("cmd[0]: %s\n", cmd[0]);
-
     int echo_len = ft_longer(cmd[0], "echo");
-    //printf("Length of 'echo': %d\n", echo_len);
     if (!ft_strncmp(cmd[0], "echo", echo_len))
-    {
-        printf("Matched 'echo'\n");
         return 1;
-    }
-
     int cd_len = ft_longer(cmd[0], "cd");
-    //printf("Length of 'cd': %d\n", cd_len);
     if (!ft_strncmp(cmd[0], "cd", cd_len))
-    {
-        printf("Matched 'cd'\n");
         return 2;
-    }
-
     int pwd_len = ft_longer(cmd[0], "pwd");
-    //printf("Length of 'pwd': %d\n", pwd_len);
     if (!ft_strncmp(cmd[0], "pwd", pwd_len))
-    {
-        //printf("Matched 'pwd'\n");
         return 3;
-    }
-
     int export_len = ft_longer(cmd[0], "export");
-    //printf("Length of 'export': %d\n", export_len);
     if (!ft_strncmp(cmd[0], "export", export_len))
-    {
-        //printf("Matched 'export'\n");
         return 4;
-    }
-
     int unset_len = ft_longer(cmd[0], "unset");
-    //printf("Length of 'unset': %d\n", unset_len);
     if (!ft_strncmp(cmd[0], "unset", unset_len))
-    {
-        //printf("Matched 'unset'\n");
         return 5;
-    }
-
     int env_len = ft_longer(cmd[0], "env");
-    //printf("Length of 'env': %d\n", env_len);
     if (!ft_strncmp(cmd[0], "env", env_len))
-    {
-        //printf("Matched 'env'\n");
         return 6;
-    }
-
     int exit_len = ft_longer(cmd[0], "exit");
-    //printf("Length of 'exit': %d\n", exit_len);
     if (!ft_strncmp(cmd[0], "exit", exit_len))
-    {
-        //printf("Matched 'exit'\n");
         return 7;
-    }
-
-    //printf("No match found\n");
     return 0;
 }
-
-
-/*void	ft_open(t_toolkit *sh, t_pipe *p, t_fd *fd1, int prev)
-{
-	while (fd1)
-	{
-		ft_check_open(p, fd1, prev);
-		if (fd1->exp == 1)
-			err_exit(sh, fd1->str, "ambiguous redirect", 1);
-		if (fd1->token == 6 || fd1->token == 9)
-			p->in_fd = fd1->fd;
-		else if (!fd1->str || *fd1->str == '\0')
-			err_exit(sh, "", "No such file or diectory", 1);
-		else if (fd1->token == 4)
-			p->in_fd = open(fd1->str, O_RDONLY);
-		else if (fd1->token == 5)
-			p->out_fd = open(fd1->str, O_TRUNC | O_CREAT | O_RDWR, 0666);
-		else if (fd1->token == 7)
-			p->out_fd = open(fd1->str, O_APPEND | O_CREAT | O_RDWR, 0666);
-		if (p->in_fd < 0 && (fd1->token == 6 || fd1->token == 9
-				|| fd1->token == 4))
-			err_exit(sh, fd1->str, NULL, 1);
-		if (p->out_fd < 0 && (fd1->token == 5 || fd1->token == 7))
-			err_exit(sh, fd1->str, NULL, 1);
-		prev = fd1->token;
-		fd1 = fd1->next;
-	}
-}*/
-
-#include <stdio.h>
-#include <fcntl.h>
-#include <unistd.h>
 
 void ft_open(t_toolkit *sh, t_pipe *p, t_fd *fd1, int prev)
 {

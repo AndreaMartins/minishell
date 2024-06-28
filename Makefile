@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    MAKEFILE                                           :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: mmarsa-s <mmarsa-s@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 17:17:13 by mmarsa-s          #+#    #+#              #
-#    Updated: 2024/03/12 17:17:16 by mmarsa-s         ###   ########.fr        #
+#    Updated: 2024/06/28 15:46:17 by andmart2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ HEADER = includes/minishell.h
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Iincludes \
+CFLAGS = -Wall -Wextra -Werror -g -Includes \
 		-I$(HOME)/.brew/Cellar/readline/8.2.10/include
 
 OBJ = $(SRC:.c=.o)
