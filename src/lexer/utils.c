@@ -32,7 +32,7 @@ int ft_longer(char *str, char *key) {
     int len;
 
     if (str == NULL || key == NULL) {
-        printf("ft_longer: invalid input, str = %p, key = %p\n", (void *)str, (void *)key);
+       // printf("ft_longer: invalid input, str = %p, key = %p\n", (void *)str, (void *)key);
         return 0;
     }
 

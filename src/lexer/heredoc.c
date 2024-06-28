@@ -103,6 +103,52 @@ int	save_hd(t_toolkit *tool, char *key, char *str, int token)
 	close(hd[1]);
 	return (hd[0]);
 }
+/*
+int	save_hd(t_toolkit *tool, char *key, char *str, int token)
+{
+	int	hd[2];
+
+	if (pipe(hd) < 0) {
+		printf("Debug: Failed to create pipe.\n");
+		return (-1);
+	}
+	init_signals(NORM);
+	while (1)
+	{
+		str = readline("> ");
+		printf("Debug: Readline input: %s\n", str);
+
+		if (!str) {
+			printf("Debug: Readline returned NULL.\n");
+			return (hd_close(hd, 0));
+		} else if (!ft_strncmp(str, key, ft_longer(str, key)) && \
+				(ft_strncmp(str, "\n", 1))) {
+			printf("Debug: Input matches key and is not a newline.\n");
+			break;
+		} else if (!ft_strncmp(str, "\n", 1) && (*key == '\0')) {
+			printf("Debug: Input is a newline and key is empty.\n");
+			break;
+		}
+
+		str = expand_hd(tool, str, token);
+		if (!str) {
+			printf("Debug: Expansion returned NULL.\n");
+			return (hd_close(hd, 1));
+		}
+
+		write(hd[1], str, ft_strlen(str));
+		write(hd[1], "\n", 1);
+		printf("Debug: Written to pipe: %s\n", str);
+
+		str = ft_memdel(str);
+	}
+
+	str = ft_memdel(str);
+	close(hd[1]);
+	printf("Debug: Pipe write end closed.\n");
+
+	return (hd[0]);
+}*/
 
 int	hd_close(int fd[], int flag)
 {
@@ -130,18 +176,73 @@ int	heredoc(t_toolkit *tool, char *input, int i)
 			return (0);
 		input = input + i;
 		new = malloc(sizeof(t_fd));
-//		if (!new)
-//			return (err_break(tool, "heredoc", NULL, 12)); // TO - DO error function
+		if (!new)
+			return (err_break(tool, "heredoc", NULL, 12));
 		new->next = NULL;
 		new->token = HEREDOC;
 		fd_add(&(tool->hd_lst), new);
 		new->str = keyword_hd(new, input, &i, ' ');
-//		if (!new->str)
-//			return (err_break(tool, "heredoc", NULL, 12)); 	// TO - DO error function
+		if (!new->str)
+			return (err_break(tool, "heredoc", NULL, 12));
 		new->fd = save_hd(tool, new->str, NULL, new->token);
-//		if (new->fd < 0)
-//			return (err_break(tool, "heredoc",  NULL, -(new->fd))); // TO - DO error function
+		if (new->fd < 0)
+			return (err_break(tool, "heredoc",  NULL, -(new->fd)));
 		i = 0;
 	}
 	return (0);
 }
+/*
+int	heredoc(t_toolkit *tool, char *input, int i)
+{
+	t_fd	*new;
+
+	if (!ft_strnstr(input, "<<", ft_strlen(input))) {
+		printf("Debug: No heredoc found in input.\n");
+		return (0);
+	}
+	i = wheredoc(input, 0);
+	while (input[i])
+	{
+		printf("Debug: wheredoc returned index: %d\n", i);
+
+		if (i <= 0) {
+			printf("Debug: Invalid index returned by wheredoc.\n");
+			return (0);
+		}
+
+		input = input + i;
+		printf("Debug: Updated input: %s\n", input);
+
+		new = malloc(sizeof(t_fd));
+		if (!new) {
+			printf("Debug: Memory allocation failed for new t_fd.\n");
+			return (err_break(tool, "heredoc", NULL, 12));
+		}
+
+		new->next = NULL;
+		new->token = HEREDOC;
+		fd_add(&(tool->hd_lst), new);
+		printf("Debug: Added new t_fd to hd_lst.\n");
+
+		new->str = keyword_hd(new, input, &i, ' ');
+		printf("Debug: keyword_hd returned: %s\n", new->str);
+
+		if (!new->str) {
+			printf("Debug: keyword_hd returned NULL.\n");
+			return (err_break(tool, "heredoc", NULL, 12));
+		}
+
+		new->fd = save_hd(tool, new->str, NULL, new->token);
+		printf("Debug: save_hd returned fd: %d\n", new->fd);
+
+		if (new->fd < 0) {
+			printf("Debug: save_hd failed with fd: %d\n", new->fd);
+			return (err_break(tool, "heredoc",  NULL, -(new->fd)));
+		}
+
+		i = 0;
+	}
+
+	printf("Debug: Heredoc processing completed.\n");
+	return (0);
+}*/

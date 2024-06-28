@@ -36,4 +36,3 @@ char *ft_get_value(t_toolkit *sh, char *key) {
     //printf("ft_get_value: key not found\n");
     return NULL;
 }
-

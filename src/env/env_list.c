@@ -128,5 +128,3 @@ int add_or_update_env(t_toolkit *sh, char *name, char *value) {
     //printf("add_or_update_env: new environment variable added successfully\n");
     return (0);
 }
-
-
