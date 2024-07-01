@@ -82,6 +82,8 @@ void	child_process(t_toolkit *sh, t_pipe *p, int flag)
 // Definición de exec_builtin
 int	exec_builtin(t_toolkit *sh, t_pipe *p)
 {
+	if(!sh->pipes && ft_open_built(sh, p , p->fd_lst, -1))
+		return (sh->exit);
 	switch (p->builtin)
 	{
 	case 1:
