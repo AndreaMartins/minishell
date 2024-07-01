@@ -16,7 +16,7 @@ void	ft_redir(t_toolkit *sh, t_pipe *p)
 {
 	if (p->in_fd >= 0)
 	{
-		if (dup2(p->in_fd, STDIN_FILENO) < 0)
+		if (dup2(p->in_fd, 0) < 0)
 		{
 			err_exit(sh, "dup2", NULL, 1);
 		}
@@ -25,7 +25,7 @@ void	ft_redir(t_toolkit *sh, t_pipe *p)
 	}
 	if (p->out_fd >= 0)
 	{
-		if (dup2(p->out_fd, STDOUT_FILENO) < 0)
+		if (dup2(p->out_fd, 1) < 0)
 		{
 			err_exit(sh, "dup2", NULL, 1);
 		}

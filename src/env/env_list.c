@@ -52,17 +52,13 @@ int env_add_last(t_toolkit *sh, char *name, char *value, int has_val) {
     (void)has_val;  // Marcar has_val como no utilizado
 
     t_env *new_env = (t_env *)malloc(sizeof(t_env));
-    if (!new_env) {
-        //printf("env_add_last: malloc failed\n");
+    if (!new_env) 
         return 1;
-    }
-
     new_env->key = ft_strdup(name);
     new_env->val = value ? ft_strdup(value) : NULL;
     new_env->next = NULL;
 
     if (!new_env->key || (value && !new_env->val)) {
-        //printf("env_add_last: strdup failed\n");
         free(new_env->key);
         free(new_env->val);
         free(new_env);
@@ -78,8 +74,6 @@ int env_add_last(t_toolkit *sh, char *name, char *value, int has_val) {
         }
         current->next = new_env;
     }
-
-    //printf("env_add_last: new environment variable added, key = %s, value = %s\n", name, value);
     return 0;
 }
 
@@ -91,40 +85,28 @@ int add_or_update_env(t_toolkit *sh, char *name, char *value) {
     if (value == NULL)
         has_val = 0;
 
-    //printf("add_or_update_env: name = %s, value = %s, has_val = %d\n", name, value, has_val);
 
     env = sh->env_lst;
     while (env != NULL) {
-        //printf("add_or_update_env: checking env key = %s\n", env->key);
 
         if (ft_strncmp(env->key, name, ft_strlen(name)) == 0 && ft_strlen(env->key) == ft_strlen(name)) {
-            //printf("add_or_update_env: match found, updating key = %s\n", env->key);
+
 
             if (env->val) {
-                //printf("add_or_update_env: freeing old value = %s\n", env->val);
                 free(env->val);
-                //printf("add_or_update_env: value freed successfully\n");
             }
 
             env->val = ft_strdup(value);
-            if (!env->val && value) {
-                //printf("add_or_update_env: memory allocation failed for value\n");
+            if (!env->val && value) 
                 return (err_break(sh, "malloc", NULL, 12));
-            }
-
-            //printf("add_or_update_env: value updated successfully\n");
             return (0);
         }
 
         env = env->next;
     }
 
-    //printf("add_or_update_env: no match found, adding new environment variable\n");
     if (env_add_last(sh, name, value, has_val)) {
-        //printf("add_or_update_env: memory allocation failed during env_add_last\n");
         return (err_break(sh, "malloc", NULL, 12));
     }
-
-    //printf("add_or_update_env: new environment variable added successfully\n");
     return (0);
 }
