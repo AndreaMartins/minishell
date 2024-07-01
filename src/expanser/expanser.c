@@ -19,6 +19,7 @@
 */
 char	*expand_hd(t_toolkit *tool, char *str, int token)
 {
+	write(1, "Entering exphdd_str\n", 20);
 	if (token == HEREDOC_NO_EXP)
 		return (str);
 	if (check_exp(str, 3, -1) < 0)
@@ -36,13 +37,17 @@ char	*expand_hd(t_toolkit *tool, char *str, int token)
 char	*expand_str(t_toolkit *tool, char *str, int token, int i)
 {
 	if (exp_start(tool, str, token))
+	{
+		write(1, "Entering expand_bla\n", 20);
 		return (NULL);
+	}
 	while (str[++i])
 	{
 		if (open_q(tool->exp, str[i], token) || str[i] != '$' || !str[i + 1])
 			tool->exp->new[++tool->exp->j] = str[i];
 		else
 		{
+			write(1, "Entering expand_str\n", 20);
 			tool->exp->var = get_var(&str[i + 1]);
 			if (!tool->exp->var)
 				return (NULL);
@@ -126,12 +131,14 @@ int	expand_word(t_toolkit *tool, t_lexer **lex)
 */
 int	expanser(t_toolkit *t, t_lexer *head, int flag)
 {
+	write(1, "Entering exppan_str\n", 20);
 	if (exp_init(t))
 		return (1);
 	while (t->lex_lst)
 	{
 		if (t->lex_lst->token == DOUBLEQ && check_exp(t->lex_lst->str, 3, -1) >= 0)
 		{
+			write(1, "Entering expanifstr\n", 20);
 			t->lex_lst->str = expand_str(t, t->lex_lst->str, 3, -1);
 			if (!t->lex_lst->str)
 				return (err_break(shell_re(&t, head, NULL),
@@ -139,6 +146,7 @@ int	expanser(t_toolkit *t, t_lexer *head, int flag)
 		}
 		else if (!flag)
 		{
+			write(1, "Entering expelsestr\n", 20);
 			if (exp_quotes(t, &head, &flag))
 				return (err_break(shell_re(&t, head, NULL), "malloc", NULL, 12));
 		}
