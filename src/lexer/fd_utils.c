@@ -44,7 +44,7 @@ int	fd_init(t_fd *new, t_toolkit *tool, int fd)
 	new->exp = 0;
 	new->token = tool->lex_lst->token;
 	tool->lex_lst = tool->lex_lst->next;
-	while (tool->lex_lst && tool->lex_lst->token == SPACE)
+	while (tool->lex_lst && tool->lex_lst->token == MYSPACE)
 		tool->lex_lst = tool->lex_lst->next;
 	if (!tool->lex_lst)
 		return (1);
