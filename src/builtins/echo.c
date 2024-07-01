@@ -83,7 +83,7 @@ int	ft_echo(t_toolkit *sh, t_pipe *p)
 	if (num_args(cmd) > 1)
 		echo_args(cmd, output);
 	if (has_n)
-		//ft_putstr_fd("\n", output);
+		ft_putstr_fd("\n", output);
 	if (sh->pipes)
 		err_break(sh, NULL, NULL, 0);
 	return (0);
