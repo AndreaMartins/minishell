@@ -107,7 +107,7 @@ int	parse_redir(t_pipe *new, t_lexer *lex, t_fd *hd, t_toolkit *t)
 	if (!fd_new)
 		return (1);
 	fd_add(&(new->fd_lst), fd_new);
-	if ((lex->token > 3 && lex->token < 6) || lex->token == OUTFILEAPP)
+	if ((lex->token > 3 && lex->token < 6) || lex->token == 7)
 		check = fd_init(fd_new, t, -2);
 	else if (lex->token == HEREDOC)
 	{

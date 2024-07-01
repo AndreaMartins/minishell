@@ -93,14 +93,14 @@ int	ft_open_built(t_toolkit *sh, t_pipe *p, t_fd *fd1, int prev)
 			p->in_fd = fd1->fd;
 		else if (!fd1->str || *fd1->str == '\0')
 			return (err_break(sh, "", "No such file or directory", 1));
-		else if (fd1->token == INFILE)
+		else if (fd1->token == 4)
 			p->in_fd = open(fd1->str, O_RDONLY);
-		else if (fd1->token == OUTFILE)
+		else if (fd1->token == 5)
 			p->out_fd = open(fd1->str, O_TRUNC | O_CREAT | O_RDWR, 0666);
-		else if (fd1->token == OUTFILEAPP)
+		else if (fd1->token == 7)
 			p->out_fd = open(fd1->str, O_APPEND | O_CREAT | O_RDWR, 0666);
 		if (p->in_fd < 0 && (fd1->token == HEREDOC || fd1->token == HEREDOC_NO_EXP
-				|| fd1->token == INFILE))
+				|| fd1->token == 4))
 			return (err_break(sh, fd1->str, NULL, 1));
 		if (p->out_fd < 0 && (fd1->token == OUTFILE || fd1->token == OUTFILEAPP))
 			return (err_break(sh, fd1->str, NULL, 1));
