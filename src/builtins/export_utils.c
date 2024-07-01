@@ -35,7 +35,7 @@ int	print_export(t_env *eprint, t_pipe *p)
 	tmp = eprint;
 	while (tmp)
 	{
-		ft_putstr_fd("declare -x", output);
+		ft_putstr_fd("declare -x ", output);
 		ft_putstr_fd(tmp->key, output);
 		if (tmp->val)
 			print_env_fd(tmp, output);
