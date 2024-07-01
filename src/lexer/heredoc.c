@@ -124,9 +124,9 @@ int	heredoc(t_toolkit *tool, char *input, int i)
 
 	if (!ft_strnstr(input, "<<", ft_strlen(input)))
 		return (0);
+	i = wheredoc(input, 0);
 	while (input[i])
 	{
-		i = wheredoc(input, 0);
 		if (i <= 0)
 			return (0);
 		input = input + i;
