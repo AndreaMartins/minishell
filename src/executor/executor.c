@@ -34,7 +34,7 @@ void	ft_redir(t_toolkit *sh, t_pipe *p)
 	}
 }
 
-int	last_child(t_toolkit *sh, t_pipe *p)
+/*int	last_child(t_toolkit *sh, t_pipe *p)
 {
 	p->builtin = check_builtin(p->cmd);
 	if (!sh->pipes && sh->pipe_lst->builtin)
@@ -56,7 +56,39 @@ int	last_child(t_toolkit *sh, t_pipe *p)
 		close(p->in_fd);
 	}
 	return (0);
+}*/
+
+int last_child(t_toolkit *sh, t_pipe *p)
+{
+    p->builtin = check_builtin(p->cmd);
+    
+    printf("p->builtin: %d\n", p->builtin);  // Debugging output
+    
+    if (!sh->pipes && sh->pipe_lst->builtin)
+    {
+        sh->exit = exec_builtin(sh, p);
+        return 0;
+    }
+    
+    sh->exe->pid = fork();
+    
+    if (sh->exe->pid < 0)
+    {
+        return err_break(sh, "fork", NULL, 12);
+    }
+    else if (sh->exe->pid == 0)
+    {
+        child_process(sh, p, 1);
+    }
+    
+    if (sh->pipes && p->in_fd >= 0)
+    {
+        close(p->in_fd);
+    }
+    
+    return 0;
 }
+
 
 void	child_process(t_toolkit *sh, t_pipe *p, int flag)
 {
@@ -82,6 +114,8 @@ void	child_process(t_toolkit *sh, t_pipe *p, int flag)
 // Definición de exec_builtin
 int	exec_builtin(t_toolkit *sh, t_pipe *p)
 {
+	if(!sh->pipes && ft_open_built(sh, p , p->fd_lst, -1))
+		return (sh->exit);
 	switch (p->builtin)
 	{
 	case 1:
@@ -116,7 +150,7 @@ int	exec_builtin(t_toolkit *sh, t_pipe *p)
 int	executor(t_toolkit *sh, t_pipe *p, int i, int j)
 {
 	while (++i < sh->pipes)
-	{
+	{ 
 		p->builtin = check_builtin(p->cmd);
 		if (pipe(sh->exe->fdp) < 0)
 		{
