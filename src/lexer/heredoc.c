@@ -104,7 +104,6 @@ int	save_hd(t_toolkit *tool, char *key, char *str, int token)
 	return (hd[0]);
 }
 
-
 int	hd_close(int fd[], int flag)
 {
 	close(fd[1]);
