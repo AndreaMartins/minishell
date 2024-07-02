@@ -94,7 +94,7 @@ int	ft_exit(t_toolkit *sh)
 	if (sh->args == NULL || ft_strcmp(sh->args, "exit") == 0)
 	{
 		sh->power_on = 0;
-		printf("ciao\n");
+		printf("ciao stronzo\n");
 		return (sh->exit);
 	}
 	else
@@ -104,7 +104,7 @@ int	ft_exit(t_toolkit *sh)
 			return (p_exit_err("minishell: exit: too many arguments\n", 2));
 		sh->power_on = 0;
 		input = sh->pipe_lst->cmd[1];
-		printf("ciao\n");
+		printf("ciao stronzo\n");
 		if (input[0] == '\0')
 			p_exit_err(input, 1);
 		else
