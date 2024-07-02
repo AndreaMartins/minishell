@@ -36,7 +36,9 @@ char	*expand_hd(t_toolkit *tool, char *str, int token)
 char	*expand_str(t_toolkit *tool, char *str, int token, int i)
 {
 	if (exp_start(tool, str, token))
+	{
 		return (NULL);
+	}
 	while (str[++i])
 	{
 		if (open_q(tool->exp, str[i], token) || str[i] != '$' || !str[i + 1])

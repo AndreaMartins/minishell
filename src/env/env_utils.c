@@ -14,7 +14,6 @@
 
 char *ft_get_value(t_toolkit *sh, char *key) {
     t_env *tmp;
-
     if (!sh || !key) {
         return NULL;
     }

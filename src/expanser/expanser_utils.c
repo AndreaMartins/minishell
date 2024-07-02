@@ -171,17 +171,20 @@ char	*get_var(char *cont)
 */
 char	*check_value(t_toolkit *tool, char *var)
 {
-	if (!var)
+	if (!var){ 
 		return (NULL);
+	}
 	if (*var == '?')
-	{
+	{	
 		tool->exp->alloc = 1;
 		return (ft_itoa(tool->exit));
 	}
 	else if (*var == '0')
 		return ("Hola Juan Carlos\0");
 	else
+	{
 		return (ft_get_value(tool, var));
+	}
 }
 
 /*

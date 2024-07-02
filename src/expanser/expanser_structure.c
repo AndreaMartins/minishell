@@ -88,7 +88,6 @@ int	exp_start(t_toolkit *tool, char *str, int token)
 char	*exp_fd(t_toolkit *tool, char *str, t_fd *new)
 {
 	char	*s;
-
 	if (tool->lex_lst->token == WORD
 		&& check_exp(str, tool->lex_lst->token, -1) < 0)
 		return (trim_quotes(str, ' ', ft_strlen(str), -1));
