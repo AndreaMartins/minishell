@@ -28,7 +28,7 @@ void	export_plus_equal(t_toolkit *sh, char *key, char *value)
 			value = ft_strdup("");
 		while (env != NULL)
 		{
-			if (ft_strncmp(env->key, key, ft_strlen(key)) == 0 \
+			if (ft_strncmp(env->key, key, ft_strlen(key)) == 0
 				&& ft_strlen(env->key) == ft_strlen(key))
 			{
 				old_value = env->val;
@@ -79,10 +79,10 @@ int	handle_args(t_toolkit *sh, char *arg)
 
 int	ft_export(t_toolkit *sh, t_pipe *p)
 {
-	t_env	*tmp_env;
-	char	**t_cmd;
-	int		err;
-	int		i;
+	t_env *tmp_env;
+	char **t_cmd;
+	int err;
+	int i;
 
 	err = 0;
 	tmp_env = sh->env_lst;

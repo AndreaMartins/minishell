@@ -14,9 +14,9 @@
 
 int	parse_nl(char *s)
 {
-	write(1, "Entering parse_line\n", 20);
 	int	i;
 
+	write(1, "Entering parse_line\n", 20);
 	i = 1;
 	if (!(s[0] == '-'))
 		return (0);
