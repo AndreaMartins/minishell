@@ -13,7 +13,7 @@
 NAME = minishell
 HEADER = includes/minishell.h
 
-CC = gcc
+CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -g \
          -I/usr/local/opt/readline/include \
@@ -53,15 +53,15 @@ SIGNALS = src/signals/signals.c
 SRC = $(MAIN) $(LEXER) $(ERRORS) $(EXPANSER) $(PARSER) $(EXECUTOR) \
       $(SIGNALS) $(BUILTINS) $(ENV)
 
-all: $(NAME)
+all: make_lib $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(READLINE) -o $(NAME)
 
-$(LIBFT):
+make_lib:
 	$(MAKE_LIBFT)
 
-%.o: %.c $(HEADER)
+%.o: %.c $(HEADER) Makefile
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
@@ -75,7 +75,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re make_lib
 
 
 
