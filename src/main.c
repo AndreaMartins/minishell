@@ -34,8 +34,10 @@ int minishell_loop(t_toolkit *sh)
     if (expanser(sh, sh->lex_lst, 0))
         return (1);
     if (!sh->lex_lst || check_syntax(sh, sh->lex_lst, -1))
-        write(1, "checksintax\n", 20);
+    {
+        write(1, "checksintax\n", 13);
         return (1);
+    }
     if (!sh->lex_lst || parser(sh, sh->lex_lst, sh->hd_lst, NULL))
         return (1);
     if (executor(sh, sh->pipe_lst, -1, -1))

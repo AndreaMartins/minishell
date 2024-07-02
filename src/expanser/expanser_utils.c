@@ -85,14 +85,12 @@ int	new_len(t_toolkit *tool, char *cont, int type)
 */
 char	*get_var(char *cont)
 {
-	write(1, "Entering get_var\n", 17);
 	int		len;
 	char	*new;
 
 	len = 0;
 	if (!cont)
 		return (NULL);
-	write(1, "Entering get_var\n", 17);
 	if (check_chr(cont[len]) == 3)
 	{
 		new = malloc(2);
@@ -111,7 +109,6 @@ char	*get_var(char *cont)
 	while (cont[++len] && check_chr(cont[len]) > 2)
 		new[len] = cont[len];
 	new[len] = '\0';
-	write(1, "Entering get_var\n", 17);
 	return (new);
 }
 
@@ -122,14 +119,11 @@ char	*get_var(char *cont)
 */
 char	*check_value(t_toolkit *tool, char *var)
 {
-	write(1, "Entering check_value\n", 21);
 	if (!var){ 
-		write(1, "Entering parse_line\n", 20);
 		return (NULL);
 	}
 	if (*var == '?')
 	{	
-		write(1, "Entering parse_line\n", 20);
 		tool->exp->alloc = 1;
 		return (ft_itoa(tool->exit));
 	}
@@ -137,7 +131,6 @@ char	*check_value(t_toolkit *tool, char *var)
 		return ("Hola Juan Carlos\0");
 	else
 	{
-		write(1, "fuck\n", 5);
 		return (ft_get_value(tool, var));
 	}
 }

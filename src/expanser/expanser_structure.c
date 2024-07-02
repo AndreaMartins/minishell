@@ -44,7 +44,6 @@ void	exp_clean(t_exp **exp)
 */
 int	exp_init(t_toolkit *tool)
 {
-	write(1, "Entering exp_init\n", 18);
 	if (tool->exp)
 		exp_clean(&tool->exp);
 	tool->exp = malloc(sizeof(t_exp));
@@ -65,7 +64,6 @@ int	exp_init(t_toolkit *tool)
 */
 int	exp_start(t_toolkit *tool, char *str, int token)
 {
-	write(1, "Entering exp_start\n", 19);
 	tool->exp->str = str;
 	tool->exp->k = new_len(tool, str, token);
 	if (tool->exp->k < 0)
@@ -90,7 +88,6 @@ int	exp_start(t_toolkit *tool, char *str, int token)
 char	*exp_fd(t_toolkit *tool, char *str, t_fd *new)
 {
 	char	*s;
-	write(1, "Entering expfdd_str\n", 20);
 	if (tool->lex_lst->token == WORD
 		&& check_exp(str, tool->lex_lst->token, -1) < 0)
 		return (trim_quotes(str, ' ', ft_strlen(str), -1));
