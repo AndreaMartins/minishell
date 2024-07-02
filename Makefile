@@ -6,7 +6,7 @@
 #    By: mmarsa-s <mmarsa-s@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 17:17:13 by mmarsa-s          #+#    #+#              #
-#    Updated: 2024/06/28 15:46:17 by andmart2         ###   ########.fr        #
+#    Updated: 2024/07/02 12:49:43 by andmart2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror -g \
          -I/usr/local/opt/readline/include \
-         -Iincludes
+         -Iincludes -fsanitize=address
 
 OBJ = $(SRC:.c=.o)
 LIBFT = ./includes/libft/libft.a

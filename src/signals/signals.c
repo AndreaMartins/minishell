@@ -11,105 +11,67 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-void norm_handler(int sig, siginfo_t *data, void *non_used_data)
-{
-    (void)data;
-    (void)non_used_data;
-    if (sig == SIGINT)
-    {
 
-        rl_on_new_line();
-        rl_replace_line("", 1);
-        rl_redisplay();
-        g_sig_rec = 1;
-    }
-    return;
+void	norm_handler(int sig, siginfo_t *data, void *non_used_data)
+{
+	(void) data;
+	(void) non_used_data;
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+		g_sig_rec = 1;
+	}
+	return ;
 }
 
-void child_sigint_handler(int sig)
+void	do_sigign(int signum)
 {
-    printf("child_sigint_handler: Signal received: %d\n", sig);
-    printf("\nCaught SIGINT in child process, terminating\n");
-    exit(130);
+	struct sigaction	signal;
+
+	signal.sa_handler = SIG_IGN;
+	signal.sa_flags = SA_RESTART;
+	sigemptyset(&signal.sa_mask);
+	if (sigaction(signum, &signal, NULL) < 0)
+		exit (1);
 }
 
-void do_sigign(int signum)
+int	init_signals(int mode)
 {
+	struct sigaction	signal;
 
-    struct sigaction signal;
-
-    signal.sa_handler = SIG_IGN;
-    signal.sa_flags = SA_RESTART;
-    sigemptyset(&signal.sa_mask);
-    if (sigaction(signum, &signal, NULL) < 0)
-    {
-        perror("do_sigign: sigaction failed");
-        exit(1);
-    }
-}
-/**
-* @brief It initializes the signals for specific funtions
-* @param mode `{int}` the mode to use for the signals
-* @returns `{int}`
-* - 0 for ..
-* - 1 for ..
-*/
-int init_signals(int mode)
-{
-   
-    struct sigaction signal;
-
-    signal.sa_flags = SA_RESTART | SA_SIGINFO;
-    sigemptyset(&signal.sa_mask);
-    if (mode == NORM)
-    {
-        signal.sa_sigaction = norm_handler;
-    }
-    else if (mode == CHILD)
-    {
-    
-        signal.sa_handler = child_sigint_handler;
-    }
-
-    if (sigaction(SIGINT, &signal, NULL) < 0)
-    {
-        perror("init_signals: sigaction failed for SIGINT");
-        exit(1);
-    }
-    if (sigaction(SIGQUIT, &signal, NULL) < 0)
-    {
-        perror("init_signals: sigaction failed for SIGQUIT");
-        exit(1);
-    }
-
-    return 0;
+	signal.sa_flags = SA_RESTART | SA_SIGINFO;
+	sigemptyset(&signal.sa_mask);
+	if (mode == NORM)
+		signal.sa_sigaction = norm_handler;
+	sigaction(SIGINT, &signal, NULL);
+	sigaction(SIGQUIT, &signal, NULL);
+	return (0);
 }
 
-void exit_status(t_toolkit *sh, int j)
+void	exit_status(t_toolkit *sh, int j)
 {
-    while (++j <= sh->pipes)
-    {
-        
-        if (sh->exe->pid == wait(&sh->exe->stat))
-        {
-            if (WIFEXITED(sh->exe->stat))
-            {
-                sh->exit = WEXITSTATUS(sh->exe->stat);
-            }
-            else if (WIFSIGNALED(sh->exe->stat))
-            {
-                if (WTERMSIG(sh->exe->stat) == SIGINT)
-                {
-                    
-                    sh->exit = 130;
-                }
-                else if (WTERMSIG(sh->exe->stat) == SIGQUIT)
-                {
-                  
-                    sh->exit = 131;
-                   
-                }
-            }
-        }
-    }
+	while (++j <= sh->pipes)
+	{
+		if (sh->exe->pid == wait(&sh->exe->stat))
+		{
+			if (WIFEXITED(sh->exe->stat))
+				sh->exit = WEXITSTATUS(sh->exe->stat);
+			else if (WIFSIGNALED(sh->exe->stat))
+			{
+				if (WTERMSIG(sh->exe->stat) == SIGINT)
+				{
+					printf("\n");
+					sh->exit = 130;
+				}
+				else if (WTERMSIG(sh->exe->stat) == SIGQUIT)
+				{
+					sh->exit = 131;
+					printf("Quit: 3\n");
+				}
+			}
+		}
+	}
 }
