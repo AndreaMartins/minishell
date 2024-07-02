@@ -60,33 +60,20 @@ void	ft_redir(t_toolkit *sh, t_pipe *p)
 
 int last_child(t_toolkit *sh, t_pipe *p)
 {
-    p->builtin = check_builtin(p->cmd);
-    
-    printf("p->builtin: %d\n", p->builtin);  // Debugging output
-    
+    p->builtin = check_builtin(p->cmd); 
     if (!sh->pipes && sh->pipe_lst->builtin)
     {
         sh->exit = exec_builtin(sh, p);
         return 0;
     }
-    
     sh->exe->pid = fork();
-    
     if (sh->exe->pid < 0)
-    {
         return err_break(sh, "fork", NULL, 12);
-    }
     else if (sh->exe->pid == 0)
-    {
         child_process(sh, p, 1);
-    }
-    
     if (sh->pipes && p->in_fd >= 0)
-    {
         close(p->in_fd);
-    }
-    
-    return 0;
+    return (0);
 }
 
 
