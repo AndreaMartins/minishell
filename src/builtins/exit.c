@@ -100,7 +100,7 @@ int	ft_exit(t_toolkit *sh)
 	else
 	{
 		ex = 255;
-		if (arg_count(sh->pipe_lst->cmd) > 2 && ft_isdigit(ft_atoi(sh->pipe_lst->cmd[1])))
+		if (arg_count(sh->pipe_lst->cmd) > 2)
 			return (p_exit_err("minishell: exit: too many arguments\n", 2));
 		sh->power_on = 0;
 		input = sh->pipe_lst->cmd[1];
