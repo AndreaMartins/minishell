@@ -53,7 +53,7 @@ int	check_exp(char *str, int token, int q)
 	for temporary variables and ensures that the length is updated correctly 
 	considering the replacements made.
 */
-int	new_len(t_toolkit *tool, char *cont, int type)
+/*int	new_len(t_toolkit *tool, char *cont, int type)
 {
 	int		len;
 	int		i;
@@ -77,6 +77,57 @@ int	new_len(t_toolkit *tool, char *cont, int type)
 		new = ft_memdel(new);
 	}
 	return (len);
+}*/
+int new_len(t_toolkit *tool, char *cont, int type)
+{
+    int len;
+    int i;
+    char *new;
+    char *val;
+
+    printf("Inicio de new_len\n");
+    printf("Contenido inicial: %s, Tipo: %d\n", cont, type);
+
+    len = ft_strlen(cont);
+    printf("Longitud inicial: %d\n", len);
+
+    while (*cont)
+    {
+        i = check_exp(cont, type, -1);
+        if (i < 0)
+            break;
+        printf("Encontrado carácter especial en índice %d\n", i);
+
+        new = get_var(&cont[i + 1]);
+        if (!new)
+        {
+            printf("Error: get_var devolvió NULL\n");
+            return (-1);
+        }
+        printf("Variable obtenida: %s\n", new);
+
+        val = check_value(tool, new);
+		if (!val)
+			return (-1);
+        printf("Valor de la variable: %s\n", val);
+
+        len = len - ft_strlen(new) - 1 + ft_strlen(val);
+        printf("Nueva longitud calculada: %d\n", len);
+
+        if (*new == '?')
+        {
+            val = ft_memdel(val);
+            printf("Memoria liberada para valor de variable '?'\n");
+        }
+
+        cont = cont + i + 1;
+        new = ft_memdel(new);
+        printf("Memoria liberada para variable\n");
+    }
+
+    printf("Longitud final: %d\n", len);
+    printf("Fin de new_len\n");
+    return (len);
 }
 
 /*
@@ -111,6 +162,7 @@ char	*get_var(char *cont)
 	new[len] = '\0';
 	return (new);
 }
+
 
 /*
 	Retrieves the value of a given variable name (var)
