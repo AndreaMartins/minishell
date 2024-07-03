@@ -130,7 +130,7 @@ int lexer(t_toolkit *tool, char	*input)
 		else
 			new = rd_word(&input[i], &i, ' ');
 		if (!new)
-			return (EXIT_FAILURE); // TO - DO error function
+			return (err_break(tool, "malloc", NULL, 12));
 		else
 			lex_add(&(tool->lex_lst), new);
 	}
