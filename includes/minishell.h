@@ -34,10 +34,7 @@
 # define N_INTERACT 3
 # define CHILD 2
 
-
 extern int g_sig_rec;
-
-
 
 typedef struct s_envlst
 {
