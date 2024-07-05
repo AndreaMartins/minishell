@@ -19,7 +19,7 @@ int	wheredoc(char *str, int i)
 {
 	while (str[i])
 	{
-		while (str[i] != '<')
+		while (str[i] && str[i] != '<')
 			i++;
 		if (!str[i] || !str[i + 1] || !str[i + 2])
 			return (-1);
@@ -80,7 +80,7 @@ int	save_hd(t_toolkit *tool, char *key, char *str, int token)
 {
 	int	hd[2];
 
-	if (pipe(hd) < 0)
+	if (pipe(hd) < -1)
 		return (-1);
 	while (1)
 	{
@@ -123,9 +123,10 @@ int	heredoc(t_toolkit *tool, char *input, int i)
 
 	if (!ft_strnstr(input, "<<", ft_strlen(input)))
 		return (0);
-	i = wheredoc(input, 0);
+	
 	while (input[i])
 	{
+		i = wheredoc(input, 0);
 		if (i <= 0)
 			return (0);
 		input = input + i;
