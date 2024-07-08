@@ -32,7 +32,7 @@ t_lexer	*rd_space(char *input, int *i)
 	return (lex_new(new, MYSPACE));
 }
 
-/* This function serves to parse input strings, 
+/* This function serves to parse input strings,
 extracting individual words, including those within quotes */
 
 t_lexer	*rd_word(char *input, int *i, char q)
@@ -61,7 +61,7 @@ a LEX_NODE with the defining characteristic */
 
 t_lexer	*rd_symbol(t_toolkit *tool, char *input, int *i)
 {
-	int			j;
+	int	j;
 
 	j = 0;
 	if (input[j] == '<' && input[j + 1] != '<')
@@ -86,8 +86,8 @@ t_lexer	*rd_symbol(t_toolkit *tool, char *input, int *i)
 	return (NULL);
 }
 
-/* This function parses an input string, identifying words within 
-single or double quotes. It extracts the word within the quotes and 
+/* This function parses an input string, identifying words within
+single or double quotes. It extracts the word within the quotes and
 creates a corresponding lexical token, distinguishing between single
 and double quotes. */
 
@@ -111,14 +111,13 @@ t_lexer	*rd_in_quotes(char *input, int *i)
 	return (NULL);
 }
 
-int lexer(t_toolkit *tool, char	*input)
+int	lexer(t_toolkit *tool, char *input)
 {
 	t_lexer	*new;
 	int		i;
 
 	new = NULL;
 	i = -1;
-
 	while (input[++i])
 	{
 		if (input[i] == ' ')

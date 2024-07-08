@@ -48,65 +48,116 @@ int	env_val_update(t_env *head, char *key, char *n_value)
 	return (1);
 }
 
-int env_add_last(t_toolkit *sh, char *name, char *value, int has_val) {
-    (void)has_val;  // Marcar has_val como no utilizado
+int	env_add_last(t_toolkit *sh, char *name, char *value, int has_value)
+{
+	t_env	*new_env;
 
-    t_env *new_env = (t_env *)malloc(sizeof(t_env));
-    if (!new_env) 
-        return 1;
-    new_env->key = ft_strdup(name);
-    new_env->val = value ? ft_strdup(value) : NULL;
-    new_env->next = NULL;
-
-    if (!new_env->key || (value && !new_env->val)) {
-        free(new_env->key);
-        free(new_env->val);
-        free(new_env);
-        return 1;
-    }
-
-    t_env *current = sh->env_lst;
-    if (!current) {
-        sh->env_lst = new_env;
-    } else {
-        while (current->next) {
-            current = current->next;
-        }
-        current->next = new_env;
-    }
-    return 0;
+	new_env = malloc(sizeof(t_env));
+	if (!new_env)
+		return (1);
+	new_env->key = ft_strdup(name);
+	new_env->val = ft_strdup(value);
+	new_env->next = NULL;
+	if (!new_env->key || (has_value && !new_env->val))
+	{
+		unset_free(new_env);
+		return (1);
+	}
+	add_env_to_list(sh, new_env);
+	return (0);
 }
 
-int add_or_update_env(t_toolkit *sh, char *name, char *value) {
-    t_env *env;
-    int has_val;
+/*int	env_add_last(t_toolkit *sh, char *name, char *value, int has_val)
+{
+	t_env	*new_env;
+	t_env	*current;
+	
+	(void)has_val;
+	new_env = (t_env *)malloc(sizeof(t_env));
+	if (!new_env)
+		return (1);
+	new_env->key = ft_strdup(name);
+	new_env->val = value ? ft_strdup(value) : NULL;
+	new_env->next = NULL;
+	if (!new_env->key || (value && !new_env->val))
+	{
+		free(new_env->key);
+		free(new_env->val);
+		free(new_env);
+		return (1);
+	}
+	current = sh->env_lst;
+	if (!current)
+	{
+		sh->env_lst = new_env;
+	}
+	else
+	{
+		while (current->next)
+		{
+			current = current->next;
+		}
+		current->next = new_env;
+	}
+	return (0);
+}*/
 
-    has_val = 1;
-    if (value == NULL)
-        has_val = 0;
+int	add_or_update_env(t_toolkit *sh, char *name, char *value)
+{
+	t_env	*env;
+	int		has_val;
 
-
-    env = sh->env_lst;
-    while (env != NULL) {
-
-        if (ft_strncmp(env->key, name, ft_strlen(name)) == 0 && ft_strlen(env->key) == ft_strlen(name)) {
-
-
-            if (env->val) {
-                free(env->val);
-            }
-
-            env->val = ft_strdup(value);
-            if (!env->val && value) 
-                return (err_break(sh, "malloc", NULL, 12));
-            return (0);
-        }
-
-        env = env->next;
-    }
-
-    if (env_add_last(sh, name, value, has_val)) {
-        return (err_break(sh, "malloc", NULL, 12));
-    }
-    return (0);
+	has_val = 1;
+	if (value == NULL)
+		has_val = 0;
+	env = sh->env_lst;
+	while (env != NULL)
+	{
+		if (ft_strncmp(env->key, name, ft_strlen(name)) == 0
+			&& ft_strlen(env->key) == ft_strlen(name))
+		{
+			if (env->val)
+				free(env->val);
+			env->val = ft_strdup(value);
+			if (!env->val && value)
+				return (err_break(sh, "malloc", NULL, 12));
+			return (0);
+		}
+		env = env->next;
+	}
+	if (env_add_last(sh, name, value, has_val))
+		return (err_break(sh, "malloc", NULL, 12));
+	return (0);
 }
+
+/*int	add_or_update_env(t_toolkit *sh, char *name, char *value)
+{
+	t_env	*env;
+	int		has_val;
+
+	has_val = 1;
+	if (value == NULL)
+		has_val = 0;
+	env = sh->env_lst;
+	while (env != NULL)
+	{
+		if (ft_strncmp(env->key, name, ft_strlen(name)) == 0
+			&& ft_strlen(env->key) == ft_strlen(name))
+		{
+			if (env->val)
+			{
+				free(env->val);
+			}
+			env->val = ft_strdup(value);
+			if (!env->val && value)
+				return (err_break(sh, "malloc", NULL, 12));
+			return (0);
+		}
+		env = env->next;
+	}
+	if (env_add_last(sh, name, value, has_val))
+	{
+		return (err_break(sh, "malloc", NULL, 12));
+	}
+	return (0);
+}*/

@@ -11,11 +11,10 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-
 void	norm_handler(int sig, siginfo_t *data, void *non_used_data)
 {
-	(void) data;
-	(void) non_used_data;
+	(void)data;
+	(void)non_used_data;
 	if (sig == SIGINT)
 	{
 		printf("\n");
@@ -35,7 +34,7 @@ void	do_sigign(int signum)
 	signal.sa_flags = SA_RESTART;
 	sigemptyset(&signal.sa_mask);
 	if (sigaction(signum, &signal, NULL) < 0)
-		exit (1);
+		exit(1);
 }
 
 int	init_signals(int mode)

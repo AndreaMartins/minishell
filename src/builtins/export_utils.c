@@ -70,7 +70,7 @@ char	*find_in_env_variables(t_toolkit *sh, char *variable_name)
 
 int	export_option(const char *name)
 {
-	int i;
+	int	i;
 
 	if (!name || (!ft_isalpha(name[0]) && name[0] != '_'))
 		return (0);

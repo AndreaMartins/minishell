@@ -59,7 +59,7 @@ int	fd_init(t_fd *new, t_toolkit *tool, int fd)
 	return (0);
 }
 
-/* 
+/*
 	This function is designed to clean up a linked list of file descriptors
 	and close any open file descriptors if they are bigger than 0.
 */
@@ -99,8 +99,8 @@ int	ft_open_built(t_toolkit *sh, t_pipe *p, t_fd *fd1, int prev)
 			p->out_fd = open(fd1->str, O_TRUNC | O_CREAT | O_RDWR, 0666);
 		else if (fd1->token == 7)
 			p->out_fd = open(fd1->str, O_APPEND | O_CREAT | O_RDWR, 0666);
-		if (p->in_fd < 0 && (fd1->token == HEREDOC || fd1->token == HEREDOC_NO_EXP
-				|| fd1->token == 4))
+		if (p->in_fd < 0 && (fd1->token == HEREDOC
+				|| fd1->token == HEREDOC_NO_EXP || fd1->token == 4))
 			return (err_break(sh, fd1->str, NULL, 1));
 		if (p->out_fd < 0 && (fd1->token == 5 || fd1->token == 7))
 			return (err_break(sh, fd1->str, NULL, 1));

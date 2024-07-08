@@ -15,7 +15,7 @@
 int	parse_nl(char *s)
 {
 	int	i;
-	
+
 	i = 1;
 	if (!(s[0] == '-'))
 		return (0);

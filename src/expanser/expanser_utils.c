@@ -13,9 +13,9 @@
 #include "../../includes/minishell.h"
 
 /*
-if token = DOUBLEQ - it's a string ""  -  expansion
-if token = SIMPLEQ - it's a string ''  - no expansion
-Q is always starting -1 - its a flag to check if we are in the double quotes. 
+if		token = DOUBLEQ - it's a string ""  -  expansion
+if		token = SIMPLEQ - it's a string ''  - no expansion
+Q is always starting -1 - its a flag to check if we are in the double quotes.
 q < 0 - no open quotes
 q > 1 - you are inside open quotes
 */
@@ -48,9 +48,9 @@ int	check_exp(char *str, int token, int q)
 }
 
 /*
-	Calculates the new length of a string after performing variable expansions 
+	Calculates the new length of a string after performing variable expansions
 	based on the provided shell state and type. It handles memory management
-	for temporary variables and ensures that the length is updated correctly 
+	for temporary variables and ensures that the length is updated correctly
 	considering the replacements made.
 */
 int	new_len(t_toolkit *tool, char *cont, int type)
@@ -114,19 +114,19 @@ char	*get_var(char *cont)
 	return (new);
 }
 
-
 /*
 	Retrieves the value of a given variable name (var)
-	from the shell state. It handles special cases for 
+	from the shell state. It handles special cases for
 	certain variable names like ? and 0.
 */
 char	*check_value(t_toolkit *tool, char *var)
 {
-	if (!var){ 
+	if (!var)
+	{
 		return (NULL);
 	}
 	if (*var == '?')
-	{	
+	{
 		tool->exp->alloc = 1;
 		return (ft_itoa(tool->exit));
 	}
@@ -139,7 +139,7 @@ char	*check_value(t_toolkit *tool, char *var)
 }
 
 /*
-Validates a string, ensuring that it does not contain 
+Validates a string, ensuring that it does not contain
 unquoted spaces and that any quotes within the string are
 properly opened and closed.
 	flag = 0 - there is no open quotes

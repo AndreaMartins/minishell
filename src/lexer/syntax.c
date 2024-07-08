@@ -59,8 +59,8 @@ int	check_input(char *in)
 }
 
 /*
-	Ensures that the sequence of tokens follows certain rules, and it 
-	returns an error if any rule is violated. The specific rules for valid 
+	Ensures that the sequence of tokens follows certain rules, and it
+	returns an error if any rule is violated. The specific rules for valid
 	syntax are based on the token values.
 */
 int	check_syntax(t_toolkit *sh, t_lexer *current, int prev_token)
@@ -73,8 +73,8 @@ int	check_syntax(t_toolkit *sh, t_lexer *current, int prev_token)
 		{
 			if (current->token >= 4 && current->token <= 8)
 			{
-				if ((prev_token >= 4 && prev_token < 8)
-					|| (prev_token == PIPE && current->token == PIPE))
+				if ((prev_token >= 4 && prev_token < 8) || (prev_token == PIPE
+						&& current->token == PIPE))
 					return (err_char(sh, current->token));
 			}
 			prev_token = current->token;
@@ -99,7 +99,8 @@ int	exp_quotes(t_toolkit *sh, t_lexer **head, int *flag)
 		if (expand_word(sh, head))
 			return (1);
 	}
-	else if (sh->lex_lst->token == WORD && check_exp(sh->lex_lst->str, 1, -1) < 0)
+	else if (sh->lex_lst->token == WORD && check_exp(sh->lex_lst->str, 1,
+			-1) < 0)
 	{
 		len = ft_strlen(sh->lex_lst->str);
 		sh->lex_lst->str = trim_quotes(sh->lex_lst->str, ' ', len, -1);
