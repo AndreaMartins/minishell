@@ -79,6 +79,7 @@ int	save_hd(t_toolkit *tool, char *key, char *str, int token)
 {
 	int	hd[2];
 
+	init_signals(NORM);
 	if (pipe(hd) < -1)
 		return (-1);
 	while (1)
