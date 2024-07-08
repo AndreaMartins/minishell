@@ -39,8 +39,8 @@ void	exp_clean(t_exp **exp)
 }
 
 /*
-    Initializes the expansion environment, preparing necessary structures
-    and variables.
+	Initializes the expansion environment, preparing necessary structures
+	and variables.
 */
 int	exp_init(t_toolkit *tool)
 {
@@ -88,11 +88,12 @@ int	exp_start(t_toolkit *tool, char *str, int token)
 char	*exp_fd(t_toolkit *tool, char *str, t_fd *new)
 {
 	char	*s;
-	if (tool->lex_lst->token == WORD
-		&& check_exp(str, tool->lex_lst->token, -1) < 0)
+
+	if (tool->lex_lst->token == WORD && check_exp(str, tool->lex_lst->token,
+			-1) < 0)
 		return (trim_quotes(str, ' ', ft_strlen(str), -1));
-	else if (new->token == HEREDOC
-		|| check_exp(str, tool->lex_lst->token, -1) < 0)
+	else if (new->token == HEREDOC || check_exp(str, tool->lex_lst->token,
+			-1) < 0)
 		return (str);
 	if (tool->exp)
 		exp_clean(&tool->exp);

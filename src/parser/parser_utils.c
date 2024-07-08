@@ -14,7 +14,7 @@
 
 /*
 	This function sets up the initial state of the t_pipe structure, ensuring
-	that all members are properly initialized before the structure is used 
+	that all members are properly initialized before the structure is used
 	further in the code.
 */
 void	pipe_init(t_pipe *pipe)
@@ -30,7 +30,7 @@ void	pipe_init(t_pipe *pipe)
 
 /*
 	This function is responsible for adding a new t_pipe node to the end of a
-	linked list of t_pipe nodes. 
+	linked list of t_pipe nodes.
 */
 void	pipe_add(t_toolkit *tool, t_pipe *new)
 {

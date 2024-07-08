@@ -36,9 +36,7 @@ char	*expand_hd(t_toolkit *tool, char *str, int token)
 char	*expand_str(t_toolkit *tool, char *str, int token, int i)
 {
 	if (exp_start(tool, str, token))
-	{
 		return (NULL);
-	}
 	while (str[++i])
 	{
 		if (open_q(tool->exp, str[i], token) || str[i] != '$' || !str[i + 1])
@@ -91,7 +89,7 @@ t_lexer	*rd_word_exp(char *in, int *i, char q, int j)
 
 /*
 	Expands the word in the lexer list by processing the string,
-	handling spaces	and word expansions, and then inserting the 
+	handling spaces	and word expansions, and then inserting the
 	expanded words back into the lexer list.
 */
 int	expand_word(t_toolkit *tool, t_lexer **lex)
@@ -132,20 +130,21 @@ int	expanser(t_toolkit *t, t_lexer *head, int flag)
 		return (1);
 	while (t->lex_lst)
 	{
-		if (t->lex_lst->token == DOUBLEQ && check_exp(t->lex_lst->str, 3, -1) >= 0)
+		if (t->lex_lst->token == 3 && check_exp(t->lex_lst->str, 3, -1) >= 0)
 		{
 			t->lex_lst->str = expand_str(t, t->lex_lst->str, 3, -1);
 			if (!t->lex_lst->str)
-				return (err_break(shell_re(&t, head, NULL),
-						"malloc", NULL, 12));
+				return (err_break(shell_re(&t, head, NULL), "malloc", NULL,
+						12));
 		}
 		else if (!flag)
 		{
 			if (exp_quotes(t, &head, &flag))
-				return (err_break(shell_re(&t, head, NULL), "malloc", NULL, 12));
+				return (err_break(shell_re(&t, head, NULL), "malloc", NULL,
+						12));
 		}
-		if (t->lex_lst && t->lex_lst->token > 0
-			&& t->lex_lst->token < 4 && flag)
+		if (t->lex_lst && t->lex_lst->token > 0 && t->lex_lst->token < 4
+			&& flag)
 			flag = 0;
 		if (t->lex_lst)
 			t->lex_lst = t->lex_lst->next;

@@ -12,9 +12,9 @@
 
 #include "../../includes/minishell.h"
 
-/* 
+/*
 	This function receives 2 strings and returns the length
-	of the longer one 
+	of the longer one
 */
 int	ft_longer(char *str, char *key)
 {

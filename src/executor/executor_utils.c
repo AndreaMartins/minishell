@@ -14,36 +14,21 @@
 
 int	check_builtin(char **cmd)
 {
-	int	echo_len;
-	int	cd_len;
-	int	pwd_len;
-	int	export_len;
-	int	unset_len;
-	int	env_len;
-	int	exit_len;
-
 	if (!cmd || !(*cmd))
 		return (0);
-	echo_len = ft_longer(cmd[0], "echo");
-	if (!ft_strncmp(cmd[0], "echo", echo_len))
+	if (!ft_strncmp(cmd[0], "echo", ft_longer(cmd[0], "echo")))
 		return (1);
-	cd_len = ft_longer(cmd[0], "cd");
-	if (!ft_strncmp(cmd[0], "cd", cd_len))
+	if (!ft_strncmp(cmd[0], "cd", ft_longer(cmd[0], "cd")))
 		return (2);
-	pwd_len = ft_longer(cmd[0], "pwd");
-	if (!ft_strncmp(cmd[0], "pwd", pwd_len))
+	if (!ft_strncmp(cmd[0], "pwd", ft_longer(cmd[0], "pwd")))
 		return (3);
-	export_len = ft_longer(cmd[0], "export");
-	if (!ft_strncmp(cmd[0], "export", export_len))
+	if (!ft_strncmp(cmd[0], "export", ft_longer(cmd[0], "export")))
 		return (4);
-	unset_len = ft_longer(cmd[0], "unset");
-	if (!ft_strncmp(cmd[0], "unset", unset_len))
+	if (!ft_strncmp(cmd[0], "unset", ft_longer(cmd[0], "unset")))
 		return (5);
-	env_len = ft_longer(cmd[0], "env");
-	if (!ft_strncmp(cmd[0], "env", env_len))
+	if (!ft_strncmp(cmd[0], "env", ft_longer(cmd[0], "env")))
 		return (6);
-	exit_len = ft_longer(cmd[0], "exit");
-	if (!ft_strncmp(cmd[0], "exit", exit_len))
+	if (!ft_strncmp(cmd[0], "exit", ft_longer(cmd[0], "exit")))
 		return (7);
 	return (0);
 }
@@ -54,38 +39,22 @@ void	ft_open(t_toolkit *sh, t_pipe *p, t_fd *fd1, int prev)
 	{
 		ft_check_open(p, fd1, prev);
 		if (fd1->exp == 1)
-		{
 			err_exit(sh, fd1->str, "ambiguous redirect", 1);
-		}
-		if (fd1->token == 6 || fd1->token == 9) // HEREDOC or HEREDOC_NO_EXP
-		{
+		if (fd1->token == 6 || fd1->token == 9)
 			p->in_fd = fd1->fd;
-		}
 		else if (!fd1->str || *fd1->str == '\0')
-		{
 			err_exit(sh, "", "No such file or directory", 1);
-		}
-		else if (fd1->token == 4) // INFILE
-		{
+		else if (fd1->token == 4)
 			p->in_fd = open(fd1->str, O_RDONLY);
-		}
-		else if (fd1->token == 5) // OUTFILE
-		{
+		else if (fd1->token == 5)
 			p->out_fd = open(fd1->str, O_TRUNC | O_CREAT | O_RDWR, 0666);
-		}
-		else if (fd1->token == 7) // OUTFILEAPP
-		{
+		else if (fd1->token == 7)
 			p->out_fd = open(fd1->str, O_APPEND | O_CREAT | O_RDWR, 0666);
-		}
 		if (p->in_fd < 0 && (fd1->token == 6 || fd1->token == 9
 				|| fd1->token == 4))
-		{
 			err_exit(sh, fd1->str, NULL, 1);
-		}
 		if (p->out_fd < 0 && (fd1->token == 5 || fd1->token == 7))
-		{
 			err_exit(sh, fd1->str, NULL, 1);
-		}
 		prev = fd1->token;
 		fd1 = fd1->next;
 	}

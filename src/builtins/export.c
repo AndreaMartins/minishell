@@ -79,10 +79,10 @@ int	handle_args(t_toolkit *sh, char *arg)
 
 int	ft_export(t_toolkit *sh, t_pipe *p)
 {
-	t_env *tmp_env;
-	char **t_cmd;
-	int err;
-	int i;
+	t_env	*tmp_env;
+	char	**t_cmd;
+	int		err;
+	int		i;
 
 	err = 0;
 	tmp_env = sh->env_lst;

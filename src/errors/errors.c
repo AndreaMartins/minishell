@@ -60,10 +60,10 @@ int	err_exit(t_toolkit *sh, char *name, char *message, int err)
 		ft_putstr_fd("\n", 2);
 	}
 	sh_clean(sh);
-	exit (err);
+	exit(err);
 }
 
-/* 
+/*
 	Handles errors in the parent process. Unlike err_exit, this function
 	does not terminate the process. Instead, it sets an error status and
 	returns the error code.

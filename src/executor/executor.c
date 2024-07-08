@@ -84,33 +84,22 @@ int	exec_builtin(t_toolkit *sh, t_pipe *p)
 {
 	if (!sh->pipes && ft_open_built(sh, p, p->fd_lst, -1))
 		return (sh->exit);
-	switch (p->builtin)
-	{
-	case 1:
+	if (p->builtin == 1)
 		return (ft_echo(sh, p));
-	case 2:
+	if (p->builtin == 2)
 		return (ft_cd(sh, p));
-	case 3:
+	if (p->builtin == 3)
 		return (ft_pwd(sh, p));
-	case 4:
+	if (p->builtin == 4)
 		return (ft_export(sh, p));
-	case 5:
+	if (p->builtin == 5)
 		return (ft_unset(sh, p));
-	case 6:
-		if (sh->paths)
-		{
-			return (ft_env(sh, p));
-		}
-		else
-		{
-			err_break(sh, p->cmd[0], "No such file or directory", 127);
-			break ;
-		}
-	case 7:
+	if (p->builtin == 6 && sh->paths)
+		return (ft_env(sh, p));
+	else if (p->builtin == 6 && !sh->paths)
+		err_break(sh, p->cmd[0], "No such file or directory", 127);
+	if (p->builtin == 7)
 		return (ft_exit(sh));
-	default:
-		return (sh->exit);
-	}
 	return (sh->exit);
 }
 
@@ -121,24 +110,16 @@ int	executor(t_toolkit *sh, t_pipe *p, int i, int j)
 	{
 		p->builtin = check_builtin(p->cmd);
 		if (pipe(sh->exe->fdp) < 0)
-		{
 			return (err_break(sh, "pipe", "Broken pipe", 32));
-		}
 		p->out_fd = sh->exe->fdp[1];
 		sh->exe->pid = fork();
 		if (sh->exe->pid < 0)
-		{
 			return (err_break(sh, "fork", NULL, 12));
-		}
 		else if (sh->exe->pid == 0)
-		{
 			child_process(sh, p, 0);
-		}
 		close(sh->exe->fdp[1]);
 		if (p->in_fd >= 0)
-		{
 			close(p->in_fd);
-		}
 		p = p->next;
 		p->in_fd = sh->exe->fdp[0];
 	}
