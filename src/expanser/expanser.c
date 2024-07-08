@@ -36,9 +36,7 @@ char	*expand_hd(t_toolkit *tool, char *str, int token)
 char	*expand_str(t_toolkit *tool, char *str, int token, int i)
 {
 	if (exp_start(tool, str, token))
-	{
 		return (NULL);
-	}
 	while (str[++i])
 	{
 		if (open_q(tool->exp, str[i], token) || str[i] != '$' || !str[i + 1])
@@ -132,8 +130,7 @@ int	expanser(t_toolkit *t, t_lexer *head, int flag)
 		return (1);
 	while (t->lex_lst)
 	{
-		if (t->lex_lst->token == DOUBLEQ && check_exp(t->lex_lst->str, 3,
-				-1) >= 0)
+		if (t->lex_lst->token == 3 && check_exp(t->lex_lst->str, 3, -1) >= 0)
 		{
 			t->lex_lst->str = expand_str(t, t->lex_lst->str, 3, -1);
 			if (!t->lex_lst->str)
