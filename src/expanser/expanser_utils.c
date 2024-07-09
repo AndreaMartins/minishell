@@ -132,6 +132,8 @@ char	*check_value(t_toolkit *tool, char *var)
 	}
 	else if (*var == '0')
 		return ("Hola Juan Carlos\0");
+	else if (ft_isdigit(*var))
+		return ("\0");
 	else
 	{
 		return (ft_get_value(tool, var));
