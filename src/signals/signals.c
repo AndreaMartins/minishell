@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
 
-void	norm_handler(int sig, siginfo_t *data, void *non_used_data)
+void norm_handler(int sig, siginfo_t *data, void *non_used_data)
 {
 	(void)data;
 	(void)non_used_data;
@@ -23,12 +23,12 @@ void	norm_handler(int sig, siginfo_t *data, void *non_used_data)
 		rl_redisplay();
 		g_sig_rec = 1;
 	}
-	return ;
+	return;
 }
 
-void	do_sigign(int signum)
+void do_sigign(int signum)
 {
-	struct sigaction	signal;
+	struct sigaction signal;
 
 	signal.sa_handler = SIG_IGN;
 	signal.sa_flags = SA_RESTART;
@@ -37,9 +37,9 @@ void	do_sigign(int signum)
 		exit(1);
 }
 
-int	init_signals(int mode)
+int init_signals(int mode)
 {
-	struct sigaction	signal;
+	struct sigaction signal;
 
 	signal.sa_flags = SA_RESTART | SA_SIGINFO;
 	sigemptyset(&signal.sa_mask);
@@ -50,7 +50,7 @@ int	init_signals(int mode)
 	return (0);
 }
 
-void	exit_status(t_toolkit *sh, int j)
+void exit_status(t_toolkit *sh, int j)
 {
 	while (++j <= sh->pipes)
 	{
