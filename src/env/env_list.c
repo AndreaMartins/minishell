@@ -38,6 +38,8 @@ int	env_val_update(t_env *head, char *key, char *n_value)
 	{
 		if (ft_strncmp(tmp->key, key, len) == 0 && len == ft_strlen(tmp->key))
 		{
+			if (tmp->val)
+				free (tmp->val);
 			tmp->val = ft_strdup(n_value);
 			if (!tmp->val)
 				return (1);
@@ -119,6 +121,7 @@ int	add_or_update_env(t_toolkit *sh, char *name, char *value)
 			if (env->val)
 				free(env->val);
 			env->val = ft_strdup(value);
+			free(value);
 			if (!env->val && value)
 				return (err_break(sh, "malloc", NULL, 12));
 			return (0);

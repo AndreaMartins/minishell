@@ -9,6 +9,7 @@
 /*   Updated: 2024/04/16 16:11:50 by andmart2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 void norm_handler(int sig, siginfo_t *data, void *non_used_data)
