@@ -34,36 +34,6 @@ int	update_oldpwd(t_toolkit *sh)
 	return (0);
 }
 
-/*int	go_to_path(int option, t_toolkit *sh)
-{
-	int		ret;
-	char	*env_path;
-
-	env_path = NULL;
-	if (option == 0)
-	{
-		update_oldpwd(sh);
-		env_path = ft_get_value(sh, "HOME");
-		if (!env_path)
-		{
-			ft_putstr_fd("minishell : cd: HOME not set\n", 2);
-			return (1);
-		}
-	}
-	else if (option == 1)
-	{
-		env_path = ft_get_value(sh, "OLDPWD");
-		if (!env_path)
-		{
-			ft_putstr_fd("minishell : cd: OLDPWD not set\n", 2);
-			return (1);
-		}
-		update_oldpwd(sh);
-	}
-	ret = chdir(env_path);
-	return (ret);
-}*/
-
 int	go_to_path(int option, t_toolkit *sh)
 {
 	int		ret;

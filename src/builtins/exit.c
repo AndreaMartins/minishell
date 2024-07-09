@@ -32,11 +32,13 @@ long long int	ft_atol_sh(char *str)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if (number > INT_MAX || number < INT_MIN)
+		if ((number * sign)> (LLONG_MAX - (str[i] - '0')) / 10)
 			return (p_exit_err(str, 1));
 		number = (number * 10) + (str[i] - '0');
 		i++;
 	}
+	if (number *sign < LLONG_MIN)
+		return(p_exit_err(str, 1));
 	return ((number *= sign));
 }
 
