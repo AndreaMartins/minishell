@@ -55,7 +55,7 @@ SRC = $(MAIN) $(LEXER) $(ERRORS) $(EXPANSER) $(PARSER) $(EXECUTOR) \
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT)
+$(NAME): $(OBJ) $(LIBFT) Makefile
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(READLINE) -o $(NAME)
 
 $(LIBFT):
@@ -68,10 +68,9 @@ clean:
 	rm -f $(OBJ)
 	$(MAKE) -C includes/libft clean --no-print-directory
 	rm -f $(LIBFT)
-	rm -f $(NAME)
-
+	
 fclean: clean
-	$(MAKE) -C includes/libft fclean --no-print-directory
+	rm -f $(NAME)
 
 re: fclean all
 
