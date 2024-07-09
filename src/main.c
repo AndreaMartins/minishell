@@ -46,9 +46,12 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_toolkit	tool;
 
-	(void)argc;
 	(void)envp;
-	(void)argv;
+	if (argc != 1)
+	{
+		printf("minishell: %s: No such file or directory\n", argv[1]);
+		return (127);
+	}
 	g_sig_rec = 0;
 	sh_init(&tool, envp);
 	while (tool.power_on)
