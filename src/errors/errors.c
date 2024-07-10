@@ -87,3 +87,15 @@ int	err_break(t_toolkit *sh, char *name, char *message, int err)
 	sh->exit = err;
 	return (err);
 }
+
+/*error cd*/
+void	print_error(char **args)
+{
+	ft_putstr_fd("minishell: cd: ", 2);
+	if (args[2])
+		ft_putstr_fd("too many arguments\n", 2);
+	else
+	{
+		perror(args[1]);
+	}
+}

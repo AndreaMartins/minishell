@@ -217,6 +217,7 @@ int					err_exit(t_toolkit *sh, char *name, char *message, int err);
 int					err_break(t_toolkit *sh, char *name, char *message,
 						int err);
 int					err_char(t_toolkit *sh, int token);
+void				print_error(char **args);
 
 //		-> PARSER <-		//
 t_lexer				*next_word(t_lexer *temp);
@@ -249,10 +250,12 @@ void				check_paths(char **paths, char *cmd, t_toolkit *sh,
 //		-> BUILTINS <-		//
 
 //		-> 1.CD <-		//
-void				print_error(char **args);
+
 int					update_oldpwd(t_toolkit *sh);
 int					go_to_path(int option, t_toolkit *sh);
 int					ft_cd(t_toolkit *sh, t_pipe *p);
+int					change_directory(t_toolkit *sh, const char *path);
+char				*get_cd_path(int option, t_toolkit *sh);
 
 //		-> 2.ECHO <-		//
 int					parse_nl(char *s);
