@@ -251,11 +251,14 @@ void				check_paths(char **paths, char *cmd, t_toolkit *sh,
 
 //		-> 1.CD <-		//
 
-
 int					go_to_path(int option, t_toolkit *sh);
 int					ft_cd(t_toolkit *sh, t_pipe *p);
 int					change_directory(t_toolkit *sh, const char *path);
 char				*get_cd_path(int option, t_toolkit *sh);
+int					handle_chdir_result(t_toolkit *sh, int cd_ret,
+						char *new_pwd);
+char				*get_env_path(int option, t_toolkit *sh, const char *var,
+						const char *msg);
 
 //		-> 2.ECHO <-		//
 int					parse_nl(char *s);
@@ -307,6 +310,7 @@ int					env_val_update(t_env *head, char *key, char *n_value);
 int					env_add_last(t_toolkit *sh, char *name, char *value,
 						int has_value);
 int					add_or_update_env(t_toolkit *sh, char *name, char *value);
+int					update_existing_env(t_env *env, char *value, t_toolkit *sh);
 
 //		-> 3.ENV_SORT <-		//
 void				print_sort_print(t_env *env);

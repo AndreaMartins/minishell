@@ -69,7 +69,7 @@ int	env_add_last(t_toolkit *sh, char *name, char *value, int has_value)
 	return (0);
 }
 
-int	add_or_update_env(t_toolkit *sh, char *name, char *value)
+/*int	add_or_update_env(t_toolkit *sh, char *name, char *value)
 {
 	t_env	*env;
 	int		has_val;
@@ -97,11 +97,11 @@ int	add_or_update_env(t_toolkit *sh, char *name, char *value)
 	if (env_add_last(sh, name, value, has_val))
 		return (err_break(sh, "malloc", NULL, 12)); // Handle malloc failure
 	return (0);
-}
+}*/
 
 /*new splited functions for less that 25 lines*/
 
-/*int update_existing_env(t_env *env, char *value, t_toolkit *sh) {
+int update_existing_env(t_env *env, char *value, t_toolkit *sh) {
     if (env->val)
         free(env->val); // Free existing value if any
     if (value) {
@@ -115,8 +115,11 @@ int	add_or_update_env(t_toolkit *sh, char *name, char *value)
 }
 
 int add_or_update_env(t_toolkit *sh, char *name, char *value) {
-    t_env *env = sh->env_lst;
-    int has_val = (value != NULL); // Check if value is provided
+    t_env *env;
+	int has_val;
+
+	env = sh->env_lst;
+    has_val = (value != NULL); // Check if value is provided
 
     while (env != NULL) {
         if (ft_strcmp(env->key, name) == 0)
@@ -127,4 +130,4 @@ int add_or_update_env(t_toolkit *sh, char *name, char *value) {
     if (env_add_last(sh, name, value, has_val))
         return err_break(sh, "malloc", NULL, 12); // Handle malloc failure
     return 0;
-}*/
+}
