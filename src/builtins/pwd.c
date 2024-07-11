@@ -34,3 +34,13 @@ int	ft_pwd(t_toolkit *sh, t_pipe *p)
 	ft_putstr_fd("\n", output);
 	return (0);
 }
+int	update_oldpwd(t_toolkit *sh)
+{
+	char	cwd[PATH_MAX];
+
+	if (getcwd(cwd, PATH_MAX) == NULL)
+		return (-1);
+	if (env_val_update(sh->env_lst, "OLDPWD", cwd))
+		return (1);
+	return (0);
+}

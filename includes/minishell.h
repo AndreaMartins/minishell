@@ -251,7 +251,7 @@ void				check_paths(char **paths, char *cmd, t_toolkit *sh,
 
 //		-> 1.CD <-		//
 
-int					update_oldpwd(t_toolkit *sh);
+
 int					go_to_path(int option, t_toolkit *sh);
 int					ft_cd(t_toolkit *sh, t_pipe *p);
 int					change_directory(t_toolkit *sh, const char *path);
@@ -288,6 +288,7 @@ char				**split_by_equal(char *str);
 
 //		-> 7.PWD<-		//
 int					ft_pwd(t_toolkit *sh, t_pipe *p);
+int					update_oldpwd(t_toolkit *sh);
 
 //		-> 8.UNSET<-		//
 void				unset_free(t_env *env);
