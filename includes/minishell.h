@@ -199,7 +199,7 @@ int					expanser(t_toolkit *t, t_lexer *head, int flag);
 
 //		-> EXPANSER_UTILS <-		//
 int					check_exp(char *str, int token, int q);
-int					new_len(t_toolkit *tool, char *cont, int type);
+int					new_len(t_toolkit *tool, char *cont, int type, int len);
 char				*get_var(char *cont);
 char				*check_value(t_toolkit *tool, char *var);
 int					check_file_exp(char *str);

@@ -53,14 +53,12 @@ int	check_exp(char *str, int token, int q)
 	for temporary variables and ensures that the length is updated correctly
 	considering the replacements made.
 */
-int	new_len(t_toolkit *tool, char *cont, int type)
+int	new_len(t_toolkit *tool, char *cont, int type, int len)
 {
-	int		len;
 	int		i;
 	char	*new;
 	char	*val;
 
-	len = ft_strlen(cont);
 	while (*cont)
 	{
 		i = check_exp(cont, type, -1);
@@ -71,7 +69,10 @@ int	new_len(t_toolkit *tool, char *cont, int type)
 			return (-1);
 		val = check_value(tool, new);
 		if (!val)
-			return (0);
+		{
+			new = ft_memdel(new);
+			return (len);
+		}
 		len = len - ft_strlen(new) - 1 + ft_strlen(val);
 		if (*new == '?')
 			val = ft_memdel(val);
@@ -102,7 +103,7 @@ char	*get_var(char *cont)
 		new[1] = '\0';
 		return (new);
 	}
-	while (cont[len] && check_chr(cont[len]) > 2)
+	while (cont[len] && check_chr(cont[len]) > 2 && cont[len] != 36)
 		len++;
 	new = malloc(len + 1);
 	if (!new)
