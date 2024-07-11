@@ -65,7 +65,7 @@ int	exp_init(t_toolkit *tool)
 int	exp_start(t_toolkit *tool, char *str, int token)
 {
 	tool->exp->str = str;
-	tool->exp->k = new_len(tool, str, token);
+	tool->exp->k = new_len(tool, str, token, ft_strlen(str));
 	if (tool->exp->k < 0)
 		return (1);
 	tool->exp->new = malloc(tool->exp->k + 1);
