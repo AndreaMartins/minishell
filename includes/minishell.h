@@ -289,6 +289,7 @@ char				**split_by_equal(char *str);
 //		-> 7.PWD<-		//
 int					ft_pwd(t_toolkit *sh, t_pipe *p);
 int					update_oldpwd(t_toolkit *sh);
+int					goodbye(t_toolkit *sh);
 
 //		-> 8.UNSET<-		//
 void				unset_free(t_env *env);

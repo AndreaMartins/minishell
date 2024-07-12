@@ -45,3 +45,10 @@ int	update_oldpwd(t_toolkit *sh)
 		return (1);
 	return (0);
 }
+
+int	goodbye(t_toolkit *sh)
+{
+	sh->power_on = 0;
+	printf("ciao stronzo\n");
+	return (sh->exit);
+}

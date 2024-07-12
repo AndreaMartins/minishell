@@ -58,7 +58,7 @@ int	p_exit_err(char *str_error, int option)
 	{
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(str_error, 2);
-		ft_putstr_fd(":numeric argument required\n", 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
 		return (2);
 	}
 	else
@@ -94,16 +94,17 @@ int	ft_exit(t_toolkit *sh)
 	int		ex;
 
 	if (sh->args == NULL || ft_strcmp(sh->args, "exit") == 0)
-	{
-		sh->power_on = 0;
-		printf("ciao stronzo\n");
-		return (sh->exit);
-	}
+		return (goodbye(sh));
 	else
 	{
 		ex = 2;
-		if (arg_count(sh->pipe_lst->cmd) > 2)
+		if (arg_count(sh->pipe_lst->cmd) > 2
+			&& ft_isdigit(sh->pipe_lst->cmd[1][0]))
 			return (p_exit_err("minishell: exit: too many arguments\n", 2));
+		if (arg_count(sh->pipe_lst->cmd) > 2
+			&& !ft_isdigit(sh->pipe_lst->cmd[1][0])
+			&& ft_isdigit(sh->pipe_lst->cmd[1][0]))
+			ft_putstr_fd(": numeric argument required\n", 2);
 		sh->power_on = 0;
 		input = sh->pipe_lst->cmd[1];
 		printf("ciao stronzo\n");
