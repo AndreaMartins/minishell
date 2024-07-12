@@ -251,14 +251,11 @@ void				check_paths(char **paths, char *cmd, t_toolkit *sh,
 
 //		-> 1.CD <-		//
 
-int					go_to_path(int option, t_toolkit *sh);
-int					ft_cd(t_toolkit *sh, t_pipe *p);
-int					change_directory(t_toolkit *sh, const char *path);
+char				*get_the_path(t_toolkit *sh, int opt);
 char				*get_cd_path(int option, t_toolkit *sh);
-int					handle_chdir_result(t_toolkit *sh, int cd_ret,
-						char *new_pwd);
-char				*get_env_path(int option, t_toolkit *sh, const char *var,
-						const char *msg);
+int					go_to_path(int option, t_toolkit *sh);
+int					change_directory(t_toolkit *sh, const char *path);
+int					ft_cd(t_toolkit *sh, t_pipe *p);
 
 //		-> 2.ECHO <-		//
 int					parse_nl(char *s);

@@ -12,93 +12,39 @@
 
 #include "../../includes/minishell.h"
 
-/*char	*get_cd_path(int option, t_toolkit *sh)
+char	*get_the_path(t_toolkit *sh, int opt)
 {
 	char	*env_path;
 
 	env_path = NULL;
-	if (option == 0)
+	if (opt == 1)
 	{
-		if (update_oldpwd(sh) != 0)
-			return (NULL);
 		env_path = ft_get_value(sh, "HOME");
 		if (!env_path)
 			ft_putstr_fd("minishell : cd: HOME not set\n", 2);
-		if (!env_path)
-			return (NULL);
+		return (env_path);
 	}
-	else if (option == 1)
+	if (opt == 2)
 	{
 		env_path = ft_get_value(sh, "OLDPWD");
 		if (!env_path)
 			ft_putstr_fd("minishell : cd: OLDPWD not set\n", 2);
-		if (!env_path)
-			return (NULL);
-		if (update_oldpwd(sh) != 0)
-			return (NULL);
+		return (env_path);
 	}
 	return (env_path);
 }
-*/
 
-/*
-int	change_directory(t_toolkit *sh, const char *path)
+char	*get_cd_path(int option, t_toolkit *sh)
 {
-	int		cd_ret;
-	char	*new_pwd;
-	int		cd_ret;
-	char	**args;
-	char	*oldpwd;
-	char	*env_path;
-	int		ret;
-	char	*new_pwd;
+	if (update_oldpwd(sh) != 0)
+		return (NULL);
+	if (option == 0)
+		return (get_the_path(sh, 1));
+	else if (option == 1)
+		return (get_the_path(sh, 2));
+	return (NULL);
+}
 
-	cd_ret = 0;
-	new_pwd = NULL;
-	if (path && path[0])
-	{
-		if (update_oldpwd(sh) != 0)
-			return (-1);
-		cd_ret = chdir(path);
-		if (cd_ret < 0)
-			cd_ret *= -1;
-		if (cd_ret != 0)
-		{
-			print_error((char *[]){"cd", (char *)path, NULL});
-		}
-		else
-		{
-			new_pwd = getcwd(NULL, 0);
-			if (new_pwd)
-			{
-				add_or_update_env(sh, "PWD", new_pwd);
-				free(new_pwd);  // Free after updating environment variable
-				new_pwd = NULL; // Reset pointer to avoid accidental reuse
-			}
-		}
-	}
-	return (cd_ret);
-}*/
-/*int	ft_cd(t_toolkit *sh, t_pipe *p)
-{
-	args = p->cmd;
-	cd_ret = 0;
-	if (!args[1] || args[1][0] == '~')
-		return (go_to_path(0, sh));
-	if (ft_strcmp(args[1], "-") == 0)
-	{
-		cd_ret = go_to_path(1, sh);
-		oldpwd = ft_get_value(sh, "OLDPWD");
-		if (oldpwd)
-			add_or_update_env(sh, "PWD", oldpwd);
-	}
-	else
-	{
-		cd_ret = change_directory(sh, args[1]);
-	}
-	return (cd_ret);
-}*/
-/*menos de 25 lineas */
 int	go_to_path(int option, t_toolkit *sh)
 {
 	char	*env_path;
@@ -121,69 +67,29 @@ int	go_to_path(int option, t_toolkit *sh)
 	return (ret);
 }
 
-char	*get_env_path(int option, t_toolkit *sh, const char *var,
-		const char *msg)
-{
-	char	*env_path;
-
-	env_path = ft_get_value(sh, var);
-	if (!env_path)
-		ft_putstr_fd(msg, 2);
-	return (env_path);
-}
-
-char	*get_cd_path(int option, t_toolkit *sh)
-{
-	char	*env_path;
-
-	if (option == 0)
-	{
-		if (update_oldpwd(sh) != 0)
-			return (NULL);
-		return (get_env_path(0, sh, "HOME", "minishell : cd: HOME not set\n"));
-	}
-	else if (option == 1)
-	{
-		env_path = get_env_path(1, sh, "OLDPWD",
-				"minishell : cd: OLDPWD not set\n");
-		if (env_path && update_oldpwd(sh) != 0)
-			return (NULL);
-		return (env_path);
-	}
-	return (NULL);
-}
-
-int	handle_chdir_result(t_toolkit *sh, int cd_ret, char *new_pwd)
-{
-	if (cd_ret != 0)
-	{
-		print_error((char *[]){"cd", (char *)new_pwd, NULL});
-	}
-	else
-	{
-		new_pwd = getcwd(NULL, 0);
-		if (new_pwd)
-		{
-			add_or_update_env(sh, "PWD", new_pwd);
-			free(new_pwd);
-		}
-	}
-	return (cd_ret);
-}
-
 int	change_directory(t_toolkit *sh, const char *path)
 {
-	int	cd_ret;
+	int		cd_ret;
+	char	*new_pwd;
 
 	cd_ret = 0;
-	if (path && path[0])
+	if (path && path[0] && update_oldpwd(sh) == 0)
 	{
-		if (update_oldpwd(sh) != 0)
-			return (-1);
 		cd_ret = chdir(path);
-		if (cd_ret < 0)
+		if (cd_ret != 0)
+		{
 			cd_ret *= -1;
-		return (handle_chdir_result(sh, cd_ret, NULL));
+			print_error((char *[]){"cd", (char *)path, NULL});
+		}
+		else
+		{
+			new_pwd = getcwd(NULL, 0);
+			if (new_pwd)
+			{
+				add_or_update_env(sh, "PWD", new_pwd);
+				free(new_pwd);
+			}
+		}
 	}
 	return (cd_ret);
 }
@@ -191,7 +97,6 @@ int	change_directory(t_toolkit *sh, const char *path)
 int	ft_cd(t_toolkit *sh, t_pipe *p)
 {
 	char	**args;
-	int		cd_ret;
 	char	*oldpwd;
 
 	args = p->cmd;
@@ -199,11 +104,14 @@ int	ft_cd(t_toolkit *sh, t_pipe *p)
 		return (go_to_path(0, sh));
 	if (ft_strcmp(args[1], "-") == 0)
 	{
-		cd_ret = go_to_path(1, sh);
-		oldpwd = ft_get_value(sh, "OLDPWD");
-		if (oldpwd)
-			add_or_update_env(sh, "PWD", oldpwd);
-		return (cd_ret);
+		if (go_to_path(1, sh) == 0)
+		{
+			oldpwd = ft_get_value(sh, "OLDPWD");
+			if (oldpwd)
+				add_or_update_env(sh, "PWD", oldpwd);
+			return (0);
+		}
+		return (1);
 	}
 	return (change_directory(sh, args[1]));
 }
